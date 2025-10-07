@@ -8,50 +8,34 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .container{max-width:1100px;margin:0 auto;padding:0 16px}
 
 /* ===== GLOBAL CANVAS BACKGROUND (SAKURA) ===== */
-#petals{
-  position:fixed; inset:0; width:100vw; height:100vh;
-  z-index:-1; pointer-events:none;
-}
+#petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
 
-/* ===== TRANSPARENT HEADER OVER POSTER ===== */
-.site-header.transparent{
-  position:absolute; top:0; left:0; right:0; z-index:10;
-  background:transparent; backdrop-filter:none; border-bottom:none;
-}
+/* ===== HEADER（ポスターの“下”に普通に表示） ===== */
+.site-header{position:sticky;top:0;z-index:20}
+.blur{backdrop-filter:saturate(160%) blur(var(--blur));background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.06)}
 .head-flex{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-#site-title{margin:0;font-size:24px;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.35);color:#fff}
-.lang-switch button{
-  margin-left:8px;border:1px solid rgba(255,255,255,.7);
-  background:rgba(0,0,0,.25);color:#fff;padding:6px 10px;border-radius:8px;
-  cursor:pointer;transition:transform .2s
-}
-.lang-switch button.active{transform:translateY(-1px);border-color:#fff}
+#site-title{margin:0;font-size:24px;letter-spacing:.5px}
+.lang-switch button{margin-left:8px;border:1px solid #ddd;background:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;transition:transform .2s}
+.lang-switch button.active{border-color:var(--brand);transform:translateY(-1px)}
 .nav ul{display:flex;gap:16px;list-style:none;padding:8px 0;margin:0;overflow:auto}
-.nav a{
-  display:block;padding:8px 12px;border-radius:10px;text-decoration:none;
-  color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35);transition:background .2s,transform .2s
-}
-.nav a.active,.nav a:hover{background:rgba(0,0,0,.25);transform:translateY(-1px)}
+.nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);transition:background .2s,transform .2s}
+.nav a.active,.nav a:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
 
 /* ===== SECTIONS ===== */
 .section{display:none;padding:36px 0}
 .section.active{display:block}
 .section-title{margin:0 0 16px 0;font-size:26px}
 
-/* ===== FULL-BLEED HERO (POSTER) ===== */
-.full-bleed{padding:0} /* 上下の余白を消す */
-.hero{
-  position:relative; overflow:hidden; color:#fff;
-  border:1px solid rgba(255,255,255,.18);
-}
+/* ===== FULL-BLEED POSTER (最上部いっぱい) ===== */
+.full-bleed{padding:0}
+.hero{position:relative;overflow:hidden;color:#fff;border:1px solid rgba(255,255,255,.18)}
 .hero.poster{
-  /* 画面端まで広げるテクニック */
-  width:100vw; margin-left:50%; transform:translateX(-50%);
+  width:100vw;margin-left:50%;transform:translateX(-50%); /* 画面端まで広げる */
   background:
     linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
     url("../img/top-hero.jpg") center/cover no-repeat;
-  min-height:52vh; padding-top:128px; padding-bottom:28px;
-  border-radius:0 0 24px 24px; box-shadow:0 20px 40px rgba(0,0,0,.08) inset;
+  min-height:52vh;padding-top:64px;padding-bottom:28px; /* ヘッダーは重ならないので64pxでOK */
+  border-radius:0 0 24px 24px;box-shadow:0 20px 40px rgba(0,0,0,.08) inset
 }
 .hero-inner{max-width:1100px;margin:0 auto;padding:0 16px}
 .lede{color:rgba(255,255,255,.9)}
@@ -98,68 +82,20 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 /* ===== FOOTER ===== */
 .site-footer{border-top:1px solid #eee;margin-top:24px;padding:16px 0;color:var(--muted);background:rgba(255,255,255,.6)}
 
-/* ===== EFFECTS ===== */
-.shine{background:linear-gradient(90deg,#fff,#fff 40%,#ddd 50%,#fff 60%,#fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+/* ===== EFFECTS / RESPONSIVE ===== */
+.shine{background:linear-gradient(90deg,#111,#111 40%,#999 50%,#111 60%,#111);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
 @keyframes shine{0%{background-position:0%}100%{background-position:200%}}
 .reveal-up{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
 .reveal-up.revealed{opacity:1;transform:none}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:560px){
-  .masonry{column-count:1}
-  .hero.poster{padding-top:112px;min-height:46vh;border-radius:0 0 20px 20px}
-}
+@media (max-width:560px){.masonry{column-count:1}.hero.poster{padding-top:48px;min-height:46vh;border-radius:0 0 20px 20px}}
 @media (max-width:900px){.masonry{column-count:2}}
 @media (prefers-color-scheme:dark){
   :root{--text:#eee;--muted:#aaa;--card:rgba(20,20,20,.5)}
-  .nav a{color:#fff}
+  .nav a{color:#eee}
   .card,.tier,.contact-form{background:rgba(28,28,28,.5)}
   .table-wrap th{background:#161616}
   .map-wrap{background:#0b0b0b}
 }
 @media (prefers-reduced-motion:reduce){
   .shine,.masonry img:hover,.nav a:hover,.card:hover,.tier:hover{animation:none;transition:none;transform:none}
-}
-/* ===== FORCE OVERRIDES (put at very bottom) ===== */
-
-/* ヘッダーを完全透明にして前面へ */
-.site-header.transparent{
-  position:absolute !important;
-  top:0; left:0; right:0; z-index:10;
-  background:transparent !important;
-  backdrop-filter:none !important;
-  border-bottom:none !important;
-}
-.nav a, #site-title, .lang-switch button{
-  color:#fff !important;
-  text-shadow:0 2px 8px rgba(0,0,0,.35);
-}
-
-/* Homeセクションは上余白ゼロ */
-#home.section, .section#home{ padding-top:0 !important; }
-
-/* ヒーロー（ポスター）を画面端まで＆最上部まで */
-#home .hero{
-  width:100vw !important;
-  margin-left:50% !important;
-  transform:translateX(-50%) !important;
-  border-radius:0 0 24px 24px !important;
-  min-height:52vh !important;
-  padding-top:128px !important;   /* ヘッダー高さぶんの余白 */
-  padding-bottom:28px !important;
-  color:#fff !important;
-  position:relative;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.18);
-  /* ポスター画像 + うっすら暗め */
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
-    url("../img/top-hero.jpg") center/cover no-repeat !important;
-}
-
-/* 桜は全ページの最背面 */
-#petals{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
-
-@media (max-width:560px){
-  #home .hero{ padding-top:112px !important; min-height:46vh !important; }
 }
