@@ -117,3 +117,28 @@ html,body{ margin:0; padding:0; color:var(--text);
 @media (prefers-reduced-motion:reduce){
   .shine,.masonry img:hover,.nav a:hover,.card:hover,.tier:hover{ animation:none; transition:none; transform:none }
 }
+/* ===== Characters ===== */
+.characters-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px
+}
+.char-card{background:rgba(255,255,255,.7);border:1px solid #eee;border-radius:16px;padding:14px;text-align:center}
+.char-card img{max-width:100%;height:auto;border-radius:12px;margin-bottom:8px}
+
+/* ===== Vendors (cards) ===== */
+.vendors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:12px}
+.vendor-card .logo{flex:0 0 72px;display:grid;place-items:center}
+.vendor-card .logo img{max-width:72px;max-height:72px;object-fit:contain}
+.vendor-card .v-body h3{margin:0 0 6px 0}
+.products{margin:6px 0}
+.tag{display:inline-block;margin:2px 6px 0 0;padding:4px 8px;border-radius:999px;font-size:12px;background:#f3f4f6}
+.v-links a{margin-right:10px;text-decoration:none}
+.v-links .insta{color:#e1306c}
+
+/* ===== Timeline ===== */
+.timeline{display:flex;flex-direction:column;gap:18px}
+.year-block{border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:14px}
+.year{font-weight:800;font-size:20px;margin-bottom:8px}
+.year-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.y-card{border:1px solid #f0f0f0;border-radius:12px;padding:10px;background:#fff}
+.y-card img{width:100%;height:auto;border-radius:10px;margin-bottom:6px}
