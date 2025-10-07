@@ -9,47 +9,53 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 
 /* ===== GLOBAL CANVAS BACKGROUND (SAKURA) ===== */
 #petals{
-  position:fixed;   /* 全ページ背景 */
+  position:fixed;         /* 全ページの背景 */
   inset:0;
   width:100vw;height:100vh;
-  z-index:-1;       /* すべての後ろ */
+  z-index:-1;             /* 一番後ろ */
   pointer-events:none;
 }
 
-/* ===== HEADER / NAV ===== */
-.site-header{position:sticky;top:0;z-index:20}
-.blur{backdrop-filter:saturate(160%) blur(var(--blur));background:rgba(255,255,255,.40);border-bottom:1px solid rgba(0,0,0,.06)}
+/* ===== TRANSPARENT HEADER OVER POSTER ===== */
+.site-header.transparent{
+  position:absolute;      /* ページ最上部に重ねる */
+  top:0;left:0;right:0;
+  background:transparent; /* 背景ゼロ＝ポスターが見える */
+  backdrop-filter:none;
+  border-bottom:none;
+  z-index:10;             /* 文字は前面 */
+}
 .head-flex{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-#site-title{margin:0;font-size:24px;letter-spacing:.5px}
-.lang-switch button{margin-left:8px;border:1px solid #ddd;background:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;transition:transform .2s}
-.lang-switch button.active{border-color:var(--brand);transform:translateY(-1px)}
+#site-title{margin:0;font-size:24px;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.lang-switch button{margin-left:8px;border:1px solid rgba(255,255,255,.7);background:rgba(0,0,0,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;transition:transform .2s}
+.lang-switch button.active{transform:translateY(-1px);border-color:#fff}
 .nav ul{display:flex;gap:16px;list-style:none;padding:8px 0;margin:0;overflow:auto}
-.nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);transition:background .2s,transform .2s}
-.nav a.active,.nav a:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
+.nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35);transition:background .2s,transform .2s}
+.nav a.active,.nav a:hover{background:rgba(0,0,0,.25);transform:translateY(-1px)}
 
 /* ===== SECTIONS ===== */
 .section{display:none;padding:36px 0}
 .section.active{display:block}
 .section-title{margin:0 0 16px 0;font-size:26px}
 
-/* ===== HERO ===== */
-.hero{padding:28px;border-radius:18px;border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden}
-.glass{background:var(--card);backdrop-filter:blur(var(--blur))}
-.hero.glass{
+/* ===== HERO (POSTER) ===== */
+.hero{
+  padding:28px;border-radius:18px;border:1px solid rgba(255,255,255,.2);
+  position:relative;overflow:hidden;color:#fff
+}
+/* ヒーローを最上部まで。ヘッダーが乗る前提で余白を追加 */
+.hero.poster{
   background:
     linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
     url("../img/top-hero.jpg") center/cover no-repeat;
-  color:#fff;min-height:44vh;z-index:1;
-}
-/* ヘッダーの下に食い込ませて“タイトルの上まで”背景を伸ばす */
-#home .hero.glass{
-  margin-top:-72px;                 /* ヘッダー高に合わせて調整可 */
-  padding-top:calc(28px + 72px);    /* もとの余白＋食い込み分 */
+  min-height:48vh;
+  margin-top:0;
+  padding-top:120px;      /* ヘッダー高さぶんの余白を確保 */
   border-radius:0 0 18px 18px;
+  box-shadow:0 20px 40px rgba(0,0,0,.08) inset;
 }
-.hero .cta{margin-top:8px}
-.lede{color:var(--muted)}
-.event-meta{margin:12px 0;padding:12px;border-left:4px solid var(--brand);background:rgba(255,255,255,.6);border-radius:6px}
+.lede{color:rgba(255,255,255,.9)}
+.event-meta{margin:12px 0;padding:12px;border-left:4px solid rgba(255,255,255,.9);background:rgba(0,0,0,.25);border-radius:6px;color:#fff}
 
 /* ===== CARDS / GRIDS ===== */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
@@ -89,24 +95,23 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .lightbox .close{position:absolute;top:18px;right:18px;font-size:28px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:40px;height:40px;cursor:pointer}
 
 /* ===== FOOTER ===== */
-.site-footer{border-top:1px solid #eee;margin-top:24px;padding:16px 0;color:var(--muted)}
+.site-footer{border-top:1px solid #eee;margin-top:24px;padding:16px 0;color:var(--muted);background:rgba(255,255,255,.6)}
 
 /* ===== EFFECTS ===== */
-.shine{background:linear-gradient(90deg,#111,#111 40%,#999 50%,#111 60%,#111);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+.shine{background:linear-gradient(90deg,#fff,#fff 40%,#ddd 50%,#fff 60%,#fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
 @keyframes shine{0%{background-position:0%}100%{background-position:200%}}
 .reveal-up{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
 .reveal-up.revealed{opacity:1;transform:none}
 
 /* ===== RESPONSIVE & A11Y ===== */
 @media (max-width:560px){
-  #home .hero.glass{margin-top:-60px;padding-top:calc(28px + 60px)}
   .masonry{column-count:1}
+  .hero.poster{padding-top:104px;min-height:44vh}
 }
 @media (max-width:900px){.masonry{column-count:2}}
 @media (prefers-color-scheme:dark){
   :root{--text:#eee;--muted:#aaa;--card:rgba(20,20,20,.5)}
-  .blur{background:rgba(16,16,16,.42);border-color:rgba(255,255,255,.08)}
-  .nav a.active,.nav a:hover{background:rgba(255,255,255,.06)}
+  .nav a{color:#fff}
   .card,.tier,.contact-form{background:rgba(28,28,28,.5)}
   .table-wrap th{background:#161616}
   .map-wrap{background:#0b0b0b}
