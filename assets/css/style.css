@@ -142,3 +142,43 @@ html,body{ margin:0; padding:0; color:var(--text);
 .year-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .y-card{border:1px solid #f0f0f0;border-radius:12px;padding:10px;background:#fff}
 .y-card img{width:100%;height:auto;border-radius:10px;margin-bottom:6px}
+/* ===== Peek Mascots ===== */
+.peek{
+  position:fixed; bottom:8vh; z-index:60; display:flex; align-items:flex-end;
+  gap:8px; filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));
+  transform:translateX(0); transition:transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s;
+}
+.peek img{ height:38vh; max-height:420px; width:auto; user-select:none; pointer-events:auto }
+.peek .bubble{
+  position:relative; max-width:240px; background:#fff; border:1px solid #eee; border-radius:14px;
+  padding:10px 14px; backdrop-filter:blur(8px)
+}
+.peek .bubble::after{ content:""; position:absolute; bottom:10px; width:14px; height:14px; background:#fff;
+  border:1px solid #eee; transform:rotate(45deg); }
+.peek.left{ left:-22vw; }         /* 初期は画面外に少し隠す */
+.peek.left.show{ left:10px; transform:translateX(0); }
+.peek.left .bubble::after{ left:-7px; border-right:none; border-top:none }
+.peek.right{ right:-22vw; }
+.peek.right.show{ right:10px; transform:translateX(0); }
+.peek.right .bubble::after{ right:-7px; border-left:none; border-bottom:none }
+.peek .close{ position:absolute; top:6px; right:6px; border:none; background:#0000;
+  font-size:18px; line-height:1; cursor:pointer; opacity:.5 }
+.peek .close:hover{ opacity:.9 }
+
+/* タップ/ホバーで全身ににょきっと（少し浮く） */
+.peek:hover img, .peek.tapped img{ transform:translateY(-6px); transition:transform .25s }
+
+/* 自動で「ひょこっ」アニメ（reduced motion は無効化） */
+@keyframes peekIn { from{ opacity:0; transform:translateX(8px) } to{ opacity:1; transform:translateX(0) } }
+.peek.show{ animation:peekIn .45s ease }
+
+/* 小さめ端末調整 */
+@media (max-width:560px){
+  .peek img{ height:32vh; max-height:320px }
+  .peek .bubble{ max-width:200px; font-size:14px }
+}
+
+/* 動きが苦手な人向け */
+@media (prefers-reduced-motion:reduce){
+  .peek, .peek img, .peek.show{ animation:none !important; transition:none !important }
+}
