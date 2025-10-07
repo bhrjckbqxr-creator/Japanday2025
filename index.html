@@ -11,18 +11,18 @@
   <meta property="og:image" content="assets/img/og-placeholder.png">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="preload" as="fetch" href="assets/data/content.json" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
 </head>
 <body>
   <!-- 全ページ背景の桜（最背面） -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- 1) 画面最上部：ポスターのみ（文字なし） -->
-  <section id="home" class="section active reveal-up full-bleed">
-    <div class="hero poster"></div>
+  <!-- ★ 画面最上部：フルスクリーン“ポスターのみ” -->
+  <section id="poster-top" class="full-bleed">
+    <div class="hero poster" aria-label="Event poster"></div>
   </section>
 
-  <!-- 2) ポスターの下にヘッダー（タイトル＆ナビ） -->
+  <!-- ★ ヘッダー（ポスターの下） -->
   <header class="site-header blur">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
@@ -38,8 +38,8 @@
   </header>
 
   <main>
-    <!-- 3) イントロ（元のヒーロー文言をここに） -->
-    <section id="intro" class="section reveal-up">
+    <!-- ★ Homeセクション：説明の文章（JSがここに流し込みます） -->
+    <section id="home" class="section active reveal-up">
       <div class="container">
         <div class="intro-card glass">
           <h2 id="home-headline"></h2>
@@ -129,7 +129,6 @@
     </div>
   </footer>
 
-  <!-- ライトボックス -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="close" aria-label="Close">×</button>
     <img alt="Expanded photo">
