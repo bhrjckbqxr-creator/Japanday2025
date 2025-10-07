@@ -11,18 +11,17 @@
   <meta property="og:image" content="assets/img/og-placeholder.png">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="preload" as="fetch" href="assets/data/content.json" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/style.css?v=9">
 </head>
 <body>
-  <!-- 全ページ背景の桜（最背面） -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- ★ 画面最上部：フルスクリーン“ポスターのみ” -->
+  <!-- Fullscreen poster (no text on top) -->
   <section id="poster-top" class="full-bleed">
     <div class="hero poster" aria-label="Event poster"></div>
   </section>
 
-  <!-- ★ ヘッダー（ポスターの下） -->
+  <!-- Header below poster -->
   <header class="site-header blur">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
@@ -38,7 +37,7 @@
   </header>
 
   <main>
-    <!-- ★ Homeセクション：説明の文章（JSがここに流し込みます） -->
+    <!-- Home intro (texts that used to be on hero) -->
     <section id="home" class="section active reveal-up">
       <div class="container">
         <div class="intro-card glass">
@@ -57,17 +56,15 @@
       </div>
     </section>
 
-    <section id="map" class="section reveal-up">
+    <!-- ★ Official Characters -->
+    <section id="characters" class="section reveal-up">
       <div class="container">
-        <h2 class="section-title">Map</h2>
-        <div class="map-wrap glass">
-          <object id="booth-map" type="image/svg+xml" data="assets/img/booth-map.svg" aria-label="Booth map"></object>
-        </div>
-        <div id="booth-info" class="booth-info" aria-live="polite"></div>
-        <p class="note">*Sample layout. Replace with your final Civic Center map later.</p>
+        <h2 class="section-title">Official Characters: Yui & Jasmine</h2>
+        <div id="character-grid" class="characters-grid"></div>
       </div>
     </section>
 
+    <!-- ★ Vendors with logos, products & Instagram -->
     <section id="vendors" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Vendors</h2>
@@ -82,7 +79,26 @@
             </select>
           </label>
         </div>
-        <div id="vendor-list" class="table-wrap"></div>
+        <div id="vendor-cards" class="vendors-grid"></div>
+      </div>
+    </section>
+
+    <!-- ★ Timeline (2008–2024) -->
+    <section id="history" class="section reveal-up">
+      <div class="container">
+        <h2 class="section-title">Japan Day History (2008–2024)</h2>
+        <div id="timeline" class="timeline"></div>
+      </div>
+    </section>
+
+    <section id="map" class="section reveal-up">
+      <div class="container">
+        <h2 class="section-title">Map</h2>
+        <div class="map-wrap glass">
+          <object id="booth-map" type="image/svg+xml" data="assets/img/booth-map.svg" aria-label="Booth map"></object>
+        </div>
+        <div id="booth-info" class="booth-info" aria-live="polite"></div>
+        <p class="note">*Sample layout. Replace with your final Civic Center map later.</p>
       </div>
     </section>
 
@@ -134,6 +150,6 @@
     <img alt="Expanded photo">
   </div>
 
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/app.js?v=9"></script>
 </body>
 </html>
