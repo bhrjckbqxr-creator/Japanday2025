@@ -120,3 +120,46 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 @media (prefers-reduced-motion:reduce){
   .shine,.masonry img:hover,.nav a:hover,.card:hover,.tier:hover{animation:none;transition:none;transform:none}
 }
+/* ===== FORCE OVERRIDES (put at very bottom) ===== */
+
+/* ヘッダーを完全透明にして前面へ */
+.site-header.transparent{
+  position:absolute !important;
+  top:0; left:0; right:0; z-index:10;
+  background:transparent !important;
+  backdrop-filter:none !important;
+  border-bottom:none !important;
+}
+.nav a, #site-title, .lang-switch button{
+  color:#fff !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
+/* Homeセクションは上余白ゼロ */
+#home.section, .section#home{ padding-top:0 !important; }
+
+/* ヒーロー（ポスター）を画面端まで＆最上部まで */
+#home .hero{
+  width:100vw !important;
+  margin-left:50% !important;
+  transform:translateX(-50%) !important;
+  border-radius:0 0 24px 24px !important;
+  min-height:52vh !important;
+  padding-top:128px !important;   /* ヘッダー高さぶんの余白 */
+  padding-bottom:28px !important;
+  color:#fff !important;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  /* ポスター画像 + うっすら暗め */
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    url("../img/top-hero.jpg") center/cover no-repeat !important;
+}
+
+/* 桜は全ページの最背面 */
+#petals{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
+
+@media (max-width:560px){
+  #home .hero{ padding-top:112px !important; min-height:46vh !important; }
+}
