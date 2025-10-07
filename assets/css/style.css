@@ -182,3 +182,29 @@ html,body{ margin:0; padding:0; color:var(--text);
 @media (prefers-reduced-motion:reduce){
   .peek, .peek img, .peek.show{ animation:none !important; transition:none !important }
 }
+/* Program buttons */
+.program-actions{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
+
+/* History by images */
+.history-panels .panel{margin:0 0 18px 0}
+.history-panels img{width:100%;height:auto;border-radius:12px;border:1px solid #eee;background:#fff}
+.sub{margin:6px 0 10px 0;color:var(--muted);font-size:18px}
+.history-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.y-card{position:relative;border:1px solid #eee;border-radius:12px;overflow:hidden;background:#fff}
+.y-card .badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:12px;padding:3px 8px;border-radius:999px;opacity:.85}
+.y-card img{width:100%;display:block}
+
+/* Maps tabs (image-only) */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.tabs .tab{padding:8px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
+.tabs .tab.active{border-color:var(--brand);color:var(--brand)}
+.map-images{border:1px solid #eee;border-radius:14px;padding:10px;background:rgba(255,255,255,.7)}
+.map-images img{width:100%;height:auto;border-radius:10px;cursor:pointer}
+
+/* Vendors (logo + links) */
+.vendors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:12px}
+.vendor-card .logo{flex:0 0 72px;display:grid;place-items:center}
+.vendor-card .logo img{max-width:72px;max-height:72px;object-fit:contain}
+.v-links a{margin-right:10px;text-decoration:none}
+.v-links .insta{color:#e1306c}
