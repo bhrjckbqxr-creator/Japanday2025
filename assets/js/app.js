@@ -164,7 +164,7 @@ function hydrateContact(){
   const email = document.getElementById('contact-email');
   const wa = document.getElementById('contact-wa');
   email.href = `mailto:${c.email}`; email.textContent = c.email;
-  wa.href = c.whatsapp; wa.textContent = c.phone;
+  wa.href = c.whatsapp;   wa.textContent = c.phone;
   document.querySelector('#contact .section-title').textContent =
     {'en':'Contact','ja':'お問い合わせ','es':'Contacto'}[STATE.lang];
 }
@@ -223,7 +223,7 @@ function wireReveal(){
   document.querySelectorAll('.reveal-up').forEach(el=>io.observe(el));
 }
 
-// ===== SAKURA BACKGROUND =====
+// ===== SAKURA BACKGROUND (fixed, behind everything) =====
 function initPetals(){
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cvs = document.getElementById('petals');
