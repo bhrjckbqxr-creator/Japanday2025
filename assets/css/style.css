@@ -20,7 +20,15 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .section.active{display:block}
 .section-title{margin:0 0 16px 0;font-size:26px}
 
-.hero{padding:28px;border-radius:18px;border:1px solid rgba(0,0,0,.06);background:var(--bg);position:relative;overflow:hidden}
+..hero {
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,.06);
+  background: url("../img/top-hero.jpg") center/cover no-repeat;
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* 文字を白にすると見やすい */
+}
 .hero .cta{margin-top:8px}
 .glass{background:var(--card);backdrop-filter:blur(var(--blur))}
 .lede{color:var(--muted)}
