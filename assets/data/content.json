@@ -1,0 +1,83 @@
+{
+  "event": {
+    "title": "Japan Day 2025",
+    "date": "Sunday, October 26, 2025",
+    "time": "10:00 – 15:00",
+    "venue": "Belize City Civic Center",
+    "timezone": "America/Guatemala"
+  },
+  "languages": [
+    "en",
+    "ja",
+    "es"
+  ],
+  "nav": {
+    "en": [
+      "Home",
+      "Program",
+      "Map",
+      "Vendors",
+      "Sponsors",
+      "Gallery",
+      "Contact"
+    ],
+    "ja": [
+      "ホーム",
+      "プログラム",
+      "マップ",
+      "出店者",
+      "スポンサー",
+      "ギャラリー",
+      "お問い合わせ"
+    ],
+    "es": [
+      "Inicio",
+      "Programa",
+      "Mapa",
+      "Vendedores",
+      "Patrocinios",
+      "Galería",
+      "Contacto"
+    ]
+  },
+  "home": {
+    "en": {
+      "headline": "Celebrate Japan & Belize Together",
+      "lede": "Food, music, anime, cosplay, and culture—free entry for everyone. Join 2,500+ guests at the Civic!",
+      "cta": "Be a vendor or sponsor? Scroll down or contact us."
+    },
+    "ja": {
+      "headline": "日本とベリーズの架け橋を祝おう",
+      "lede": "フード、音楽、アニメ、コスプレ、文化—どなたでも入場無料。2,500人以上が集まるお祭りです！",
+      "cta": "出店・スポンサーをご希望の方は下へスクロール、またはお問い合わせください。"
+    },
+    "es": {
+      "headline": "Celebremos Japón y Belice juntos",
+      "lede": "Comida, música, anime, cosplay y cultura—entrada gratuita para todos. ¡Únete a 2,500+ asistentes!",
+      "cta": "¿Quieres ser vendedor o patrocinador? Desplázate o contáctanos."
+    }
+  },
+  "program": [
+    {
+      "time": "10:00",
+      "en": "Opening Ceremony & Taiko Performance",
+      "ja": "開会式・太鼓演奏",
+      "es": "Ceremonia de apertura y taiko"
+    }
+  ],
+  "vendors": [
+    {
+      "booth": 46,
+      "name": "Jyoto Sushi",
+      "category": "Food"
+    }
+  ],
+  "sponsors": {
+    "tiers": []
+  },
+  "contact": {
+    "email": "japanday.belize@gmail.com",
+    "phone": "+501-611-3434",
+    "whatsapp": "https://wa.me/5016113434"
+  }
+}
