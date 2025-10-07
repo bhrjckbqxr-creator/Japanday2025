@@ -2,82 +2,130 @@
   "event": {
     "title": "Japan Day 2025",
     "date": "Sunday, October 26, 2025",
-    "time": "10:00 – 15:00",
-    "venue": "Belize City Civic Center",
-    "timezone": "America/Guatemala"
-  },
-  "languages": [
-    "en",
-    "ja",
-    "es"
-  ],
-  "nav": {
-    "en": [
-      "Home",
-      "Program",
-      "Map",
-      "Vendors",
-      "Sponsors",
-      "Gallery",
-      "Contact"
-    ],
-    "ja": [
-      "ホーム",
-      "プログラム",
-      "マップ",
-      "出店者",
-      "スポンサー",
-      "ギャラリー",
-      "お問い合わせ"
-    ],
-    "es": [
-      "Inicio",
-      "Programa",
-      "Mapa",
-      "Vendedores",
-      "Patrocinios",
-      "Galería",
-      "Contacto"
-    ]
+    "time": "10:00 — 15:00",
+    "venue": "Belize City Civic Center"
   },
   "home": {
-    "en": {
-      "headline": "Celebrate Japan & Belize Together",
-      "lede": "Food, music, anime, cosplay, and culture—free entry for everyone. Join 2,500+ guests at the Civic!",
-      "cta": "Be a vendor or sponsor? Scroll down or contact us."
-    },
-    "ja": {
-      "headline": "日本とベリーズの架け橋を祝おう",
-      "lede": "フード、音楽、アニメ、コスプレ、文化—どなたでも入場無料。2,500人以上が集まるお祭りです！",
-      "cta": "出店・スポンサーをご希望の方は下へスクロール、またはお問い合わせください。"
-    },
-    "es": {
-      "headline": "Celebremos Japón y Belice juntos",
-      "lede": "Comida, música, anime, cosplay y cultura—entrada gratuita para todos. ¡Únete a 2,500+ asistentes!",
-      "cta": "¿Quieres ser vendedor o patrocinador? Desplázate o contáctanos."
-    }
+    "headline": "Celebrate Japan & Belize Together",
+    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone. Join 2,500+ guests at the Civic!",
+    "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
   },
   "program": [
+    { "time": "10:00", "title": "Opening Ceremony", "desc": "Taiko welcome & greetings" },
+    { "time": "11:00", "title": "Cosplay Walk", "desc": "Prizes for best costumes" },
+    { "time": "12:00", "title": "Stage Performance", "desc": "Dance & J-pop cover" },
+    { "time": "13:30", "title": "Workshop", "desc": "Origami & calligraphy" }
+  ],
+  "characters": [
     {
-      "time": "10:00",
-      "en": "Opening Ceremony & Taiko Performance",
-      "ja": "開会式・太鼓演奏",
-      "es": "Ceremonia de apertura y taiko"
+      "name": "Yui",
+      "image": "assets/img/char-yui.png",
+      "bio": "Cheerful shrine maiden. Short hair, loves welcoming guests with a smile."
+    },
+    {
+      "name": "Jasmine",
+      "image": "assets/img/char-jasmine.png",
+      "bio": "Cool big sister in yukata. Long black hair, keeps the festival running smooth."
+    },
+    {
+      "name": "Chibi Yui & Jasmine",
+      "image": "assets/img/char-chibi.png",
+      "bio": "Our kawaii mascots for kids activities!"
     }
   ],
   "vendors": [
     {
-      "booth": 46,
-      "name": "Jyoto Sushi",
-      "category": "Food"
+      "name": "Sakura Bites",
+      "type": "Food",
+      "logo": "assets/img/vendor-sakura.png",
+      "products": ["Takoyaki", "Taiyaki", "Matcha Latte"],
+      "instagram": "https://instagram.com/sakura_bites_bz",
+      "desc": "Fresh street snacks straight from matsuri vibes."
+    },
+    {
+      "name": "Otaku Corner",
+      "type": "Merch",
+      "logo": "assets/img/vendor-otaku.png",
+      "products": ["Keychains", "Stickers", "Figures"],
+      "instagram": "https://instagram.com/otakucornerbz",
+      "site": "https://example.com",
+      "desc": "Anime & game merch. Limited badges!"
+    },
+    {
+      "name": "Origami Lab",
+      "type": "Workshop",
+      "logo": "assets/img/vendor-origami.png",
+      "products": ["Origami class", "Cranes kit"],
+      "instagram": "https://instagram.com/origamilabbz",
+      "desc": "Learn & take home your origami art."
     }
   ],
-  "sponsors": {
-    "tiers": []
-  },
+  "history": [
+    {
+      "year": 2008,
+      "items": [
+        { "caption": "First Japan Day at St. Joseph & Stella Maris — instant hit!" }
+      ]
+    },
+    {
+      "year": 2015,
+      "items": [
+        { "image": "assets/img/hist-2015.jpg", "caption": "First Anime & Culture Festival packed Biltmore." }
+      ]
+    },
+    {
+      "year": 2016,
+      "items": [
+        { "image": "assets/img/hist-2016.jpg", "caption": "Princess Queen Room—dance & photography showcase." }
+      ]
+    },
+    {
+      "year": 2017,
+      "items": [
+        { "image": "assets/img/hist-2017.jpg", "caption": "Full anime mode—cosplay day!" }
+      ]
+    },
+    {
+      "year": 2018,
+      "items": [
+        { "image": "assets/img/hist-2018.jpg", "caption": "Traditional arts & sushi surprises." }
+      ]
+    },
+    {
+      "year": 2019,
+      "items": [
+        { "image": "assets/img/hist-2019.jpg", "caption": "Beautiful Harmony—unity & peace." }
+      ]
+    },
+    {
+      "year": "2020 & 2021",
+      "items": [
+        { "image": "assets/img/hist-2020.jpg", "caption": "Virtual Japan Day—streamed to homes." }
+      ]
+    },
+    {
+      "year": 2022,
+      "items": [
+        { "image": "assets/img/hist-2022.jpg", "caption": "Modern dance + sake tasting—Belize loved it!" }
+      ]
+    },
+    {
+      "year": 2023,
+      "items": [
+        { "image": "assets/img/hist-2023.jpg", "caption": "Partnered events and anime fun." }
+      ]
+    },
+    {
+      "year": 2024,
+      "items": [
+        { "image": "assets/img/hist-2024a.jpg", "caption": "Big step toward Civic Center show." },
+        { "image": "assets/img/hist-2024b.jpg", "caption": "Community support & mascots debut." }
+      ]
+    }
+  ],
   "contact": {
-    "email": "japanday.belize@gmail.com",
-    "phone": "+501-611-3434",
-    "whatsapp": "https://wa.me/5016113434"
+    "email": "info@japanday.bz",
+    "whatsapp": "https://wa.me/5010000000",
+    "whatsapp_label": "+501 000-0000"
   }
 }
