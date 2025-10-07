@@ -4,19 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Japan Day 2025 – Belize City Civic Center</title>
-  <meta name="description" content="Official site for Japan Day 2025 in Belize: program, maps, history, vendors, sponsors, gallery and contact.">
-  <meta property="og:image" content="assets/img/og-placeholder.png">
+  <meta name="description" content="Official site for Japan Day 2025 in Belize: program, maps, history, vendors, gallery and contact.">
   <link rel="icon" href="assets/img/favicon.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=12">
+  <link rel="stylesheet" href="assets/css/style.css?v=20">
 </head>
 <body>
+  <!-- 全ページ背景：桜 -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- Fullscreen poster -->
+  <!-- 1. 画面いっぱいのポスター（文字は乗せない） -->
   <section id="poster-top" class="full-bleed">
     <div class="hero poster" aria-label="Event poster"></div>
   </section>
 
+  <!-- 2. その下にサイトヘッダー -->
   <header class="site-header blur">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
@@ -25,6 +26,7 @@
   </header>
 
   <main>
+    <!-- Home -->
     <section id="home" class="section active reveal-up">
       <div class="container">
         <div class="intro-card glass">
@@ -36,6 +38,7 @@
       </div>
     </section>
 
+    <!-- Program -->
     <section id="program" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Program</h2>
@@ -47,6 +50,7 @@
       </div>
     </section>
 
+    <!-- Characters -->
     <section id="characters" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Official Characters: Yui & Jasmine</h2>
@@ -54,17 +58,17 @@
       </div>
     </section>
 
+    <!-- History（画像のみで構成） -->
     <section id="history" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Japan Day History (Images)</h2>
-        <!-- 長尺画像をそのまま縦に -->
         <div id="history-panels" class="history-panels"></div>
-        <!-- ハイライトをカードで -->
         <h3 class="sub">Highlights</h3>
         <div id="history-highlights" class="history-grid"></div>
       </div>
     </section>
 
+    <!-- Maps -->
     <section id="map" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Maps</h2>
@@ -73,6 +77,7 @@
       </div>
     </section>
 
+    <!-- Vendors -->
     <section id="vendors" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Vendors</h2>
@@ -80,6 +85,7 @@
       </div>
     </section>
 
+    <!-- Contact -->
     <section id="contact" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Contact</h2>
@@ -93,11 +99,12 @@
     <p>&copy; 2025 Japan Day Belize Committee • Built with love for culture.</p>
   </div></footer>
 
+  <!-- 画像拡大用 -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="close" aria-label="Close">×</button>
     <img alt="Expanded view">
   </div>
 
-  <script src="assets/js/app.js?v=12"></script>
+  <script src="assets/js/app.js?v=20" defer></script>
 </body>
 </html>
