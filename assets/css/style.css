@@ -10,7 +10,7 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 /* ===== GLOBAL CANVAS BACKGROUND (SAKURA) ===== */
 #petals{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
 
-/* ===== HEADER（ポスターの“下”に普通に表示） ===== */
+/* ===== HEADER（ポスターの下に通常表示） ===== */
 .site-header{position:sticky;top:0;z-index:20}
 .blur{backdrop-filter:saturate(160%) blur(var(--blur));background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.06)}
 .head-flex{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
@@ -26,21 +26,22 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .section.active{display:block}
 .section-title{margin:0 0 16px 0;font-size:26px}
 
-/* ===== FULL-BLEED POSTER (最上部いっぱい) ===== */
+/* ===== FULL-BLEED POSTER（最上部いっぱい／文字なし） ===== */
 .full-bleed{padding:0}
-.hero{position:relative;overflow:hidden;color:#fff;border:1px solid rgba(255,255,255,.18)}
+.hero{position:relative;overflow:hidden}
 .hero.poster{
-  width:100vw;margin-left:50%;transform:translateX(-50%); /* 画面端まで広げる */
+  width:100vw;margin-left:50%;transform:translateX(-50%); /* 画面端まで */
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    linear-gradient(to bottom, rgba(0,0,0,.12), rgba(0,0,0,.12)), /* ほんの少し締める */
     url("../img/top-hero.jpg") center/cover no-repeat;
-  min-height:52vh;padding-top:64px;padding-bottom:28px; /* ヘッダーは重ならないので64pxでOK */
-  border-radius:0 0 24px 24px;box-shadow:0 20px 40px rgba(0,0,0,.08) inset
+  min-height:52vh; /* 高さは好みで */
+  border-radius:0 0 24px 24px;
 }
-.hero-inner{max-width:1100px;margin:0 auto;padding:0 16px}
-.lede{color:rgba(255,255,255,.9)}
-.event-meta{margin:12px 0;padding:12px;border-left:4px solid rgba(255,255,255,.9);background:rgba(0,0,0,.25);border-radius:6px;color:#fff}
-.hero .cta{margin-top:8px}
+
+/* ===== INTRO（ヒーローの文言はここへ） ===== */
+.intro-card{padding:20px 22px;border-radius:16px;border:1px solid rgba(0,0,0,.06);background:var(--card);backdrop-filter:blur(var(--blur))}
+.lede{color:var(--muted)}
+.event-meta{margin:12px 0;padding:12px;border-left:4px solid var(--brand);background:rgba(255,255,255,.6);border-radius:6px}
 
 /* ===== CARDS / GRIDS ===== */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
@@ -87,7 +88,7 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 @keyframes shine{0%{background-position:0%}100%{background-position:200%}}
 .reveal-up{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
 .reveal-up.revealed{opacity:1;transform:none}
-@media (max-width:560px){.masonry{column-count:1}.hero.poster{padding-top:48px;min-height:46vh;border-radius:0 0 20px 20px}}
+@media (max-width:560px){.masonry{column-count:1}.hero.poster{min-height:46vh;border-radius:0 0 20px 20px}}
 @media (max-width:900px){.masonry{column-count:2}}
 @media (prefers-color-scheme:dark){
   :root{--text:#eee;--muted:#aaa;--card:rgba(20,20,20,.5)}
