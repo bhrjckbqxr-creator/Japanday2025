@@ -1,196 +1,96 @@
-// Minimal client loader for JSON-driven site
-(async function () {
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+(async function(){
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>[...r.querySelectorAll(s)];
+  const data = await fetch('assets/data/content.json', {cache:'no-store'}).then(r=>r.json());
 
-  // Load content
-  const data = await fetch('assets/data/content.json', { cache: 'no-store' }).then(r => r.json());
-
-  // Build nav
+  // ナビ
   const sections = [
-    { id:'home', label:'Home' },
-    { id:'program', label:'Program' },
-    { id:'characters', label:'Characters' },
-    { id:'vendors', label:'Vendors' },
-    { id:'history', label:'History' },
-    { id:'map', label:'Map' },
-    { id:'sponsors', label:'Sponsors' },
-    { id:'gallery', label:'Gallery' },
-    { id:'contact', label:'Contact' },
+    {id:'home',label:'Home'},{id:'program',label:'Program'},
+    {id:'characters',label:'Characters'},{id:'history',label:'History'},
+    {id:'map',label:'Maps'},{id:'vendors',label:'Vendors'},{id:'contact',label:'Contact'}
   ];
-  const nav = $('#nav-list');
-  nav.innerHTML = sections.map(s => `<li><a href="#${s.id}">${s.label}</a></li>`).join('');
-  // nav active on click
-  nav.addEventListener('click', e => {
-    if (e.target.tagName !== 'A') return;
-    $$('#nav-list a').forEach(a => a.classList.remove('active'));
-    e.target.classList.add('active');
-  });
+  $('#nav-list').innerHTML = sections.map(s=>`<li><a href="#${s.id}">${s.label}</a></li>`).join('');
 
-  // Home texts
+  // Home
   $('#home-headline').textContent = data.home.headline;
   $('#home-lede').textContent = data.home.lede;
-  $('#event-meta').innerHTML = `
-    <strong>${data.event.title}</strong><br>
-    ${data.event.date} &nbsp; ${data.event.time}<br>
-    ${data.event.venue}
-  `;
+  $('#event-meta').innerHTML = `<strong>${data.event.title}</strong><br>${data.event.date} &nbsp; ${data.event.time}<br>${data.event.venue}`;
   $('#home-cta').innerHTML = data.home.cta_html;
 
-  // Contacts
-  $('#contact-email').href = `mailto:${data.contact.email}`;
-  $('#contact-email').textContent = data.contact.email;
-  $('#contact-wa').href = data.contact.whatsapp;
-  $('#contact-wa').textContent = data.contact.whatsapp_label || 'WhatsApp';
-
-  // Program
-  const programWrap = $('#program-list');
-  programWrap.innerHTML = data.program.map(item => `
-    <div class="card">
-      <div class="time">${item.time}</div>
-      <div class="title"><strong>${item.title}</strong></div>
-      <div class="desc">${item.desc || ''}</div>
-    </div>
-  `).join('');
-
-  // Characters
-  const charGrid = $('#character-grid');
-  charGrid.innerHTML = data.characters.map(c => `
-    <div class="char-card">
-      <img src="${c.image}" alt="${c.name}" loading="lazy">
-      <h3>${c.name}</h3>
-      <p>${c.bio}</p>
-    </div>
-  `).join('');
-
-  // Vendors (cards with logo, product tags, instagram link)
-  const vendorWrap = $('#vendor-cards');
-  function renderVendors(filter='all'){
-    const list = data.vendors.filter(v => filter==='all' || v.type===filter);
-    vendorWrap.innerHTML = list.map(v => `
-      <article class="vendor-card">
-        <div class="logo"><img src="${v.logo}" alt="${v.name} logo"></div>
-        <div class="v-body">
-          <h3>${v.name}</h3>
-          <p class="v-desc">${v.desc || ''}</p>
-          <div class="products">
-            ${ (v.products||[]).map(p=>`<span class="tag">${p}</span>`).join('') }
-          </div>
-          <div class="v-links">
-            ${ v.instagram ? `<a class="insta" href="${v.instagram}" target="_blank" rel="noopener">Instagram</a>` : '' }
-            ${ v.site ? `<a class="site" href="${v.site}" target="_blank" rel="noopener">Website</a>` : '' }
-          </div>
-        </div>
-      </article>
+  // Program（リストは参考表示、ポスター中心）
+  const programList = $('#program-list');
+  if (data.program) {
+    programList.innerHTML = data.program.map(p=>`
+      <div class="card"><div class="time">${p.time||''}</div><div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div></div>
     `).join('');
   }
-  renderVendors();
-  $('#vendor-filter').addEventListener('change', e => renderVendors(e.target.value));
+  if (data.program_poster){
+    $('#download-program-poster').href = data.program_poster;
+    $('#open-program-poster').addEventListener('click',()=>{
+      $('#lightbox img').src = data.program_poster;
+      $('#lightbox').classList.add('open');
+    });
+  }
 
-  // Timeline (history)
-  const timeline = $('#timeline');
-  timeline.innerHTML = data.history.map(block => `
-    <section class="year-block">
-      <div class="year">${block.year}</div>
-      <div class="year-items">
-        ${block.items.map(it => `
-          <div class="y-card">
-            ${ it.image ? `<img src="${it.image}" alt="${it.caption||''}" loading="lazy">` : '' }
-            ${ it.caption ? `<p>${it.caption}</p>` : '' }
-          </div>
-        `).join('')}
-      </div>
-    </section>
+  // Characters（画像だけ）
+  $('#character-grid').innerHTML = (data.characters||[]).map(c=>`
+    <div class="char-card">
+      <img src="${c.image}" alt="${c.name}">
+      <h3>${c.name||''}</h3>
+    </div>
   `).join('');
 
-  // Light gallery (simple)
-  const lightbox = $('#lightbox'), lightImg = $('#lightbox img'), closeBtn = $('#lightbox .close');
-  document.addEventListener('click', e => {
+  // History：長尺パネルを縦に、その下にハイライトをカードで
+  const hp = $('#history-panels');
+  hp.innerHTML = (data.history_panels||[]).map(p=>`
+    <figure class="panel"><img src="${p.src}" alt="${p.alt||''}"></figure>
+  `).join('');
+  const hg = $('#history-highlights');
+  hg.innerHTML = (data.history_highlights||[]).map(h=>`
+    <div class="y-card">
+      <span class="badge">${h.year||''}</span>
+      <img src="${h.src}" alt="History ${h.year||''}">
+    </div>
+  `).join('');
+
+  // Maps：タブ切替（画像だけ）
+  const tabs = $('#map-tabs'), mapBox = $('#map-images');
+  tabs.innerHTML = data.maps.map((m,i)=>`<button class="tab ${i===0?'active':''}" data-i="${i}">${m.title}</button>`).join('');
+  function showMap(i=0){ mapBox.innerHTML = `<img src="${data.maps[i].src}" alt="${data.maps[i].title}">`; }
+  showMap(0);
+  tabs.addEventListener('click',e=>{
+    const b=e.target.closest('.tab'); if(!b) return;
+    tabs.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active'); showMap(+b.dataset.i);
+  });
+
+  // Vendors：ロゴ＋リンクだけ
+  const vwrap = $('#vendor-cards');
+  vwrap.innerHTML = (data.vendors||[]).map(v=>`
+    <article class="vendor-card">
+      <div class="logo"><img src="${v.logo}" alt="${v.name} logo"></div>
+      <div class="v-body">
+        <h3>${v.name}</h3>
+        <div class="v-links">
+          ${v.instagram?`<a class="insta" href="${v.instagram}" target="_blank" rel="noopener">Instagram</a>`:''}
+          ${v.site?`<a class="site" href="${v.site}" target="_blank" rel="noopener">Website</a>`:''}
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  // Lightbox（maps/パネル/ハイライト どれでも拡大）
+  const lb = $('#lightbox'), img = $('#lightbox img');
+  document.addEventListener('click', e=>{
     const t = e.target;
-    if (t.matches('.masonry img, .timeline img')) {
-      lightImg.src = t.src; lightbox.classList.add('open');
+    if (t.matches('.map-images img, .history-panels img, .history-grid img')) {
+      img.src = t.src; lb.classList.add('open');
     }
   });
-  closeBtn.addEventListener('click', ()=> lightbox.classList.remove('open'));
-  lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.classList.remove('open'); });
+  $('#lightbox .close').addEventListener('click',()=>lb.classList.remove('open'));
+  lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('open'); });
 
-  // Reveal on scroll
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(en=> en.isIntersecting && en.target.classList.add('revealed'));
-  },{threshold:.1});
-  $$('.reveal-up').forEach(el=> io.observe(el));
-})();
-/* ====== Peek Mascots logic ====== */
-(function(){
-  const yui = document.getElementById('peek-yui');
-  const jas = document.getElementById('peek-jasmine');
-  const yMsg = document.getElementById('yui-msg');
-  const jMsg = document.getElementById('jas-msg');
-
-  // メッセージ（多言語）
-  const msgs = {
-    en: { yui: "Hi! I’m Yui. Check the Program!", jas: "Welcome! I’m Jasmine. Vendors →" },
-    ja: { yui: "やっほー！ユイだよ。プログラム見てね！", jas: "こんにちは、ジャスミンです。ベンダーへ→" },
-    es: { yui: "¡Hola! Soy Yui. ¡Mira el programa!", jas: "¡Bienvenida! Soy Jasmine. Vendedores →" }
-  };
-  // 言語ボタンの状態から設定
-  function currentLang(){
-    const btn = document.querySelector('.lang-switch button.active');
-    return btn?.dataset.lang || 'en';
-  }
-  function setMsgs(){
-    const l = currentLang();
-    yMsg.textContent = msgs[l].yui;
-    jMsg.textContent = msgs[l].jas;
-  }
-  setMsgs();
-  document.querySelectorAll('.lang-switch button').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      document.querySelectorAll('.lang-switch button').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      setMsgs();
-    });
-  });
-
-  // 自動で交互に「ひょこっ」
-  let t1, t2;
-  function autoPeek(){
-    clearTimeout(t1); clearTimeout(t2);
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce) return;
-    // Yui → Jasmine の順で出したり引っ込めたり
-    const showY = ()=> yui.classList.add('show');
-    const hideY = ()=> yui.classList.remove('show');
-    const showJ = ()=> jas.classList.add('show');
-    const hideJ = ()=> jas.classList.remove('show');
-
-    showY();
-    t1 = setTimeout(()=>{ hideY(); showJ(); }, 4200);
-    t2 = setTimeout(()=>{ hideJ(); }, 8400);
-  }
-  autoPeek();
-  // 周期的に（12秒ごと）
-  setInterval(autoPeek, 12000);
-
-  // タップ/ホバーで手動開閉
-  function wire(el){
-    el.addEventListener('mouseenter', ()=> el.classList.add('show'));
-    el.addEventListener('mouseleave', ()=> el.classList.remove('show'));
-    el.addEventListener('click', ()=> el.classList.toggle('tapped'));
-    el.querySelector('.close').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      el.classList.remove('show','tapped');
-    });
-  }
-  wire(yui); wire(jas);
-
-  // スクロール上部では見せすぎない（ポスターが見えている間は控えめ）
-  const poster = document.querySelector('#poster-top');
-  if (poster) {
-    const io = new IntersectionObserver(entries=>{
-      const onTop = entries[0].isIntersecting;
-      if(onTop){ yui.classList.remove('show'); jas.classList.remove('show'); }
-    }, { threshold: 0.2 });
-    io.observe(poster);
-  }
+  // reveal
+  const io = new IntersectionObserver(es=>es.forEach(en=>en.isIntersecting&&en.target.classList.add('revealed')), {threshold:.1});
+  $$('.reveal-up').forEach(el=>io.observe(el));
 })();
