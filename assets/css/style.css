@@ -1,191 +1,51 @@
-/* ============ RESET & THEME ============ */
+/* ======= RESET & THEME ======= */
 *{box-sizing:border-box}
-:root{ --text:#111; --muted:#666; --brand:#e91e63; --card:rgba(255,255,255,.6); --blur:10px }
-html,body{ margin:0; padding:0; color:var(--text);
-  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial; background:#fff }
-.container{ max-width:1100px; margin:0 auto; padding:0 16px }
+:root{
+  --text:#111; --muted:#666; --bg:#fff;
+  --brand:#e91e63; --card:rgba(255,255,255,.75)
+}
+html,body{margin:0;padding:0;color:var(--text);background:var(--bg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 
-/* ============ SAKURA BACKGROUND ============ */
-#petals{ position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none }
+/* ======= GLOBAL CANVAS BACKGROUND (桜) ======= */
+#petals{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
-/* ============ HEADER (under the poster) ============ */
-.site-header{ position:sticky; top:0; z-index:20 }
-.blur{ backdrop-filter:saturate(160%) blur(var(--blur)); background:rgba(255,255,255,.65);
-  border-bottom:1px solid rgba(0,0,0,.06) }
-.head-flex{ display:flex; align-items:center; justify-content:space-between; padding:12px 0 }
-#site-title{ margin:0; font-size:24px; letter-spacing:.5px }
-.lang-switch button{ margin-left:8px; border:1px solid #ddd; background:#fff; padding:6px 10px;
-  border-radius:8px; cursor:pointer; transition:transform .2s }
-.lang-switch button.active{ border-color:var(--brand); transform:translateY(-1px) }
-.nav ul{ display:flex; gap:16px; list-style:none; padding:8px 0; margin:0; overflow:auto }
-.nav a{ display:block; padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--text);
-  transition:background .2s, transform .2s }
-.nav a.active,.nav a:hover{ background:rgba(0,0,0,.06); transform:translateY(-1px) }
+/* ======= LAYOUT ======= */
+.container{max-width:1100px;margin:0 auto;padding:0 16px}
+.section{padding:28px 0}
+.section-title{margin:0 0 12px 0;font-size:26px}
 
-/* ============ SECTIONS ============ */
-.section{ display:none; padding:36px 0 }
-.section.active{ display:block }
-.section-title{ margin:0 0 16px 0; font-size:26px }
+/* ヘッダー（ポスターの“下”） */
+.site-header{position:sticky;top:0;z-index:20;padding:10px 0}
+.site-header.blur{backdrop-filter:saturate(160%) blur(12px);background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.06)}
+.head-flex{display:flex;align-items:center;gap:16px}
+#site-title{font-size:22px;margin:0}
+.nav ul{display:flex;gap:12px;margin:0;padding:0;list-style:none}
+.nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text)}
+.nav a:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
 
-/* ============ FULL-SCREEN POSTER (no text on top) ============ */
-.full-bleed{ padding:0 }
-.hero{ position:relative; overflow:hidden }
+/* ======= FULL POSTER (トップ全面) ======= */
+.full-bleed{width:100%;margin:0;padding:0}
 .hero.poster{
-  width:100vw; margin-left:50%; transform:translateX(-50%);
-
-  /* 画像を切らずに全面表示（レターボックス可） */
-  background:url("../img/top-hero.jpg") center / contain no-repeat;
-  background-color:#fff;  /* 余白色（透明にしたいなら #0000） */
-
-  /* 画面いっぱいの高さ（モバイルのアドレスバー対策でsvhも指定） */
-  height:100vh;          /* fallback */
-  height:100svh;         /* modern browsers */
-  border-radius:0 0 24px 24px;
+  min-height: clamp(46vh, 60vh, 72vh);
+  background: url("../img/top-hero.jpg") center/contain no-repeat #fff;
 }
 
-/* ============ INTRO (hero texts moved here) ============ */
-.intro-card{ padding:20px 22px; border-radius:16px; border:1px solid rgba(0,0,0,.06);
-  background:var(--card); backdrop-filter:blur(var(--blur)) }
-.lede{ color:var(--muted) }
-.event-meta{ margin:12px 0; padding:12px; border-left:4px solid var(--brand);
-  background:rgba(255,255,255,.6); border-radius:6px }
-.intro-card .cta{ margin-top:8px }
+/* ======= CARDS & UI ======= */
+.glass{background:var(--card);border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px}
+.intro-card .lede{color:var(--muted)}
+.event-meta{margin:12px 0;padding:12px;border-left:4px solid var(--brand);background:rgba(255,255,255,.7)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:rgba(255,255,255,.7);border-radius:14px;padding:14px;border:1px solid rgba(0,0,0,.06)}
+.card .time{font-weight:700}
+.btn{display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;text-decoration:none;cursor:pointer}
 
-/* ============ CARDS / GRIDS ============ */
-.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px }
-.card{ background:rgba(255,255,255,.7); border-radius:14px; padding:14px; border:1px solid rgba(0,0,0,.06);
-  transition:transform .2s,box-shadow .2s }
-.card:hover{ transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.06) }
-.card .time{ font-weight:700 }
+/* ======= CHARACTERS ======= */
+.characters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.char-card{border:1px solid #eee;border-radius:16px;overflow:hidden;background:#fff}
+.char-card img{width:100%;height:auto;display:block}
+.char-card h3{text-align:center;margin:8px 0 12px}
 
-/* ============ MAP / VENDORS ============ */
-.map-wrap{ border:1px solid rgba(0,0,0,.06); border-radius:16px; overflow:hidden; background:#fff; position:relative }
-.map-wrap object{ width:100%; height:380px; display:block }
-.booth-info{ margin-top:8px; padding:12px; background:rgba(255,255,255,.7); border:1px dashed #ddd; border-radius:10px; min-height:44px }
-.table-wrap table{ width:100%; border-collapse:separate; border-spacing:0 }
-.table-wrap th,.table-wrap td{ padding:12px; border-bottom:1px solid #eee; text-align:left }
-.table-wrap th{ background:#fafafa }
-
-/* ============ SPONSORS ============ */
-.tiers{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px }
-.tier{ border:1px solid #eee; border-radius:16px; background:rgba(255,255,255,.7); padding:16px;
-  transition:transform .2s,box-shadow .2s }
-.tier:hover{ transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.06) }
-.tier h3{ margin:0 0 6px 0 }
-.tier .price{ color:var(--brand); font-weight:800; margin-bottom:8px }
-
-/* ============ BUTTONS / FORMS ============ */
-.btn{ display:inline-block; padding:10px 14px; border:1px solid var(--brand); color:var(--brand);
-  border-radius:10px; text-decoration:none; background:#fff; transition:transform .15s }
-.btn:hover{ transform:translateY(-1px) }
-.contact-form{ display:grid; gap:10px; max-width:520px }
-.contact-form input,.contact-form textarea{ padding:12px; border:1px solid #ddd; border-radius:10px }
-
-/* ============ GALLERY ============ */
-.masonry{ column-count:3; column-gap:12px }
-.masonry img{ width:100%; margin:0 0 12px; border-radius:12px; break-inside:avoid; cursor:pointer; transition:transform .2s }
-.masonry img:hover{ transform:scale(1.01) }
-.lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.8); display:none; align-items:center; justify-content:center; z-index:50 }
-.lightbox.open{ display:flex }
-.lightbox img{ max-width:90vw; max-height:85vh; border-radius:12px }
-.lightbox .close{ position:absolute; top:18px; right:18px; font-size:28px; background:rgba(255,255,255,.9);
-  border:none; border-radius:50%; width:40px; height:40px; cursor:pointer }
-
-/* ============ FOOTER ============ */
-.site-footer{ border-top:1px solid #eee; margin-top:24px; padding:16px 0; color:var(--muted); background:rgba(255,255,255,.6) }
-
-/* ============ EFFECTS / A11Y ============ */
-.shine{ background:linear-gradient(90deg,#111,#111 40%,#999 50%,#111 60%,#111);
-  background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 4s linear infinite }
-@keyframes shine{ 0%{background-position:0%} 100%{background-position:200%} }
-.reveal-up{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease }
-.reveal-up.revealed{ opacity:1; transform:none }
-
-/* ============ RESPONSIVE ============ */
-@media (max-width:900px){ .masonry{ column-count:2 } }
-@media (max-width:560px){
-  .masonry{ column-count:1 }
-  .hero.poster{ border-radius:0 0 20px 20px } /* モバイルは角丸少し小さく */
-}
-@media (prefers-color-scheme:dark){
-  :root{ --text:#eee; --muted:#aaa; --card:rgba(20,20,20,.5) }
-  .nav a{ color:#eee }
-  .card,.tier,.contact-form{ background:rgba(28,28,28,.5) }
-  .table-wrap th{ background:#161616 }
-  .map-wrap{ background:#0b0b0b }
-}
-@media (prefers-reduced-motion:reduce){
-  .shine,.masonry img:hover,.nav a:hover,.card:hover,.tier:hover{ animation:none; transition:none; transform:none }
-}
-/* ===== Characters ===== */
-.characters-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px
-}
-.char-card{background:rgba(255,255,255,.7);border:1px solid #eee;border-radius:16px;padding:14px;text-align:center}
-.char-card img{max-width:100%;height:auto;border-radius:12px;margin-bottom:8px}
-
-/* ===== Vendors (cards) ===== */
-.vendors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-.vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:12px}
-.vendor-card .logo{flex:0 0 72px;display:grid;place-items:center}
-.vendor-card .logo img{max-width:72px;max-height:72px;object-fit:contain}
-.vendor-card .v-body h3{margin:0 0 6px 0}
-.products{margin:6px 0}
-.tag{display:inline-block;margin:2px 6px 0 0;padding:4px 8px;border-radius:999px;font-size:12px;background:#f3f4f6}
-.v-links a{margin-right:10px;text-decoration:none}
-.v-links .insta{color:#e1306c}
-
-/* ===== Timeline ===== */
-.timeline{display:flex;flex-direction:column;gap:18px}
-.year-block{border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:14px}
-.year{font-weight:800;font-size:20px;margin-bottom:8px}
-.year-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.y-card{border:1px solid #f0f0f0;border-radius:12px;padding:10px;background:#fff}
-.y-card img{width:100%;height:auto;border-radius:10px;margin-bottom:6px}
-/* ===== Peek Mascots ===== */
-.peek{
-  position:fixed; bottom:8vh; z-index:60; display:flex; align-items:flex-end;
-  gap:8px; filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));
-  transform:translateX(0); transition:transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s;
-}
-.peek img{ height:38vh; max-height:420px; width:auto; user-select:none; pointer-events:auto }
-.peek .bubble{
-  position:relative; max-width:240px; background:#fff; border:1px solid #eee; border-radius:14px;
-  padding:10px 14px; backdrop-filter:blur(8px)
-}
-.peek .bubble::after{ content:""; position:absolute; bottom:10px; width:14px; height:14px; background:#fff;
-  border:1px solid #eee; transform:rotate(45deg); }
-.peek.left{ left:-22vw; }         /* 初期は画面外に少し隠す */
-.peek.left.show{ left:10px; transform:translateX(0); }
-.peek.left .bubble::after{ left:-7px; border-right:none; border-top:none }
-.peek.right{ right:-22vw; }
-.peek.right.show{ right:10px; transform:translateX(0); }
-.peek.right .bubble::after{ right:-7px; border-left:none; border-bottom:none }
-.peek .close{ position:absolute; top:6px; right:6px; border:none; background:#0000;
-  font-size:18px; line-height:1; cursor:pointer; opacity:.5 }
-.peek .close:hover{ opacity:.9 }
-
-/* タップ/ホバーで全身ににょきっと（少し浮く） */
-.peek:hover img, .peek.tapped img{ transform:translateY(-6px); transition:transform .25s }
-
-/* 自動で「ひょこっ」アニメ（reduced motion は無効化） */
-@keyframes peekIn { from{ opacity:0; transform:translateX(8px) } to{ opacity:1; transform:translateX(0) } }
-.peek.show{ animation:peekIn .45s ease }
-
-/* 小さめ端末調整 */
-@media (max-width:560px){
-  .peek img{ height:32vh; max-height:320px }
-  .peek .bubble{ max-width:200px; font-size:14px }
-}
-
-/* 動きが苦手な人向け */
-@media (prefers-reduced-motion:reduce){
-  .peek, .peek img, .peek.show{ animation:none !important; transition:none !important }
-}
-/* Program buttons */
-.program-actions{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px}
-
-/* History by images */
+/* ======= HISTORY (画像だけ) ======= */
 .history-panels .panel{margin:0 0 18px 0}
 .history-panels img{width:100%;height:auto;border-radius:12px;border:1px solid #eee;background:#fff}
 .sub{margin:6px 0 10px 0;color:var(--muted);font-size:18px}
@@ -194,17 +54,31 @@ html,body{ margin:0; padding:0; color:var(--text);
 .y-card .badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:12px;padding:3px 8px;border-radius:999px;opacity:.85}
 .y-card img{width:100%;display:block}
 
-/* Maps tabs (image-only) */
+/* ======= MAPS ======= */
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
 .tabs .tab{padding:8px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
 .tabs .tab.active{border-color:var(--brand);color:var(--brand)}
 .map-images{border:1px solid #eee;border-radius:14px;padding:10px;background:rgba(255,255,255,.7)}
 .map-images img{width:100%;height:auto;border-radius:10px;cursor:pointer}
 
-/* Vendors (logo + links) */
+/* ======= VENDORS ======= */
 .vendors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:12px}
 .vendor-card .logo{flex:0 0 72px;display:grid;place-items:center}
 .vendor-card .logo img{max-width:72px;max-height:72px;object-fit:contain}
 .v-links a{margin-right:10px;text-decoration:none}
 .v-links .insta{color:#e1306c}
+
+/* ======= LIGHTBOX ======= */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:92vh;border-radius:10px;background:#fff}
+.lightbox .close{position:absolute;top:18px;right:18px;font-size:26px;border:0;background:#fff;border-radius:999px;width:40px;height:40px}
+
+/* ======= Footer ======= */
+.site-footer{padding:28px 0;border-top:1px solid rgba(0,0,0,.06);color:var(--muted);font-size:14px}
+
+/* ======= motion reduce ======= */
+@media (prefers-reduced-motion:reduce){
+  .shine,.masonry img:hover,.nav a:hover{transform:none}
+}
