@@ -9,28 +9,28 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 
 /* ===== GLOBAL CANVAS BACKGROUND (SAKURA) ===== */
 #petals{
-  position:fixed;         /* 全ページの背景 */
-  inset:0;
-  width:100vw;height:100vh;
-  z-index:-1;             /* 一番後ろ */
-  pointer-events:none;
+  position:fixed; inset:0; width:100vw; height:100vh;
+  z-index:-1; pointer-events:none;
 }
 
 /* ===== TRANSPARENT HEADER OVER POSTER ===== */
 .site-header.transparent{
-  position:absolute;      /* ページ最上部に重ねる */
-  top:0;left:0;right:0;
-  background:transparent; /* 背景ゼロ＝ポスターが見える */
-  backdrop-filter:none;
-  border-bottom:none;
-  z-index:10;             /* 文字は前面 */
+  position:absolute; top:0; left:0; right:0; z-index:10;
+  background:transparent; backdrop-filter:none; border-bottom:none;
 }
 .head-flex{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-#site-title{margin:0;font-size:24px;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.35)}
-.lang-switch button{margin-left:8px;border:1px solid rgba(255,255,255,.7);background:rgba(0,0,0,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;transition:transform .2s}
+#site-title{margin:0;font-size:24px;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.35);color:#fff}
+.lang-switch button{
+  margin-left:8px;border:1px solid rgba(255,255,255,.7);
+  background:rgba(0,0,0,.25);color:#fff;padding:6px 10px;border-radius:8px;
+  cursor:pointer;transition:transform .2s
+}
 .lang-switch button.active{transform:translateY(-1px);border-color:#fff}
 .nav ul{display:flex;gap:16px;list-style:none;padding:8px 0;margin:0;overflow:auto}
-.nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35);transition:background .2s,transform .2s}
+.nav a{
+  display:block;padding:8px 12px;border-radius:10px;text-decoration:none;
+  color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35);transition:background .2s,transform .2s
+}
 .nav a.active,.nav a:hover{background:rgba(0,0,0,.25);transform:translateY(-1px)}
 
 /* ===== SECTIONS ===== */
@@ -38,24 +38,25 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .section.active{display:block}
 .section-title{margin:0 0 16px 0;font-size:26px}
 
-/* ===== HERO (POSTER) ===== */
+/* ===== FULL-BLEED HERO (POSTER) ===== */
+.full-bleed{padding:0} /* 上下の余白を消す */
 .hero{
-  padding:28px;border-radius:18px;border:1px solid rgba(255,255,255,.2);
-  position:relative;overflow:hidden;color:#fff
+  position:relative; overflow:hidden; color:#fff;
+  border:1px solid rgba(255,255,255,.18);
 }
-/* ヒーローを最上部まで。ヘッダーが乗る前提で余白を追加 */
 .hero.poster{
+  /* 画面端まで広げるテクニック */
+  width:100vw; margin-left:50%; transform:translateX(-50%);
   background:
     linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.35)),
     url("../img/top-hero.jpg") center/cover no-repeat;
-  min-height:48vh;
-  margin-top:0;
-  padding-top:120px;      /* ヘッダー高さぶんの余白を確保 */
-  border-radius:0 0 18px 18px;
-  box-shadow:0 20px 40px rgba(0,0,0,.08) inset;
+  min-height:52vh; padding-top:128px; padding-bottom:28px;
+  border-radius:0 0 24px 24px; box-shadow:0 20px 40px rgba(0,0,0,.08) inset;
 }
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 16px}
 .lede{color:rgba(255,255,255,.9)}
 .event-meta{margin:12px 0;padding:12px;border-left:4px solid rgba(255,255,255,.9);background:rgba(0,0,0,.25);border-radius:6px;color:#fff}
+.hero .cta{margin-top:8px}
 
 /* ===== CARDS / GRIDS ===== */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
@@ -103,10 +104,10 @@ html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-sy
 .reveal-up{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
 .reveal-up.revealed{opacity:1;transform:none}
 
-/* ===== RESPONSIVE & A11Y ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width:560px){
   .masonry{column-count:1}
-  .hero.poster{padding-top:104px;min-height:44vh}
+  .hero.poster{padding-top:112px;min-height:46vh;border-radius:0 0 20px 20px}
 }
 @media (max-width:900px){.masonry{column-count:2}}
 @media (prefers-color-scheme:dark){
