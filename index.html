@@ -14,11 +14,11 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <!-- 全ページ背景の桜（一番後ろ） -->
+  <!-- 全ページ背景の桜（最背面） -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- ヘッダー（半透明ガラス） -->
-  <header class="site-header blur">
+  <!-- 透明ヘッダー（文字だけ前面に重なる） -->
+  <header class="site-header transparent">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
       <div class="lang-switch" aria-label="Language">
@@ -32,75 +32,89 @@
     </nav>
   </header>
 
-  <main class="container">
-    <!-- ヒーロー：ヘッダー裏まで背景画像をのばす -->
+  <main>
+    <!-- ヒーロー：ポスター画像（top-hero.jpg）が最上部まで見える -->
     <section id="home" class="section active reveal-up">
-      <div class="hero glass">
-        <h2 id="home-headline"></h2>
-        <p id="home-lede" class="lede"></p>
-        <div class="event-meta" id="event-meta"></div>
-        <p id="home-cta" class="cta"></p>
+      <div class="container">
+        <div class="hero poster">
+          <h2 id="home-headline"></h2>
+          <p id="home-lede" class="lede"></p>
+          <div class="event-meta" id="event-meta"></div>
+          <p id="home-cta" class="cta"></p>
+        </div>
       </div>
     </section>
 
     <section id="program" class="section reveal-up">
-      <h2 class="section-title">Program</h2>
-      <div id="program-list" class="cards"></div>
+      <div class="container">
+        <h2 class="section-title">Program</h2>
+        <div id="program-list" class="cards"></div>
+      </div>
     </section>
 
     <section id="map" class="section reveal-up">
-      <h2 class="section-title">Map</h2>
-      <div class="map-wrap glass">
-        <object id="booth-map" type="image/svg+xml" data="assets/img/booth-map.svg" aria-label="Booth map"></object>
+      <div class="container">
+        <h2 class="section-title">Map</h2>
+        <div class="map-wrap glass">
+          <object id="booth-map" type="image/svg+xml" data="assets/img/booth-map.svg" aria-label="Booth map"></object>
+        </div>
+        <div id="booth-info" class="booth-info" aria-live="polite"></div>
+        <p class="note">*Sample layout. Replace with your final Civic Center map later.</p>
       </div>
-      <div id="booth-info" class="booth-info" aria-live="polite"></div>
-      <p class="note">*Sample layout. Replace with your final Civic Center map later.</p>
     </section>
 
     <section id="vendors" class="section reveal-up">
-      <h2 class="section-title">Vendors</h2>
-      <div id="vendor-filters">
-        <label>Filter:
-          <select id="vendor-filter">
-            <option value="all">All</option>
-            <option value="Food">Food</option>
-            <option value="Merch">Merch</option>
-            <option value="Workshop">Workshop</option>
-            <option value="Cultural">Cultural</option>
-          </select>
-        </label>
+      <div class="container">
+        <h2 class="section-title">Vendors</h2>
+        <div id="vendor-filters">
+          <label>Filter:
+            <select id="vendor-filter">
+              <option value="all">All</option>
+              <option value="Food">Food</option>
+              <option value="Merch">Merch</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Cultural">Cultural</option>
+            </select>
+          </label>
+        </div>
+        <div id="vendor-list" class="table-wrap"></div>
       </div>
-      <div id="vendor-list" class="table-wrap"></div>
     </section>
 
     <section id="sponsors" class="section reveal-up">
-      <h2 class="section-title">Sponsors</h2>
-      <div id="sponsor-tiers" class="tiers"></div>
-      <div class="cta-sponsor">
-        <a id="contact-btn" href="#contact" class="btn">Become a Sponsor</a>
+      <div class="container">
+        <h2 class="section-title">Sponsors</h2>
+        <div id="sponsor-tiers" class="tiers"></div>
+        <div class="cta-sponsor">
+          <a id="contact-btn" href="#contact" class="btn">Become a Sponsor</a>
+        </div>
       </div>
     </section>
 
     <section id="gallery" class="section reveal-up">
-      <h2 class="section-title">Gallery</h2>
-      <div id="gallery-grid" class="masonry">
-        <img src="assets/img/gallery1.jpg" alt="Japan Day photo 1" loading="lazy">
-        <img src="assets/img/gallery2.jpg" alt="Japan Day photo 2" loading="lazy">
-        <img src="assets/img/gallery3.jpg" alt="Japan Day photo 3" loading="lazy">
+      <div class="container">
+        <h2 class="section-title">Gallery</h2>
+        <div id="gallery-grid" class="masonry">
+          <img src="assets/img/gallery1.jpg" alt="Japan Day photo 1" loading="lazy">
+          <img src="assets/img/gallery2.jpg" alt="Japan Day photo 2" loading="lazy">
+          <img src="assets/img/gallery3.jpg" alt="Japan Day photo 3" loading="lazy">
+        </div>
       </div>
     </section>
 
     <section id="contact" class="section reveal-up">
-      <h2 class="section-title">Contact</h2>
-      <p><strong>Email:</strong> <a id="contact-email" href="#">—</a><br>
-         <strong>Phone/WhatsApp:</strong> <a id="contact-wa" href="#">—</a></p>
-      <form class="contact-form glass" name="contact">
-        <label>Name<input type="text" name="name" required></label>
-        <label>Email<input type="email" name="email" required></label>
-        <label>Message<textarea name="message" rows="5" required></textarea></label>
-        <button type="submit" class="btn">Send</button>
-        <p class="form-note">*This demo just opens your mail app.</p>
-      </form>
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <p><strong>Email:</strong> <a id="contact-email" href="#">—</a><br>
+           <strong>Phone/WhatsApp:</strong> <a id="contact-wa" href="#">—</a></p>
+        <form class="contact-form glass" name="contact">
+          <label>Name<input type="text" name="name" required></label>
+          <label>Email<input type="email" name="email" required></label>
+          <label>Message<textarea name="message" rows="5" required></textarea></label>
+          <button type="submit" class="btn">Send</button>
+          <p class="form-note">*This demo just opens your mail app.</p>
+        </form>
+      </div>
     </section>
   </main>
 
@@ -110,6 +124,7 @@
     </div>
   </footer>
 
+  <!-- ライトボックス -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="close" aria-label="Close">×</button>
     <img alt="Expanded photo">
