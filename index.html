@@ -4,55 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Japan Day 2025 – Belize City Civic Center</title>
-  <meta name="description" content="Official site for Japan Day 2025 in Belize: program, map, vendors, sponsors, gallery, and contact.">
-  <meta property="og:title" content="Japan Day 2025 – Belize City">
-  <meta property="og:description" content="Food, music, anime, cosplay, and culture — free entry. Program, map, vendors & sponsors.">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Official site for Japan Day 2025 in Belize: program, maps, history, vendors, sponsors, gallery and contact.">
   <meta property="og:image" content="assets/img/og-placeholder.png">
   <link rel="icon" href="assets/img/favicon.png">
-  <link rel="preload" as="fetch" href="assets/data/content.json" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/style.css?v=9">
+  <link rel="stylesheet" href="assets/css/style.css?v=12">
 </head>
 <body>
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- Fullscreen poster (no text on top) -->
+  <!-- Fullscreen poster -->
   <section id="poster-top" class="full-bleed">
     <div class="hero poster" aria-label="Event poster"></div>
   </section>
-<!-- === Peek Mascots (fixed on screen edges) === -->
-<div id="peek-yui" class="peek left" aria-live="polite">
-  <img src="assets/img/char-yui.png" alt="Yui mascot">
-  <div class="bubble">
-    <button class="close" aria-label="Close">×</button>
-    <p id="yui-msg">Hi! I’m Yui. Check the Program!</p>
-  </div>
-</div>
 
-<div id="peek-jasmine" class="peek right" aria-live="polite">
-  <img src="assets/img/char-jasmine.png" alt="Jasmine mascot">
-  <div class="bubble">
-    <button class="close" aria-label="Close">×</button>
-    <p id="jas-msg">Welcome! I’m Jasmine. Vendors →</p>
-  </div>
-</div>
-  <!-- Header below poster -->
   <header class="site-header blur">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
-      <div class="lang-switch" aria-label="Language">
-        <button data-lang="en" class="active" aria-pressed="true">EN</button>
-        <button data-lang="ja" aria-pressed="false">日本語</button>
-        <button data-lang="es" aria-pressed="false">ES</button>
-      </div>
+      <nav class="nav"><ul id="nav-list"></ul></nav>
     </div>
-    <nav class="nav container" aria-label="Primary">
-      <ul id="nav-list"></ul>
-    </nav>
   </header>
 
   <main>
-    <!-- Home intro (texts that used to be on hero) -->
     <section id="home" class="section active reveal-up">
       <div class="container">
         <div class="intro-card glass">
@@ -67,11 +39,14 @@
     <section id="program" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Program</h2>
+        <div class="program-actions">
+          <button id="open-program-poster" class="btn">Open Program Poster</button>
+          <a id="download-program-poster" class="btn" download>Download</a>
+        </div>
         <div id="program-list" class="cards"></div>
       </div>
     </section>
 
-    <!-- ★ Official Characters -->
     <section id="characters" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Official Characters: Yui & Jasmine</h2>
@@ -79,62 +54,29 @@
       </div>
     </section>
 
-    <!-- ★ Vendors with logos, products & Instagram -->
-    <section id="vendors" class="section reveal-up">
-      <div class="container">
-        <h2 class="section-title">Vendors</h2>
-        <div id="vendor-filters">
-          <label>Filter:
-            <select id="vendor-filter">
-              <option value="all">All</option>
-              <option value="Food">Food</option>
-              <option value="Merch">Merch</option>
-              <option value="Workshop">Workshop</option>
-              <option value="Cultural">Cultural</option>
-            </select>
-          </label>
-        </div>
-        <div id="vendor-cards" class="vendors-grid"></div>
-      </div>
-    </section>
-
-    <!-- ★ Timeline (2008–2024) -->
     <section id="history" class="section reveal-up">
       <div class="container">
-        <h2 class="section-title">Japan Day History (2008–2024)</h2>
-        <div id="timeline" class="timeline"></div>
+        <h2 class="section-title">Japan Day History (Images)</h2>
+        <!-- 長尺画像をそのまま縦に -->
+        <div id="history-panels" class="history-panels"></div>
+        <!-- ハイライトをカードで -->
+        <h3 class="sub">Highlights</h3>
+        <div id="history-highlights" class="history-grid"></div>
       </div>
     </section>
 
     <section id="map" class="section reveal-up">
       <div class="container">
-        <h2 class="section-title">Map</h2>
-        <div class="map-wrap glass">
-          <object id="booth-map" type="image/svg+xml" data="assets/img/booth-map.svg" aria-label="Booth map"></object>
-        </div>
-        <div id="booth-info" class="booth-info" aria-live="polite"></div>
-        <p class="note">*Sample layout. Replace with your final Civic Center map later.</p>
+        <h2 class="section-title">Maps</h2>
+        <div id="map-tabs" class="tabs"></div>
+        <div id="map-images" class="map-images glass"></div>
       </div>
     </section>
 
-    <section id="sponsors" class="section reveal-up">
+    <section id="vendors" class="section reveal-up">
       <div class="container">
-        <h2 class="section-title">Sponsors</h2>
-        <div id="sponsor-tiers" class="tiers"></div>
-        <div class="cta-sponsor">
-          <a id="contact-btn" href="#contact" class="btn">Become a Sponsor</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="section reveal-up">
-      <div class="container">
-        <h2 class="section-title">Gallery</h2>
-        <div id="gallery-grid" class="masonry">
-          <img src="assets/img/gallery1.jpg" alt="Japan Day photo 1" loading="lazy">
-          <img src="assets/img/gallery2.jpg" alt="Japan Day photo 2" loading="lazy">
-          <img src="assets/img/gallery3.jpg" alt="Japan Day photo 3" loading="lazy">
-        </div>
+        <h2 class="section-title">Vendors</h2>
+        <div id="vendor-cards" class="vendors-grid"></div>
       </div>
     </section>
 
@@ -142,29 +84,20 @@
       <div class="container">
         <h2 class="section-title">Contact</h2>
         <p><strong>Email:</strong> <a id="contact-email" href="#">—</a><br>
-           <strong>Phone/WhatsApp:</strong> <a id="contact-wa" href="#">—</a></p>
-        <form class="contact-form glass" name="contact">
-          <label>Name<input type="text" name="name" required></label>
-          <label>Email<input type="email" name="email" required></label>
-          <label>Message<textarea name="message" rows="5" required></textarea></label>
-          <button type="submit" class="btn">Send</button>
-          <p class="form-note">*This demo just opens your mail app.</p>
-        </form>
+           <strong>WhatsApp:</strong> <a id="contact-wa" href="#">—</a></p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2025 Japan Day Belize Committee • Built with love for culture.</p>
-    </div>
-  </footer>
+  <footer class="site-footer"><div class="container">
+    <p>&copy; 2025 Japan Day Belize Committee • Built with love for culture.</p>
+  </div></footer>
 
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="close" aria-label="Close">×</button>
-    <img alt="Expanded photo">
+    <img alt="Expanded view">
   </div>
 
-  <script src="assets/js/app.js?v=9"></script>
+  <script src="assets/js/app.js?v=12"></script>
 </body>
 </html>
