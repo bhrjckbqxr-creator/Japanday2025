@@ -5,124 +5,50 @@
     "time": "10:00 — 15:00",
     "venue": "Belize City Civic Center"
   },
+
   "home": {
     "headline": "Celebrate Japan & Belize Together",
-    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone. Join 2,500+ guests at the Civic!",
+    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
     "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
   },
-  "program": [
-    { "time": "10:00", "title": "Opening Ceremony", "desc": "Taiko welcome & greetings" },
-    { "time": "11:00", "title": "Cosplay Walk", "desc": "Prizes for best costumes" },
-    { "time": "12:00", "title": "Stage Performance", "desc": "Dance & J-pop cover" },
-    { "time": "13:30", "title": "Workshop", "desc": "Origami & calligraphy" }
+
+  "program_poster": "assets/img/program-2025.jpg",
+
+  "maps": [
+    { "title": "Inside Arena",  "src": "assets/img/map-inside.jpg" },
+    { "title": "Outside Arena", "src": "assets/img/map-outside.jpg" },
+    { "title": "Top Floor",     "src": "assets/img/map-topfloor.jpg" },
+    { "title": "Booths List",   "src": "assets/img/booths-list.jpg" }
   ],
+
   "characters": [
-    {
-      "name": "Yui",
-      "image": "assets/img/char-yui.png",
-      "bio": "Cheerful shrine maiden. Short hair, loves welcoming guests with a smile."
-    },
-    {
-      "name": "Jasmine",
-      "image": "assets/img/char-jasmine.png",
-      "bio": "Cool big sister in yukata. Long black hair, keeps the festival running smooth."
-    },
-    {
-      "name": "Chibi Yui & Jasmine",
-      "image": "assets/img/char-chibi.png",
-      "bio": "Our kawaii mascots for kids activities!"
-    }
+    { "name": "Yui",      "image": "assets/img/char-yui.png",      "bio": "" },
+    { "name": "Jasmine",  "image": "assets/img/char-jasmine.png",  "bio": "" },
+    { "name": "Chibi",    "image": "assets/img/char-chibi.png",    "bio": "" }
   ],
+
+  /* ===== 画像だけで作るヒストリー =====
+     - panels: 年代の長尺画像（そのまま縦に並べる）
+     - highlights: 単体年の画像（任意。あれば並べる）
+  */
+  "history_panels": [
+    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008–2014" },
+    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015–2021" },
+    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022–2024" }
+  ],
+  "history_highlights": [
+    { "year": "2022", "src": "assets/img/hist-2022.jpg" },
+    { "year": "2023", "src": "assets/img/hist-2023.jpg" },
+    { "year": "2024", "src": "assets/img/hist-2024a.jpg" },
+    { "year": "2024", "src": "assets/img/hist-2024b.jpg" }
+  ],
+
+  /* ベンダーは画像主導のカード（ロゴ画像＋リンクのみ） */
   "vendors": [
-    {
-      "name": "Sakura Bites",
-      "type": "Food",
-      "logo": "assets/img/vendor-sakura.png",
-      "products": ["Takoyaki", "Taiyaki", "Matcha Latte"],
-      "instagram": "https://instagram.com/sakura_bites_bz",
-      "desc": "Fresh street snacks straight from matsuri vibes."
-    },
-    {
-      "name": "Otaku Corner",
-      "type": "Merch",
-      "logo": "assets/img/vendor-otaku.png",
-      "products": ["Keychains", "Stickers", "Figures"],
-      "instagram": "https://instagram.com/otakucornerbz",
-      "site": "https://example.com",
-      "desc": "Anime & game merch. Limited badges!"
-    },
-    {
-      "name": "Origami Lab",
-      "type": "Workshop",
-      "logo": "assets/img/vendor-origami.png",
-      "products": ["Origami class", "Cranes kit"],
-      "instagram": "https://instagram.com/origamilabbz",
-      "desc": "Learn & take home your origami art."
-    }
+    { "name": "Sample Vendor", "type": "Food", "logo": "assets/img/vendor-sample.png",
+      "instagram": "https://instagram.com/yourvendor", "site": "" }
   ],
-  "history": [
-    {
-      "year": 2008,
-      "items": [
-        { "caption": "First Japan Day at St. Joseph & Stella Maris — instant hit!" }
-      ]
-    },
-    {
-      "year": 2015,
-      "items": [
-        { "image": "assets/img/hist-2015.jpg", "caption": "First Anime & Culture Festival packed Biltmore." }
-      ]
-    },
-    {
-      "year": 2016,
-      "items": [
-        { "image": "assets/img/hist-2016.jpg", "caption": "Princess Queen Room—dance & photography showcase." }
-      ]
-    },
-    {
-      "year": 2017,
-      "items": [
-        { "image": "assets/img/hist-2017.jpg", "caption": "Full anime mode—cosplay day!" }
-      ]
-    },
-    {
-      "year": 2018,
-      "items": [
-        { "image": "assets/img/hist-2018.jpg", "caption": "Traditional arts & sushi surprises." }
-      ]
-    },
-    {
-      "year": 2019,
-      "items": [
-        { "image": "assets/img/hist-2019.jpg", "caption": "Beautiful Harmony—unity & peace." }
-      ]
-    },
-    {
-      "year": "2020 & 2021",
-      "items": [
-        { "image": "assets/img/hist-2020.jpg", "caption": "Virtual Japan Day—streamed to homes." }
-      ]
-    },
-    {
-      "year": 2022,
-      "items": [
-        { "image": "assets/img/hist-2022.jpg", "caption": "Modern dance + sake tasting—Belize loved it!" }
-      ]
-    },
-    {
-      "year": 2023,
-      "items": [
-        { "image": "assets/img/hist-2023.jpg", "caption": "Partnered events and anime fun." }
-      ]
-    },
-    {
-      "year": 2024,
-      "items": [
-        { "image": "assets/img/hist-2024a.jpg", "caption": "Big step toward Civic Center show." },
-        { "image": "assets/img/hist-2024b.jpg", "caption": "Community support & mascots debut." }
-      ]
-    }
-  ],
+
   "contact": {
     "email": "info@japanday.bz",
     "whatsapp": "https://wa.me/5010000000",
