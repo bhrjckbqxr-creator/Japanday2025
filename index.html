@@ -11,14 +11,26 @@
   <meta property="og:image" content="assets/img/og-placeholder.png">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="preload" as="fetch" href="assets/data/content.json" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+  <link rel="stylesheet" href="assets/css/style.css?v=4"><!-- cache-buster -->
 </head>
 <body>
   <!-- 全ページ背景の桜（最背面） -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- 透明ヘッダー（文字だけ前面に重なる） -->
-  <header class="site-header transparent">
+  <!-- ★ 最上部＝フルブリードのポスター -->
+  <section id="home" class="section active reveal-up full-bleed">
+    <div class="hero poster">
+      <div class="hero-inner container">
+        <h2 id="home-headline"></h2>
+        <p id="home-lede" class="lede"></p>
+        <div class="event-meta" id="event-meta"></div>
+        <p id="home-cta" class="cta"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ★ ポスターの“下”にヘッダー（文字＆ナビ） -->
+  <header class="site-header blur">
     <div class="container head-flex">
       <h1 id="site-title" class="shine">Japan Day 2025</h1>
       <div class="lang-switch" aria-label="Language">
@@ -33,18 +45,6 @@
   </header>
 
   <main>
-    <!-- ★ フルブリードのヒーロー：container無しで画面端まで広げる -->
-    <section id="home" class="section active reveal-up full-bleed">
-      <div class="hero poster">
-        <div class="hero-inner container">
-          <h2 id="home-headline"></h2>
-          <p id="home-lede" class="lede"></p>
-          <div class="event-meta" id="event-meta"></div>
-          <p id="home-cta" class="cta"></p>
-        </div>
-      </div>
-    </section>
-
     <section id="program" class="section reveal-up">
       <div class="container">
         <h2 class="section-title">Program</h2>
