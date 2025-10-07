@@ -120,3 +120,77 @@
   },{threshold:.1});
   $$('.reveal-up').forEach(el=> io.observe(el));
 })();
+/* ====== Peek Mascots logic ====== */
+(function(){
+  const yui = document.getElementById('peek-yui');
+  const jas = document.getElementById('peek-jasmine');
+  const yMsg = document.getElementById('yui-msg');
+  const jMsg = document.getElementById('jas-msg');
+
+  // メッセージ（多言語）
+  const msgs = {
+    en: { yui: "Hi! I’m Yui. Check the Program!", jas: "Welcome! I’m Jasmine. Vendors →" },
+    ja: { yui: "やっほー！ユイだよ。プログラム見てね！", jas: "こんにちは、ジャスミンです。ベンダーへ→" },
+    es: { yui: "¡Hola! Soy Yui. ¡Mira el programa!", jas: "¡Bienvenida! Soy Jasmine. Vendedores →" }
+  };
+  // 言語ボタンの状態から設定
+  function currentLang(){
+    const btn = document.querySelector('.lang-switch button.active');
+    return btn?.dataset.lang || 'en';
+  }
+  function setMsgs(){
+    const l = currentLang();
+    yMsg.textContent = msgs[l].yui;
+    jMsg.textContent = msgs[l].jas;
+  }
+  setMsgs();
+  document.querySelectorAll('.lang-switch button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.lang-switch button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      setMsgs();
+    });
+  });
+
+  // 自動で交互に「ひょこっ」
+  let t1, t2;
+  function autoPeek(){
+    clearTimeout(t1); clearTimeout(t2);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    // Yui → Jasmine の順で出したり引っ込めたり
+    const showY = ()=> yui.classList.add('show');
+    const hideY = ()=> yui.classList.remove('show');
+    const showJ = ()=> jas.classList.add('show');
+    const hideJ = ()=> jas.classList.remove('show');
+
+    showY();
+    t1 = setTimeout(()=>{ hideY(); showJ(); }, 4200);
+    t2 = setTimeout(()=>{ hideJ(); }, 8400);
+  }
+  autoPeek();
+  // 周期的に（12秒ごと）
+  setInterval(autoPeek, 12000);
+
+  // タップ/ホバーで手動開閉
+  function wire(el){
+    el.addEventListener('mouseenter', ()=> el.classList.add('show'));
+    el.addEventListener('mouseleave', ()=> el.classList.remove('show'));
+    el.addEventListener('click', ()=> el.classList.toggle('tapped'));
+    el.querySelector('.close').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      el.classList.remove('show','tapped');
+    });
+  }
+  wire(yui); wire(jas);
+
+  // スクロール上部では見せすぎない（ポスターが見えている間は控えめ）
+  const poster = document.querySelector('#poster-top');
+  if (poster) {
+    const io = new IntersectionObserver(entries=>{
+      const onTop = entries[0].isIntersecting;
+      if(onTop){ yui.classList.remove('show'); jas.classList.remove('show'); }
+    }, { threshold: 0.2 });
+    io.observe(poster);
+  }
+})();
