@@ -2,39 +2,38 @@
   "event": {
     "title": "Japan Day 2025",
     "date": "Sunday, October 26, 2025",
-    "time": "10:00 — 15:00",
+    "time": "10:00 - 15:00",
     "venue": "Belize City Civic Center"
   },
-
   "home": {
     "headline": "Celebrate Japan & Belize Together",
     "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
     "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
   },
-
+  "program": [
+    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem, Ambassador remarks, Japanese lesson, Bon Dance" },
+    { "time": "10:30", "title": "Live Performance 1", "desc": "" },
+    { "time": "11:00", "title": "Karate Demonstration", "desc": "" },
+    { "time": "12:00", "title": "Live Performance 2", "desc": "" },
+    { "time": "13:00", "title": "Cosplay Contest", "desc": "" },
+    { "time": "14:30", "title": "Japan Day Band", "desc": "" }
+  ],
   "program_poster": "assets/img/program-2025.jpg",
-
   "maps": [
     { "title": "Inside Arena",  "src": "assets/img/map-inside.jpg" },
     { "title": "Outside Arena", "src": "assets/img/map-outside.jpg" },
     { "title": "Top Floor",     "src": "assets/img/map-topfloor.jpg" },
     { "title": "Booths List",   "src": "assets/img/booths-list.jpg" }
   ],
-
   "characters": [
     { "name": "Yui",      "image": "assets/img/char-yui.png",      "bio": "" },
     { "name": "Jasmine",  "image": "assets/img/char-jasmine.png",  "bio": "" },
     { "name": "Chibi",    "image": "assets/img/char-chibi.png",    "bio": "" }
   ],
-
-  /* ===== 画像だけで作るヒストリー =====
-     - panels: 年代の長尺画像（そのまま縦に並べる）
-     - highlights: 単体年の画像（任意。あれば並べる）
-  */
   "history_panels": [
-    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008–2014" },
-    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015–2021" },
-    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022–2024" }
+    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008-2014" },
+    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015-2021" },
+    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022-2024" }
   ],
   "history_highlights": [
     { "year": "2022", "src": "assets/img/hist-2022.jpg" },
@@ -42,13 +41,15 @@
     { "year": "2024", "src": "assets/img/hist-2024a.jpg" },
     { "year": "2024", "src": "assets/img/hist-2024b.jpg" }
   ],
-
-  /* ベンダーは画像主導のカード（ロゴ画像＋リンクのみ） */
   "vendors": [
-    { "name": "Sample Vendor", "type": "Food", "logo": "assets/img/vendor-sample.png",
-      "instagram": "https://instagram.com/yourvendor", "site": "" }
+    {
+      "name": "Sample Vendor",
+      "type": "Food",
+      "logo": "assets/img/vendor-sample.png",
+      "instagram": "https://instagram.com/yourvendor",
+      "site": ""
+    }
   ],
-
   "contact": {
     "email": "info@japanday.bz",
     "whatsapp": "https://wa.me/5010000000",
