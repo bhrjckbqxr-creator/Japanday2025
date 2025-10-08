@@ -1,51 +1,57 @@
-/* ======= RESET & THEME ======= */
+/* ==== Theme / Reset ==== */
 *{box-sizing:border-box}
 :root{
-  --text:#111; --muted:#666; --bg:#fff;
-  --brand:#e91e63; --card:rgba(255,255,255,.75)
+  --text:#111; --muted:#666; --brand:#e91e63;
+  --card:rgba(255,255,255,.72); --blur:10px;
 }
-html,body{margin:0;padding:0;color:var(--text);background:var(--bg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+html,body{margin:0;padding:0;color:var(--text);background:#fff;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
 
-/* ======= GLOBAL CANVAS BACKGROUND (桜) ======= */
-#petals{position:fixed;inset:0;z-index:-1;pointer-events:none}
-
-/* ======= LAYOUT ======= */
+/* ==== Global containers ==== */
 .container{max-width:1100px;margin:0 auto;padding:0 16px}
-.section{padding:28px 0}
-.section-title{margin:0 0 12px 0;font-size:26px}
+.section{padding:36px 0}
+.section-title{margin:0 0 16px 0;font-size:26px}
 
-/* ヘッダー（ポスターの“下”） */
-.site-header{position:sticky;top:0;z-index:20;padding:10px 0}
-.site-header.blur{backdrop-filter:saturate(160%) blur(12px);background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.06)}
-.head-flex{display:flex;align-items:center;gap:16px}
-#site-title{font-size:22px;margin:0}
-.nav ul{display:flex;gap:12px;margin:0;padding:0;list-style:none}
+/* ==== Sakura background ==== */
+#bg-sakura{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+
+/* ==== Poster (full screen) ==== */
+.full-bleed{position:relative;margin:0;padding:0}
+.poster-img{
+  height:100svh; background:url("../img/top-hero.jpg") center/contain no-repeat #fff;
+  will-change:transform; transition:transform .15s linear;
+}
+.scroll-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);opacity:.6;font-size:12px}
+#party-btn.party{position:absolute;right:14px;bottom:14px}
+
+/* ==== Header ==== */
+.site-header{position:sticky;top:0;z-index:20}
+.blur{backdrop-filter:saturate(160%) blur(var(--blur));background:rgba(255,255,255,.6);border-bottom:1px solid rgba(0,0,0,.06)}
+.head-flex{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.logo{margin:0;font-size:22px}
+.nav ul{display:flex;gap:10px;list-style:none;margin:0;padding:0}
 .nav a{display:block;padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text)}
 .nav a:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
+.shine{background:linear-gradient(90deg,#111,#111 40%,#999 50%,#111 60%,#111);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{from{background-position:0%}to{background-position:200%}}
 
-/* ======= FULL POSTER (トップ全面) ======= */
-.full-bleed{width:100%;margin:0;padding:0}
-.hero.poster{
-  min-height: clamp(46vh, 60vh, 72vh);
-  background: url("../img/top-hero.jpg") center/contain no-repeat #fff;
-}
-
-/* ======= CARDS & UI ======= */
-.glass{background:var(--card);border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px}
-.intro-card .lede{color:var(--muted)}
-.event-meta{margin:12px 0;padding:12px;border-left:4px solid var(--brand);background:rgba(255,255,255,.7)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.card{background:rgba(255,255,255,.7);border-radius:14px;padding:14px;border:1px solid rgba(0,0,0,.06)}
+/* ==== Cards / UI ==== */
+.glass{background:var(--card);backdrop-filter:blur(var(--blur));border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:16px}
+.lede{color:var(--muted)}
+.event-meta{margin:12px 0;padding:12px;border-left:4px solid var(--brand);background:rgba(255,255,255,.78);border-radius:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{border:1px solid #eee;border-radius:14px;padding:12px;background:#fff;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
 .card .time{font-weight:700}
-.btn{display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;text-decoration:none;cursor:pointer}
+.btn{display:inline-block;padding:10px 14px;border:1px solid #ddd;border-radius:10px;background:#fff;text-decoration:none;cursor:pointer}
 
-/* ======= CHARACTERS ======= */
+/* ==== Characters ==== */
 .characters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.char-card{border:1px solid #eee;border-radius:16px;overflow:hidden;background:#fff}
+.char-card{border:1px solid #eee;border-radius:16px;background:#fff;overflow:hidden;transition:transform .2s}
 .char-card img{width:100%;height:auto;display:block}
-.char-card h3{text-align:center;margin:8px 0 12px}
+.char-card:hover{transform:translateY(-3px)}
 
-/* ======= HISTORY (画像だけ) ======= */
+/* ==== History ==== */
 .history-panels .panel{margin:0 0 18px 0}
 .history-panels img{width:100%;height:auto;border-radius:12px;border:1px solid #eee;background:#fff}
 .sub{margin:6px 0 10px 0;color:var(--muted);font-size:18px}
@@ -54,31 +60,52 @@ html,body{margin:0;padding:0;color:var(--text);background:var(--bg);font:16px/1.
 .y-card .badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:12px;padding:3px 8px;border-radius:999px;opacity:.85}
 .y-card img{width:100%;display:block}
 
-/* ======= MAPS ======= */
+/* ==== Maps ==== */
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
 .tabs .tab{padding:8px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer}
 .tabs .tab.active{border-color:var(--brand);color:var(--brand)}
 .map-images{border:1px solid #eee;border-radius:14px;padding:10px;background:rgba(255,255,255,.7)}
 .map-images img{width:100%;height:auto;border-radius:10px;cursor:pointer}
 
-/* ======= VENDORS ======= */
+/* ==== Vendors ==== */
 .vendors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-.vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.7);padding:12px}
+.vendor-card{display:flex;gap:12px;border:1px solid #eee;border-radius:16px;background:rgba(255,255,255,.8);padding:12px;transition:transform .2s}
+.vendor-card:hover{transform:translateY(-3px)}
 .vendor-card .logo{flex:0 0 72px;display:grid;place-items:center}
 .vendor-card .logo img{max-width:72px;max-height:72px;object-fit:contain}
 .v-links a{margin-right:10px;text-decoration:none}
 .v-links .insta{color:#e1306c}
 
-/* ======= LIGHTBOX ======= */
+/* ==== Lightbox ==== */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
 .lightbox.open{display:flex}
 .lightbox img{max-width:92vw;max-height:92vh;border-radius:10px;background:#fff}
 .lightbox .close{position:absolute;top:18px;right:18px;font-size:26px;border:0;background:#fff;border-radius:999px;width:40px;height:40px}
 
-/* ======= Footer ======= */
+/* ==== Peek mascots ==== */
+.peek{position:fixed;bottom:8vh;z-index:60;display:flex;align-items:flex-end;gap:8px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18))}
+.peek img{height:36vh;max-height:420px;width:auto}
+.peek .bubble{position:relative;max-width:240px;background:#fff;border:1px solid #eee;border-radius:14px;padding:10px 14px}
+.peek .bubble::after{content:"";position:absolute;bottom:10px;width:14px;height:14px;background:#fff;border:1px solid #eee;transform:rotate(45deg)}
+.peek .close{position:absolute;top:6px;right:6px;border:none;background:#0000;font-size:18px;opacity:.6;cursor:pointer}
+.peek.left{left:-24vw} .peek.left.show{left:10px}
+.peek.left .bubble::after{left:-7px;border-right:none;border-top:none}
+.peek.right{right:-24vw} .peek.right.show{right:10px}
+.peek.right .bubble::after{right:-7px;border-left:none;border-bottom:none}
+
+/* ==== Animations ==== */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ==== Footer ==== */
 .site-footer{padding:28px 0;border-top:1px solid rgba(0,0,0,.06);color:var(--muted);font-size:14px}
 
-/* ======= motion reduce ======= */
+/* ==== Responsive ==== */
+@media (max-width:560px){
+  .peek img{height:30vh;max-height:320px}
+  .poster-img{height:92svh}
+}
 @media (prefers-reduced-motion:reduce){
-  .shine,.masonry img:hover,.nav a:hover{transform:none}
+  .reveal{transition:none}
+  .poster-img{transition:none}
 }
