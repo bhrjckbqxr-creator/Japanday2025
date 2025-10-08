@@ -1,65 +1,79 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Japan Day 2025 – Belize City Civic Center</title>
-  <meta name="description" content="Official site for Japan Day 2025 in Belize: program, maps, history, vendors, gallery and contact.">
+  <meta name="description" content="Japan Day 2025 official site: program, maps, history, vendors, characters Yui & Jasmine.">
   <link rel="icon" href="assets/img/favicon.png">
-  <link rel="stylesheet" href="assets/css/style.css?v=20">
+  <link rel="stylesheet" href="assets/css/style.css?v=30">
 </head>
 <body>
-  <!-- 全ページ背景：桜 -->
-  <canvas id="petals" aria-hidden="true"></canvas>
+  <!-- 背景アニメ：桜 -->
+  <canvas id="bg-sakura" aria-hidden="true"></canvas>
 
-  <!-- 1. 画面いっぱいのポスター（文字は乗せない） -->
-  <section id="poster-top" class="full-bleed">
-    <div class="hero poster" aria-label="Event poster"></div>
+  <!-- ヒーローポスター（フルスクリーン / パララックス） -->
+  <section id="poster" class="full-bleed">
+    <div class="poster-img" role="img" aria-label="Japan Day Poster"></div>
+    <button id="party-btn" class="btn party">🎉 Party Mode</button>
+    <div class="scroll-hint">↓ scroll</div>
   </section>
 
-  <!-- 2. その下にサイトヘッダー -->
+  <!-- ヘッダー（ポスターの下） -->
   <header class="site-header blur">
     <div class="container head-flex">
-      <h1 id="site-title" class="shine">Japan Day 2025</h1>
+      <h1 class="logo shine">Japan Day 2025</h1>
       <nav class="nav"><ul id="nav-list"></ul></nav>
     </div>
   </header>
 
+  <!-- Peek Mascots（画面端からひょこっ） -->
+  <div id="peek-yui" class="peek left" aria-live="polite">
+    <img src="assets/img/char-yui.png" alt="Yui">
+    <div class="bubble">
+      <button class="close" aria-label="閉じる">×</button>
+      <p>ユイだよ！<a href="#program">ステージ</a>見てね！</p>
+    </div>
+  </div>
+  <div id="peek-jasmine" class="peek right" aria-live="polite">
+    <img src="assets/img/char-jasmine.png" alt="Jasmine">
+    <div class="bubble">
+      <button class="close" aria-label="閉じる">×</button>
+      <p>ジャスミンです。<a href="#vendors">ベンダー</a>に行こ！</p>
+    </div>
+  </div>
+
   <main>
-    <!-- Home -->
-    <section id="home" class="section active reveal-up">
+    <section id="home" class="section reveal">
       <div class="container">
-        <div class="intro-card glass">
+        <div class="intro glass pop">
           <h2 id="home-headline"></h2>
           <p id="home-lede" class="lede"></p>
-          <div class="event-meta" id="event-meta"></div>
+          <div id="event-meta" class="event-meta"></div>
           <p id="home-cta" class="cta"></p>
         </div>
       </div>
     </section>
 
-    <!-- Program -->
-    <section id="program" class="section reveal-up">
+    <section id="program" class="section reveal">
       <div class="container">
         <h2 class="section-title">Program</h2>
         <div class="program-actions">
-          <button id="open-program-poster" class="btn">Open Program Poster</button>
-          <a id="download-program-poster" class="btn" download>Download</a>
+          <button id="open-program-poster" class="btn">ポスターを開く</button>
+          <a id="download-program-poster" class="btn" download>ポスターDL</a>
         </div>
         <div id="program-list" class="cards"></div>
       </div>
     </section>
 
-    <!-- Characters -->
-    <section id="characters" class="section reveal-up">
+    <section id="characters" class="section reveal">
       <div class="container">
         <h2 class="section-title">Official Characters: Yui & Jasmine</h2>
         <div id="character-grid" class="characters-grid"></div>
       </div>
     </section>
 
-    <!-- History（画像のみで構成） -->
-    <section id="history" class="section reveal-up">
+    <section id="history" class="section reveal">
       <div class="container">
         <h2 class="section-title">Japan Day History (Images)</h2>
         <div id="history-panels" class="history-panels"></div>
@@ -68,8 +82,7 @@
       </div>
     </section>
 
-    <!-- Maps -->
-    <section id="map" class="section reveal-up">
+    <section id="map" class="section reveal">
       <div class="container">
         <h2 class="section-title">Maps</h2>
         <div id="map-tabs" class="tabs"></div>
@@ -77,16 +90,14 @@
       </div>
     </section>
 
-    <!-- Vendors -->
-    <section id="vendors" class="section reveal-up">
+    <section id="vendors" class="section reveal">
       <div class="container">
         <h2 class="section-title">Vendors</h2>
         <div id="vendor-cards" class="vendors-grid"></div>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="section reveal-up">
+    <section id="contact" class="section reveal">
       <div class="container">
         <h2 class="section-title">Contact</h2>
         <p><strong>Email:</strong> <a id="contact-email" href="#">—</a><br>
@@ -95,16 +106,16 @@
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container">
-    <p>&copy; 2025 Japan Day Belize Committee • Built with love for culture.</p>
-  </div></footer>
+  <footer class="site-footer">
+    <div class="container"><p>&copy; 2025 Japan Day Belize Committee</p></div>
+  </footer>
 
-  <!-- 画像拡大用 -->
+  <!-- 画像ビューア -->
   <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="close" aria-label="Close">×</button>
     <img alt="Expanded view">
   </div>
 
-  <script src="assets/js/app.js?v=20" defer></script>
+  <script src="assets/js/app.js?v=30" defer></script>
 </body>
 </html>
