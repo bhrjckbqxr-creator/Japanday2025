@@ -1,78 +1,107 @@
 {
-  "event": {
-    "title": "Japan Day 2025",
-    "date": "Sunday, October 26, 2025",
-    "time": "10:00 - 15:00",
-    "venue": "Belize City Civic Center"
-  },
   "home": {
-    "headline": "日本とベリーズをいっしょにお祝い🎌",
-    "lede": "Food, music, anime, cosplay, culture — everyone’s welcome!",
-    "cta_html": "<a href=\"#vendors\">出店者一覧へ</a> ・ <a href=\"#map\">会場マップ</a>"
+    "headline": "Celebrate Japan & Belize Together",
+    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
+    "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
   },
+
+  "program_poster": "assets/img/program-2025.jpg",
+  "top_hero": "assets/img/top-hero.jpg",
+
   "program": [
-    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem / Ambassador / Japanese Lesson / Bon Dance" },
-    { "time": "10:30", "title": "Live Performance 1", "desc": "" },
-    { "time": "11:00", "title": "Karate Demonstration", "desc": "" },
-    { "time": "12:00", "title": "Live Performance 2", "desc": "" },
+    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem, Ambassador remarks, Language lesson, Bon Dance" },
+    { "time": "10:30", "title": "Live Performance ①", "desc": "" },
+    { "time": "11:00", "title": "KARATE Demonstration", "desc": "" },
+    { "time": "12:00", "title": "Live Performance ②", "desc": "" },
     { "time": "13:00", "title": "Cosplay Contest", "desc": "" },
     { "time": "14:30", "title": "Japan Day Band", "desc": "" }
   ],
-  "program_poster": "assets/img/program-2025.jpg",
+
   "maps": [
-    { "title": "Inside Arena",  "src": "assets/img/map-inside.jpg" },
+    { "title": "Inside Arena",  "src": "assets/img/map-inside.jpg"  },
     { "title": "Outside Arena", "src": "assets/img/map-outside.jpg" },
     { "title": "Top Floor",     "src": "assets/img/map-topfloor.jpg" },
     { "title": "Booths List",   "src": "assets/img/booths-list.jpg" }
   ],
-  "characters": [
-    { "name": "Yui",      "image": "assets/img/char-yui.png",      "bio": "" },
-    { "name": "Jasmine",  "image": "assets/img/char-jasmine.png",  "bio": "" }
-  ],
+
   "history_panels": [
-    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008-2014" },
-    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015-2021" },
-    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022-2024" }
+    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008–2014" },
+    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015–2021" },
+    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022–2024" }
   ],
-  "history_highlights": [
-    { "year": "2022", "src": "assets/img/hist-2022.jpg" },
-    { "year": "2023", "src": "assets/img/hist-2023.jpg" },
-    { "year": "2024", "src": "assets/img/hist-2024a.jpg" },
-    { "year": "2024", "src": "assets/img/hist-2024b.jpg" }
-  ],
+
   "vendors": [
-    { "name": "Sakura Bites", "logo": "assets/img/vendor-sakura.png", "instagram": "https://instagram.com/sakura_bites_bz" },
-    { "name": "Otaku Corner", "logo": "assets/img/vendor-otaku.png",  "instagram": "https://instagram.com/otakucornerbz", "site": "https://example.com" }
+    {
+      "name": "Yuzu & Crane",
+      "logo": "assets/img/vendor-yuzucrane.png",
+      "items": "Sushi rolls / Japanese snacks",
+      "instagram": "https://instagram.com/",
+      "url": ""
+    }
   ],
-  "contact": {
-    "email": "info@japanday.bz",
-    "whatsapp": "https://wa.me/5010000000",
-    "whatsapp_label": "+501 000-0000"
-  }
-}
-"i18n": {
-  "en": {
-    "nav":   { "program":"Program", "characters":"Characters", "history":"History", "maps":"Maps", "vendors":"Vendors", "contact":"Contact" },
-    "home":  { "headline":"Celebrate Japan & Belize Together", "lede":"Food, music, anime, cosplay, and culture — everyone’s welcome!", "cta_html":"<a href=\"#vendors\">See vendors</a> · <a href=\"#map\">Maps</a>" },
-    "buttons": { "openPoster":"Open Program Poster", "downloadPoster":"Download Poster" },
-    "titles": { "characters":"Official Characters: Yui & Jasmine", "history":"Japan Day History (Images)" },
-    "maps":  ["Inside Arena","Outside Arena","Top Floor","Booths List"],
-    "bubbles": { "yui":"Hi! Check the Program →", "jas":"Welcome! Vendors →" }
-  },
-  "ja": {
-    "nav":   { "program":"プログラム", "characters":"キャラクター", "history":"ヒストリー", "maps":"マップ", "vendors":"ベンダー", "contact":"お問い合わせ" },
-    "home":  { "headline":"日本とベリーズをいっしょにお祝い🎌", "lede":"フード・音楽・アニメ・コスプレ・文化、みんな歓迎！", "cta_html":"<a href=\"#vendors\">出店一覧</a> ・ <a href=\"#map\">会場マップ</a>" },
-    "buttons": { "openPoster":"ポスターを開く", "downloadPoster":"ポスターDL" },
-    "titles": { "characters":"公式キャラ：Yui & Jasmine", "history":"ジャパンデーの歴史（画像）" },
-    "maps":  ["インサイド","アウトサイド","トップフロア","出店一覧"],
-    "bubbles": { "yui":"ユイだよ！ステージ見てね →", "jas":"ジャスミンです。ベンダーへ →" }
-  },
-  "es": {
-    "nav":   { "program":"Programa", "characters":"Personajes", "history":"Historia", "maps":"Mapas", "vendors":"Vendedores", "contact":"Contacto" },
-    "home":  { "headline":"Celebremos Japón y Belice juntos", "lede":"Comida, música, anime, cosplay y cultura — ¡todos bienvenidos!", "cta_html":"<a href=\"#vendors\">Ver vendedores</a> · <a href=\"#map\">Mapas</a>" },
-    "buttons": { "openPoster":"Abrir póster del programa", "downloadPoster":"Descargar póster" },
-    "titles": { "characters":"Personajes oficiales: Yui & Jasmine", "history":"Historia de Japan Day (imágenes)" },
-    "maps":  ["Interior","Exterior","Piso superior","Lista de stands"],
-    "bubbles": { "yui":"¡Hola! Mira el programa →", "jas":"Bienvenida, vamos a vendedores →" }
+
+  "i18n": {
+    "ja": {
+      "nav": {
+        "home": "Home",
+        "program": "プログラム",
+        "characters": "公式キャラ",
+        "history": "ヒストリー",
+        "maps": "会場マップ",
+        "vendors": "ベンダー",
+        "contact": "お問い合わせ"
+      },
+      "home": {
+        "headline": "ジャパンデーでベリーズと日本をつなごう",
+        "lede": "フード、音楽、アニメ、コスプレ、文化体験。どなたでも無料で入場できます。",
+        "cta_html": "出店・スポンサー募集中！<a href=\"#contact\">こちらからご連絡ください</a>。"
+      },
+      "buttons": {
+        "openPoster": "プログラムを見る",
+        "downloadPoster": "ポスターを保存"
+      },
+      "maps": ["インサイドアリーナ","アウトサイド","トップフロア","出店一覧"],
+      "bubbles": { "yui": "やっほー！プログラムはここだよ→", "jas": "いらっしゃい！ベンダーも見てね→" },
+      "program": [
+        { "time":"10:00","title":"オープニング","desc":"国歌・大使挨拶・日本語レッスン・盆踊り" },
+        { "time":"10:30","title":"ライブ①","desc":"" },
+        { "time":"11:00","title":"空手デモ","desc":"" },
+        { "time":"12:00","title":"ライブ②","desc":"" },
+        { "time":"13:00","title":"コスプレコンテスト","desc":"" },
+        { "time":"14:30","title":"Japan Day Band","desc":"" }
+      ]
+    },
+
+    "en": {
+      "nav": {
+        "home": "Home","program": "Program","characters": "Characters","history": "History",
+        "maps": "Maps","vendors": "Vendors","contact": "Contact"
+      },
+      "home": {
+        "headline": "Celebrate Japan & Belize Together",
+        "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
+        "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
+      },
+      "buttons": { "openPoster": "Open Program Poster", "downloadPoster": "Download Poster" },
+      "maps": ["Inside Arena","Outside Arena","Top Floor","Booths List"],
+      "bubbles": { "yui": "Hi! Check the Program →", "jas": "Welcome! See Vendors →" },
+      "program": []
+    },
+
+    "es": {
+      "nav": {
+        "home":"Inicio","program":"Programa","characters":"Personajes","history":"Historia",
+        "maps":"Mapas","vendors":"Vendedores","contact":"Contacto"
+      },
+      "home": {
+        "headline":"Celebremos Japón y Belice juntos",
+        "lede":"Comida, música, anime, cosplay y cultura — entrada gratuita para todos.",
+        "cta_html":"¿Quieres participar como vendedor o patrocinador? <a href=\"#contact\">Contáctanos</a>."
+      },
+      "buttons": { "openPoster":"Abrir programa", "downloadPoster":"Descargar póster" },
+      "maps": ["Arena interior","Exterior","Piso superior","Lista de puestos"],
+      "bubbles": { "yui": "¡Hola! Programa →", "jas": "¡Bienvenido! Puestos →" },
+      "program": []
+    }
   }
 }
