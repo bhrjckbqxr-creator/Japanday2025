@@ -260,3 +260,31 @@
   });
 
 })();
+
+/* ===== Mobile polish additions ===== */
+
+// 1) iOSなどのvh補正（必要端末のみ）
+function setVH(){
+  document.documentElement.style.setProperty('--vhfix', `${window.innerHeight * 0.01}px`);
+}
+setVH(); addEventListener('resize', setVH);
+// CSS側で必要なら height: calc(var(--vhfix) * 100);
+
+/* 2) Header condense on scroll */
+(function(){
+  const header = document.querySelector('.site-header');
+  if(!header) return;
+  let lastY = 0;
+  addEventListener('scroll', ()=>{
+    const y = scrollY;
+    header.style.boxShadow = y>8 ? '0 6px 18px rgba(0,0,0,.08)' : 'none';
+    header.style.paddingTop = y>8 ? '6px' : 'var(--pad-top)';
+    header.style.paddingBottom = y>8 ? '6px' : '8px';
+    lastY = y;
+  }, {passive:true});
+})();
+
+/* 3) lazy=auto for all imgs not in lightbox */
+document.querySelectorAll('img:not(#lightbox img)').forEach(img=>{
+  if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
+});
