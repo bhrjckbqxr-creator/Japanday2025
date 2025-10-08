@@ -90,24 +90,44 @@ a{ color:var(--brand); text-decoration:none }
 #lightbox img{ max-width:96vw; max-height:86vh; border-radius:12px; background:#000 }
 #lightbox .close{ position:absolute; top:12px; right:12px; font-size:28px; color:#fff; background:transparent; border:none }
 
-/* Peek mascots */
-.peek{ position:fixed; bottom:calc(10vh + var(--pad-bot)); z-index:60; display:flex; align-items:flex-end; gap:10px; filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); transition:transform .7s cubic-bezier(.2,.7,.2,1), opacity .7s; opacity:0 }
-.peek img{ height:34vh; max-height:380px; width:auto; background:transparent; transform-origin:bottom center }
-.peek .bubble{ position:relative; max-width:240px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px) }
+/* === Peek mascots === */
+.peek{
+  position:fixed;
+  bottom:calc(12vh + var(--pad-bot));
+  z-index:60;
+  display:flex; align-items:flex-end; gap:10px;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.18));
+  transition:transform .7s cubic-bezier(.2,.7,.2,1), opacity .7s;
+  opacity:0; pointer-events:auto;
+}
+.peek img{
+  height:32vh; max-height:340px; width:auto; background:transparent;
+  transform-origin:bottom center;
+}
+.peek .bubble{
+  position:relative; max-width:220px;
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px)
+}
 .peek .bubble .close{ position:absolute; top:6px; right:6px; border:none; background:#0000; font-size:18px; opacity:.6; cursor:pointer }
-.peek.from-left{ left:-28vw; transform:translateX(-8px) scale(.98) }
-.peek.from-right{ right:-28vw; transform:translateX(8px) scale(.98) }
-.peek.show.from-left{ left:10px; transform:translateX(0) scale(1); opacity:1 }
-.peek.show.from-right{ right:10px; transform:translateX(0) scale(1); opacity:1 }
+.peek.from-left{ left:-30vw; transform:translateX(-8px) scale(.98) }
+.peek.from-right{ right:-30vw; transform:translateX(8px) scale(.98) }
+.peek.show.from-left{ left:8px; transform:translateX(0) scale(1); opacity:1 }
+.peek.show.from-right{ right:8px; transform:translateX(0) scale(1); opacity:1 }
+
 @keyframes bob{ 0%{transform:translateY(0)} 50%{transform:translateY(-6px)} 100%{transform:translateY(0)} }
 .peek.float img{ animation:bob 2.2s ease-in-out infinite }
 
-.reveal{ opacity:0; transform:translateY(14px) scale(.98); transition:.6s cubic-bezier(.2,.7,.2,1) }
-.reveal.in{ opacity:1; transform:none }
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important }
+/* >>> 追加：モバイル時はさらに小さく＆下げる */
+@media (max-width: 480px){
+  .peek{ bottom:calc(7vh + var(--pad-bot)); }
+  .peek img{ height:26vh; max-height:300px; }
+  .peek .bubble{ max-width:190px; font-size:0.95em; }
 }
+
+/* “重なり回避”のため、上部セクションに余白を足す */
+body.has-peek #characters,
+body.has-peek #history{ scroll-margin-top:120px; }
 
 /* Desktop upgrades */
 @media (min-width:800px){
