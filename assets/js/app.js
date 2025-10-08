@@ -288,3 +288,119 @@ setVH(); addEventListener('resize', setVH);
 document.querySelectorAll('img:not(#lightbox img)').forEach(img=>{
   if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
 });
+
+/* ===== Multilingual (ja / en / es) ===== */
+(function(){
+  const state = {
+    lang: localStorage.getItem('lang') || 'ja'
+  };
+
+  const $ = (s, r=document)=>r.querySelector(s);
+  const $$ = (s, r=document)=>[...r.querySelectorAll(s)];
+
+  const i18n = window.__LANG = (window.__DATA && window.__DATA.i18n) || null;
+
+  function textOr(keyPath, fallback){
+    // keyPath like: ['home','headline']
+    if(!i18n) return fallback;
+    const obj = i18n[state.lang];
+    try{
+      return keyPath.reduce((o,k)=>o?.[k], obj) ?? fallback;
+    }catch{ return fallback; }
+  }
+
+  function applyLang(){
+    // ----- NAV labels -----
+    const navMap = textOr(['nav'], null);
+    if(navMap){
+      const ids = [['program','#title-program'], ['characters','#title-characters'], ['history','#title-history'],
+                   ['maps','#title-maps'], ['vendors','#title-vendors'], ['contact','#title-contact']];
+      ids.forEach(([k, sel])=>{
+        const el = $(sel);
+        if(el && navMap[k]) el.textContent = navMap[k];
+      });
+
+      // 既存ナビのテキストも差し替え（#nav-list の a 要素順に）
+      const a = $$('#nav-list a');
+      const order = ['home','program','characters','history','maps','vendors','contact'];
+      a.forEach((link, i)=>{
+        const key = order[i+1] || order[i]; // 先頭がhomeの構成ならズレ対策
+        if(key && navMap[key]) link.textContent = navMap[key];
+      });
+    }
+
+    // ----- Home -----
+    const head = textOr(['home','headline'], null);
+    const lede = textOr(['home','lede'], null);
+    const cta  = textOr(['home','cta_html'], null);
+    if($('#home-headline') && head) $('#home-headline').textContent = head;
+    if($('#home-lede') && lede)     $('#home-lede').textContent     = lede;
+    if($('#home-cta')  && cta)      $('#home-cta').innerHTML        = cta;
+
+    // ----- Buttons -----
+    const btns = textOr(['buttons'], null);
+    if(btns){
+      if($('#open-program-poster') && btns.openPoster)    $('#open-program-poster').textContent = btns.openPoster;
+      if($('#download-program-poster') && btns.downloadPoster) $('#download-program-poster').textContent = btns.downloadPoster;
+    }
+
+    // ----- Section specific titles -----
+    const titles = textOr(['titles'], null);
+    if(titles){
+      if($('#title-characters') && titles.characters) $('#title-characters').textContent = titles.characters;
+      if($('#title-history')    && titles.history)    $('#title-history').textContent    = titles.history;
+    }
+
+    // ----- Map tabs -----
+    const mapsLabels = textOr(['maps'], null);
+    const tabs = $('#map-tabs');
+    if(tabs && mapsLabels && mapsLabels.length){
+      // 既存の data.maps の順を保持したままラベルだけ置換
+      $$('#map-tabs .tab').forEach((b, i)=>{
+        if(mapsLabels[i]) b.textContent = mapsLabels[i];
+      });
+    }
+
+    // ----- Peek bubbles -----
+    const bubbles = textOr(['bubbles'], null);
+    if(bubbles){
+      const yuiBubble = document.querySelector('#peek-yui .bubble p');
+      const jasBubble = document.querySelector('#peek-jasmine .bubble p');
+      if(yuiBubble && bubbles.yui) yuiBubble.textContent = bubbles.yui;
+      if(jasBubble && bubbles.jas) jasBubble.textContent = bubbles.jas;
+    }
+
+    // ----- Program list (optional: per-language) -----
+    const perLangProgram = i18n?.[state.lang]?.program;
+    if (Array.isArray(perLangProgram) && $('#program-list')) {
+      $('#program-list').innerHTML = perLangProgram.map(p=>`
+        <div class="card">
+          <div class="time">${p.time||''}</div>
+          <div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div>
+        </div>
+      `).join('');
+    }
+
+    localStorage.setItem('lang', state.lang);
+    // ボタン表示の更新
+    document.querySelectorAll('.lang-switch button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.lang === state.lang);
+    });
+  }
+
+  // グローバルデータ参照（既存）を露出
+  window.__DATA = window.__DATA || data;
+
+  // 初回適用
+  applyLang();
+
+  // クリックで切替
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.lang-switch button');
+    if(!btn) return;
+    const lang = btn.dataset.lang;
+    if(!lang || state.lang === lang) return;
+    state.lang = lang;
+    applyLang();
+  });
+})();
