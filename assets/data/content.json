@@ -1,107 +1,72 @@
 {
-  "home": {
-    "headline": "Celebrate Japan & Belize Together",
-    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
-    "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
+  "i18n": {
+    "en": {
+      "nav": { "program":"Program", "characters":"Characters", "history":"History", "maps":"Maps", "vendors":"Vendors", "contact":"Contact" },
+      "home": {
+        "headline":"Celebrate Japan & Belize Together",
+        "lede":"Food, music, anime, cosplay, and culture — free entry for everyone.",
+        "cta_html":"Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
+      },
+      "buttons": { "openPoster":"Open Program Poster", "downloadPoster":"Download Poster" },
+      "bubbles": { "yui":"Hi! Check the Program →", "jas":"Welcome! See Vendors →" }
+    },
+    "ja": {
+      "nav": { "program":"プログラム", "characters":"キャラクター", "history":"ヒストリー", "maps":"会場マップ", "vendors":"ベンダー", "contact":"お問い合わせ" },
+      "home": {
+        "headline":"ジャパンデーでみんな一緒に！",
+        "lede":"フード、音楽、アニメ、コスプレ、文化体験。どなたでも入場無料。",
+        "cta_html":"出店・協賛はこちら → <a href=\"#contact\">お問い合わせ</a>"
+      },
+      "buttons": { "openPoster":"プログラムポスターを見る", "downloadPoster":"ポスターをダウンロード" },
+      "bubbles": { "yui":"ユイだよ！プログラム見てね →", "jas":"ようこそ！ベンダーはこちら →" }
+    },
+    "es": {
+      "nav": { "program":"Programa", "characters":"Personajes", "history":"Historia", "maps":"Mapas", "vendors":"Vendedores", "contact":"Contacto" },
+      "home": {
+        "headline":"¡Celebra Japón y Belice!",
+        "lede":"Comida, música, anime, cosplay y cultura — entrada gratis para todos.",
+        "cta_html":"¿Quieres participar? <a href=\"#contact\">Contáctanos</a>."
+      },
+      "buttons": { "openPoster":"Abrir póster del programa", "downloadPoster":"Descargar póster" },
+      "bubbles": { "yui":"¡Hola! Programa →", "jas":"¡Bienvenidos! Vendedores →" }
+    }
   },
 
-  "program_poster": "assets/img/program-2025.jpg",
   "top_hero": "assets/img/top-hero.jpg",
+  "program_poster": "assets/img/program-2025.jpg",
 
-  "program": [
-    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem, Ambassador remarks, Language lesson, Bon Dance" },
-    { "time": "10:30", "title": "Live Performance ①", "desc": "" },
-    { "time": "11:00", "title": "KARATE Demonstration", "desc": "" },
-    { "time": "12:00", "title": "Live Performance ②", "desc": "" },
-    { "time": "13:00", "title": "Cosplay Contest", "desc": "" },
-    { "time": "14:30", "title": "Japan Day Band", "desc": "" }
+  "history_entries": [
+    { "year": "2008", "headline": "Japan Day 開催スタート", "text": "日本文化を紹介する地域イベントとして初開催。" },
+    { "year": "2013", "headline": "来場者が拡大", "text": "体験型ワークショップを拡充。" },
+    { "year": "2015", "headline": "アニメ＆コスプレ強化", "text": "ステージ企画が人気に。" },
+    { "year": "2018", "headline": "パフォーマンス多様化", "text": "太鼓・空手・ダンスなど充実。" },
+    { "year": "2022", "headline": "再起動とアップグレード", "text": "屋内外を活用して安全に再開。" },
+    { "year": "2023", "headline": "コミュニティ連携", "text": "学校・団体と協力して拡大。" },
+    { "year": "2024", "headline": "公式キャラ登場", "text": "Yui & Jasmine がガイド役に。" },
+    { "year": "2025", "headline": "さらに進化する Japan Day", "text": "ベンダー連携・導線・プログラムを刷新。" }
   ],
 
-  "maps": [
-    { "title": "Inside Arena",  "src": "assets/img/map-inside.jpg"  },
-    { "title": "Outside Arena", "src": "assets/img/map-outside.jpg" },
-    { "title": "Top Floor",     "src": "assets/img/map-topfloor.jpg" },
-    { "title": "Booths List",   "src": "assets/img/booths-list.jpg" }
+  "program_2025": [
+    { "time":"10:00", "title":"Opening Ceremony", "desc":"National Anthem, Greetings, Mini Japanese lesson, Bon Dance" },
+    { "time":"10:30", "title":"Live Performance ①", "desc":"" },
+    { "time":"11:00", "title":"KARATE Demonstration", "desc":"" },
+    { "time":"12:00", "title":"Live Performance ②", "desc":"" },
+    { "time":"13:00", "title":"Cosplay Contest", "desc":"" },
+    { "time":"14:30", "title":"Japan Day Band", "desc":"" }
   ],
 
   "history_panels": [
-    { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008–2014" },
-    { "src": "assets/img/history-2015-2021.jpg", "alt": "History 2015–2021" },
-    { "src": "assets/img/history-2022-2024.jpg", "alt": "History 2022–2024" }
+    { "src":"assets/img/history-2008-2014.jpg", "alt":"History 2008–2014" },
+    { "src":"assets/img/history-2015-2021.jpg", "alt":"History 2015–2021" },
+    { "src":"assets/img/history-2022-2024.jpg", "alt":"History 2022–2024" }
   ],
 
-  "vendors": [
-    {
-      "name": "Yuzu & Crane",
-      "logo": "assets/img/vendor-yuzucrane.png",
-      "items": "Sushi rolls / Japanese snacks",
-      "instagram": "https://instagram.com/",
-      "url": ""
-    }
+  "maps": [
+    { "key":"inside",  "title":"Inside Arena",  "src":"assets/img/map-inside.jpg"  },
+    { "key":"outside", "title":"Outside Arena", "src":"assets/img/map-outside.jpg" },
+    { "key":"top",     "title":"Top Floor",     "src":"assets/img/map-topfloor.jpg" },
+    { "key":"booths",  "title":"Booths List",   "src":"assets/img/booths-list.jpg" }
   ],
 
-  "i18n": {
-    "ja": {
-      "nav": {
-        "home": "Home",
-        "program": "プログラム",
-        "characters": "公式キャラ",
-        "history": "ヒストリー",
-        "maps": "会場マップ",
-        "vendors": "ベンダー",
-        "contact": "お問い合わせ"
-      },
-      "home": {
-        "headline": "ジャパンデーでベリーズと日本をつなごう",
-        "lede": "フード、音楽、アニメ、コスプレ、文化体験。どなたでも無料で入場できます。",
-        "cta_html": "出店・スポンサー募集中！<a href=\"#contact\">こちらからご連絡ください</a>。"
-      },
-      "buttons": {
-        "openPoster": "プログラムを見る",
-        "downloadPoster": "ポスターを保存"
-      },
-      "maps": ["インサイドアリーナ","アウトサイド","トップフロア","出店一覧"],
-      "bubbles": { "yui": "やっほー！プログラムはここだよ→", "jas": "いらっしゃい！ベンダーも見てね→" },
-      "program": [
-        { "time":"10:00","title":"オープニング","desc":"国歌・大使挨拶・日本語レッスン・盆踊り" },
-        { "time":"10:30","title":"ライブ①","desc":"" },
-        { "time":"11:00","title":"空手デモ","desc":"" },
-        { "time":"12:00","title":"ライブ②","desc":"" },
-        { "time":"13:00","title":"コスプレコンテスト","desc":"" },
-        { "time":"14:30","title":"Japan Day Band","desc":"" }
-      ]
-    },
-
-    "en": {
-      "nav": {
-        "home": "Home","program": "Program","characters": "Characters","history": "History",
-        "maps": "Maps","vendors": "Vendors","contact": "Contact"
-      },
-      "home": {
-        "headline": "Celebrate Japan & Belize Together",
-        "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
-        "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
-      },
-      "buttons": { "openPoster": "Open Program Poster", "downloadPoster": "Download Poster" },
-      "maps": ["Inside Arena","Outside Arena","Top Floor","Booths List"],
-      "bubbles": { "yui": "Hi! Check the Program →", "jas": "Welcome! See Vendors →" },
-      "program": []
-    },
-
-    "es": {
-      "nav": {
-        "home":"Inicio","program":"Programa","characters":"Personajes","history":"Historia",
-        "maps":"Mapas","vendors":"Vendedores","contact":"Contacto"
-      },
-      "home": {
-        "headline":"Celebremos Japón y Belice juntos",
-        "lede":"Comida, música, anime, cosplay y cultura — entrada gratuita para todos.",
-        "cta_html":"¿Quieres participar como vendedor o patrocinador? <a href=\"#contact\">Contáctanos</a>."
-      },
-      "buttons": { "openPoster":"Abrir programa", "downloadPoster":"Descargar póster" },
-      "maps": ["Arena interior","Exterior","Piso superior","Lista de puestos"],
-      "bubbles": { "yui": "¡Hola! Programa →", "jas": "¡Bienvenido! Puestos →" },
-      "program": []
-    }
-  }
+  "vendors": []
 }
