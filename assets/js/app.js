@@ -1,379 +1,36 @@
-/* Japan Day 2025 - app.js v33
-   - loads assets/data/content.json
-   - full-screen poster + parallax
-   - sakura background (canvas)
-   - peek mascots: Jasmine from LEFT, Yui from RIGHT (with float)
-   - sections: Program / Characters / History / Maps / Vendors / Contact
-   - image lightbox
-   - Party Mode (confetti)
-*/
-(async function () {
-  // ---------- small helpers ----------
+/* Japan Day app – mobile-first / safe vM1 */
+(function(){
   const $  = (s, r=document)=>r.querySelector(s);
-  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
-
-  // ---------- load JSON ----------
-  let data;
-  try {
-    const res = await fetch('assets/data/content.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('content.json not found');
-    data = await res.json();
-  } catch (e) {
-    console.error('[JSON] load error:', e);
-    return;
-  }
-
-  // ---------- NAV ----------
-  const sections = [
-    {id:'home',label:'Home'},
-    {id:'program',label:'Program'},
-    {id:'characters',label:'Characters'},
-    {id:'history',label:'History'},
-    {id:'map',label:'Maps'},
-    {id:'vendors',label:'Vendors'},
-    {id:'contact',label:'Contact'}
-  ];
-  const nav = $('#nav-list');
-  if (nav) nav.innerHTML = sections.map(s=>`<li><a href="#${s.id}">${s.label}</a></li>`).join('');
-
-  // ---------- HOME ----------
-  $('#home-headline') && ($('#home-headline').textContent = data.home?.headline || '');
-  $('#home-lede')     && ($('#home-lede').textContent     = data.home?.lede || '');
-  $('#home-cta')      && ($('#home-cta').innerHTML        = data.home?.cta_html || '');
-
-  const em = $('#event-meta');
-  if (em && data.event){
-    em.innerHTML = `<strong>${data.event.title||''}</strong><br>${data.event.date||''}
-      &nbsp; ${data.event.time||''}<br>${data.event.venue||''}`;
-  }
-
-  // ---------- POSTER actions ----------
-  if (data.program_poster){
-    const openBtn = $('#open-program-poster');
-    const dlBtn   = $('#download-program-poster');
-    if (openBtn){
-      openBtn.addEventListener('click',()=>{
-        const lb = $('#lightbox'); const img = $('#lightbox img');
-        img.src = data.program_poster; lb.classList.add('open');
-      });
-    }
-    if (dlBtn){ dlBtn.href = data.program_poster; }
-  }
-
-  // ---------- PROGRAM ----------
-  const prg = $('#program-list');
-  if (prg){
-    prg.innerHTML = (data.program||[]).map(p=>`
-      <div class="card">
-        <div class="time">${p.time||''}</div>
-        <div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div>
-      </div>
-    `).join('');
-  }
-
-  // ---------- CHARACTERS ----------
-  const cg = $('#character-grid');
-  if (cg){
-    cg.innerHTML = (data.characters||[]).map(c=>`
-      <div class="char-card">
-        <img src="${c.image}" alt="${c.name}">
-        <h3>${c.name||''}</h3>
-      </div>
-    `).join('');
-  }
-
-  // ---------- HISTORY (images only) ----------
-  const hp = $('#history-panels');
-  if (hp){
-    hp.innerHTML = (data.history_panels||[]).map(p=>`
-      <figure class="panel"><img src="${p.src}" alt="${p.alt||''}"></figure>
-    `).join('');
-  }
-  const hg = $('#history-highlights');
-  if (hg){
-    hg.innerHTML = (data.history_highlights||[]).map(h=>`
-      <div class="y-card"><span class="badge">${h.year||''}</span>
-        <img src="${h.src}" alt="History ${h.year||''}">
-      </div>
-    `).join('');
-  }
-
-  // ---------- MAPS (tabs + image) ----------
-  const tabs = $('#map-tabs');
-  const mapBox = $('#map-images');
-  function showMap(i){ if (!mapBox || !data.maps?.[i]) return;
-    mapBox.innerHTML = `<img src="${data.maps[i].src}" alt="${data.maps[i].title}">`;
-  }
-  if (tabs){
-    tabs.innerHTML = (data.maps||[]).map((m,i)=>`
-      <button class="tab ${i===0?'active':''}" data-i="${i}">${m.title}</button>
-    `).join('');
-    showMap(0);
-    tabs.addEventListener('click',e=>{
-      const b=e.target.closest('.tab'); if(!b) return;
-      $$('.tab',tabs).forEach(x=>x.classList.remove('active'));
-      b.classList.add('active'); showMap(+b.dataset.i);
-    });
-  }
-
-  // ---------- VENDORS ----------
-  const vg = $('#vendor-cards');
-  if (vg){
-    vg.innerHTML = (data.vendors||[]).map(v=>`
-      <article class="vendor-card">
-        <div class="logo"><img src="${v.logo}" alt="${v.name} logo"></div>
-        <div class="v-body">
-          <h3>${v.name||''}</h3>
-          <div class="v-links">
-            ${v.instagram?`<a class="insta" href="${v.instagram}" target="_blank" rel="noopener">Instagram</a>`:''}
-            ${v.site?`<a class="site" href="${v.site}" target="_blank" rel="noopener">Website</a>`:''}
-          </div>
-        </div>
-      </article>
-    `).join('');
-  }
-
-  // ---------- CONTACT ----------
-  if (data.contact){
-    const eml = $('#contact-email'); const wa = $('#contact-wa');
-    if (eml){ eml.href=`mailto:${data.contact.email}`; eml.textContent=data.contact.email; }
-    if (wa){ wa.href=data.contact.whatsapp; wa.textContent=data.contact.whatsapp_label||data.contact.whatsapp; }
-  }
-
-  // ---------- LIGHTBOX ----------
-  const lb = $('#lightbox');
-  if (lb){
-    $('#lightbox .close').addEventListener('click',()=>lb.classList.remove('open'));
-    lb.addEventListener('click',e=>{ if(e.target.id==='lightbox') lb.classList.remove('open'); });
-    document.addEventListener('click',e=>{
-      const t = e.target;
-      if (t.tagName==='IMG' && t.closest('.map-images, .history-panels, .history-grid')){
-        $('#lightbox img').src = t.src; lb.classList.add('open');
-      }
-    });
-  }
-
-  // ---------- REVEAL on scroll ----------
-  const io = new IntersectionObserver(es=>{
-    es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
-  },{threshold:.12});
-  $$('.reveal').forEach(el=>io.observe(el));
-
-  // ---------- PARALLAX poster ----------
-  const poster = $('.poster-img');
-  if (poster){
-    window.addEventListener('scroll', ()=>{
-      const y = Math.min(1, window.scrollY / window.innerHeight);
-      poster.style.transform = `translateY(${y * -14}px) scale(${1 + y*0.02})`;
-    }, {passive:true});
-  }
-
-  // ---------- SAKURA background (light) ----------
-  const cvs = $('#bg-sakura'); const ctx = cvs?.getContext('2d');
-  if (cvs && ctx){
-    let W=innerWidth, H=innerHeight;
-    const resize = ()=>{ W=cvs.width=innerWidth; H=cvs.height=innerHeight; };
-    resize(); addEventListener('resize', resize);
-    const N=70, S= ()=>Math.random()*0.6+0.3;
-    const petals = Array.from({length:N},()=>({
-      x:Math.random()*W, y:Math.random()*H, s:S(),
-      vx:Math.random()*0.4-0.2, vy:Math.random()*0.7+0.2, rot:Math.random()*6
-    }));
-    (function loop(){
-      ctx.clearRect(0,0,W,H);
-      petals.forEach(p=>{
-        p.x+=p.vx; p.y+=p.vy; p.rot+=0.01+p.s*0.01;
-        if(p.y>H+20){ p.y=-20; p.x=Math.random()*W; }
-        if(p.x<-20) p.x=W+20; if(p.x>W+20) p.x=-20;
-        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-        ctx.fillStyle='rgba(255,182,193,.75)';
-        ctx.beginPath();
-        ctx.moveTo(0,0);
-        ctx.bezierCurveTo(6*p.s,-8*p.s, 10*p.s,6*p.s, 0,10*p.s);
-        ctx.bezierCurveTo(-10*p.s,6*p.s, -6*p.s,-8*p.s, 0,0);
-        ctx.fill(); ctx.restore();
-      });
-      requestAnimationFrame(loop);
-    })();
-
-    // Confetti on same canvas
-    let confettiOn=false, confetti=[];
-    const btn=$('#party-btn');
-    function toggleConfetti(){
-      confettiOn=!confettiOn;
-      if(btn) btn.textContent = confettiOn ? '🛑 Stop Party' : '🎉 Party Mode';
-      if(confettiOn){
-        confetti = Array.from({length:120},()=>({
-          x:Math.random()*W, y:Math.random()*-H,
-          s:Math.random()*6+3, vy:Math.random()*2+1.5, vx:Math.random()*1-0.5,
-          c:`hsl(${Math.random()*360},90%,60%)`, r:Math.random()*Math.PI
-        }));
-      }
-    }
-    btn && btn.addEventListener('click', toggleConfetti);
-
-    (function conf(){
-      if(confettiOn){
-        confetti.forEach(p=>{
-          p.y+=p.vy; p.x+=p.vx; p.r+=0.08;
-          if(p.y>H+10){ p.y=-10; p.x=Math.random()*W; }
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
-          ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);
-          ctx.restore();
-        });
-      }
-      requestAnimationFrame(conf);
-    })();
-  }
-
-  // ---------- PEEK MASCOTS (Jasmine from LEFT, Yui from RIGHT) ----------
-  const yui = $('#peek-yui');      // 右から
-  const jas = $('#peek-jasmine');  // 左から
-
-  function showPeek(el, side, ms=4200){
-    if(!el) return;
-    el.classList.remove('from-left','from-right'); // 先にリセット
-    el.classList.add('show', side, 'float');       // float でふわっと
-    const t=setTimeout(()=>el.classList.remove('show', side, 'float'), ms);
-    const close = el.querySelector('.close');
-    if(close){
-      close.onclick = (e)=>{ e.stopPropagation(); el.classList.remove('show', side, 'float'); clearTimeout(t); };
-    }
-  }
-
-  function cycle(){
-    // Jasmine → 左から、Yui → 右から
-    showPeek(jas, 'from-left', 4200);
-    setTimeout(()=>showPeek(yui, 'from-right', 4200), 4800);
-  }
-  cycle();
-  setInterval(cycle, 12000 + Math.random()*6000);
-
-  // user interaction（触ったら出る/離れたら戻る）
-  ['mouseenter','touchstart'].forEach(ev=>{
-    yui && yui.addEventListener(ev, ()=> yui.classList.add('show','from-right','float'), {passive:true});
-    jas && jas.addEventListener(ev, ()=> jas.classList.add('show','from-left','float'), {passive:true});
-  });
-  ['mouseleave','touchend'].forEach(ev=>{
-    yui && yui.addEventListener(ev, ()=> yui.classList.remove('show','from-right','float'));
-    jas && jas.addEventListener(ev, ()=> jas.classList.remove('show','from-left','float'));
-  });
-
-})();
-
-/* ===== Mobile polish additions ===== */
-
-// 1) iOSなどのvh補正（必要端末のみ）
-function setVH(){
-  document.documentElement.style.setProperty('--vhfix', `${window.innerHeight * 0.01}px`);
-}
-setVH(); addEventListener('resize', setVH);
-// CSS側で必要なら height: calc(var(--vhfix) * 100);
-
-/* 2) Header condense on scroll */
-(function(){
-  const header = document.querySelector('.site-header');
-  if(!header) return;
-  let lastY = 0;
-  addEventListener('scroll', ()=>{
-    const y = scrollY;
-    header.style.boxShadow = y>8 ? '0 6px 18px rgba(0,0,0,.08)' : 'none';
-    header.style.paddingTop = y>8 ? '6px' : 'var(--pad-top)';
-    header.style.paddingBottom = y>8 ? '6px' : '8px';
-    lastY = y;
-  }, {passive:true});
-})();
-
-/* 3) lazy=auto for all imgs not in lightbox */
-document.querySelectorAll('img:not(#lightbox img)').forEach(img=>{
-  if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
-});
-
-/* ===== Multilingual (ja / en / es) ===== */
-(function(){
-  const state = {
-    lang: localStorage.getItem('lang') || 'ja'
-  };
-
-  const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>[...r.querySelectorAll(s)];
 
-  const i18n = window.__LANG = (window.__DATA && window.__DATA.i18n) || null;
-
-  function textOr(keyPath, fallback){
-    // keyPath like: ['home','headline']
-    if(!i18n) return fallback;
-    const obj = i18n[state.lang];
+  /* ===== 0. JSON ロード（必須ではない/無くても落ちない） ===== */
+  async function loadData(){
     try{
-      return keyPath.reduce((o,k)=>o?.[k], obj) ?? fallback;
-    }catch{ return fallback; }
+      const res = await fetch('assets/data/content.json', {cache:'no-store'});
+      if(!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      window.__DATA = data;  // 他のIIFEからも参照可
+    }catch(e){
+      console.warn('[data] fallback (no JSON)', e);
+      window.__DATA = window.__DATA || {}; // 最低限
+    }
   }
 
-  function applyLang(){
-    // ----- NAV labels -----
-    const navMap = textOr(['nav'], null);
-    if(navMap){
-      const ids = [['program','#title-program'], ['characters','#title-characters'], ['history','#title-history'],
-                   ['maps','#title-maps'], ['vendors','#title-vendors'], ['contact','#title-contact']];
-      ids.forEach(([k, sel])=>{
-        const el = $(sel);
-        if(el && navMap[k]) el.textContent = navMap[k];
-      });
+  /* ===== 1. 画面レンダリング（データがあれば差し替え） ===== */
+  function renderFromData(){
+    const D = window.__DATA || {};
 
-      // 既存ナビのテキストも差し替え（#nav-list の a 要素順に）
-      const a = $$('#nav-list a');
-      const order = ['home','program','characters','history','maps','vendors','contact'];
-      a.forEach((link, i)=>{
-        const key = order[i+1] || order[i]; // 先頭がhomeの構成ならズレ対策
-        if(key && navMap[key]) link.textContent = navMap[key];
-      });
+    // Home
+    if (D.home){
+      if ($('#home-headline') && D.home.headline) $('#home-headline').textContent = D.home.headline;
+      if ($('#home-lede')     && D.home.lede)     $('#home-lede').textContent     = D.home.lede;
+      if ($('#home-cta')      && D.home.cta_html) $('#home-cta').innerHTML        = D.home.cta_html;
     }
 
-    // ----- Home -----
-    const head = textOr(['home','headline'], null);
-    const lede = textOr(['home','lede'], null);
-    const cta  = textOr(['home','cta_html'], null);
-    if($('#home-headline') && head) $('#home-headline').textContent = head;
-    if($('#home-lede') && lede)     $('#home-lede').textContent     = lede;
-    if($('#home-cta')  && cta)      $('#home-cta').innerHTML        = cta;
-
-    // ----- Buttons -----
-    const btns = textOr(['buttons'], null);
-    if(btns){
-      if($('#open-program-poster') && btns.openPoster)    $('#open-program-poster').textContent = btns.openPoster;
-      if($('#download-program-poster') && btns.downloadPoster) $('#download-program-poster').textContent = btns.downloadPoster;
-    }
-
-    // ----- Section specific titles -----
-    const titles = textOr(['titles'], null);
-    if(titles){
-      if($('#title-characters') && titles.characters) $('#title-characters').textContent = titles.characters;
-      if($('#title-history')    && titles.history)    $('#title-history').textContent    = titles.history;
-    }
-
-    // ----- Map tabs -----
-    const mapsLabels = textOr(['maps'], null);
-    const tabs = $('#map-tabs');
-    if(tabs && mapsLabels && mapsLabels.length){
-      // 既存の data.maps の順を保持したままラベルだけ置換
-      $$('#map-tabs .tab').forEach((b, i)=>{
-        if(mapsLabels[i]) b.textContent = mapsLabels[i];
-      });
-    }
-
-    // ----- Peek bubbles -----
-    const bubbles = textOr(['bubbles'], null);
-    if(bubbles){
-      const yuiBubble = document.querySelector('#peek-yui .bubble p');
-      const jasBubble = document.querySelector('#peek-jasmine .bubble p');
-      if(yuiBubble && bubbles.yui) yuiBubble.textContent = bubbles.yui;
-      if(jasBubble && bubbles.jas) jasBubble.textContent = bubbles.jas;
-    }
-
-    // ----- Program list (optional: per-language) -----
-    const perLangProgram = i18n?.[state.lang]?.program;
-    if (Array.isArray(perLangProgram) && $('#program-list')) {
-      $('#program-list').innerHTML = perLangProgram.map(p=>`
+    // Program list
+    const list = $('#program-list');
+    if (list && Array.isArray(D.program)){
+      list.innerHTML = D.program.map(p=>`
         <div class="card">
           <div class="time">${p.time||''}</div>
           <div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div>
@@ -381,26 +38,250 @@ document.querySelectorAll('img:not(#lightbox img)').forEach(img=>{
       `).join('');
     }
 
-    localStorage.setItem('lang', state.lang);
-    // ボタン表示の更新
-    document.querySelectorAll('.lang-switch button').forEach(b=>{
-      b.classList.toggle('active', b.dataset.lang === state.lang);
-    });
+    // Poster override
+    if (D.program_poster){
+      const open = $('#open-program-poster');
+      const dl   = $('#download-program-poster');
+      if (open) open.href = D.program_poster;
+      if (dl)   dl.href   = D.program_poster;
+    }
+    if (D.top_hero){
+      const hero = $('.poster-img');
+      if (hero) hero.style.backgroundImage = `url("${D.top_hero}")`;
+    }
+
+    // History
+    const hp = $('#history-panels');
+    if (hp && Array.isArray(D.history_panels)){
+      hp.innerHTML = D.history_panels.map(it=>`
+        <figure class="panel">
+          <img src="${it.src}" alt="${it.alt||''}">
+        </figure>
+      `).join('');
+      // クリックでLightbox
+      hp.addEventListener('click', e=>{
+        const img = e.target.closest('img'); if(!img) return;
+        openLightbox(img.src, img.alt||'');
+      });
+    }
+
+    // Maps
+    const tabs = $('#map-tabs'); const img = $('#map-image');
+    if (tabs && img && Array.isArray(D.maps) && D.maps.length){
+      tabs.innerHTML = D.maps.map((m,i)=>`<button class="tab ${i===0?'active':''}">${m.title||('Map '+(i+1))}</button>`).join('');
+      img.src = D.maps[0].src;
+      tabs.addEventListener('click', e=>{
+        const b = e.target.closest('.tab'); if(!b) return;
+        const idx = [...tabs.children].indexOf(b);
+        $$('.tab', tabs).forEach(x=>x.classList.remove('active'));
+        b.classList.add('active'); img.src = D.maps[idx].src;
+      });
+    }else{
+      // 既定ボタン（index.htmlのデフォルト4タブ）に画像紐付け
+      const fallback = [
+        'assets/img/map-inside.jpg',
+        'assets/img/map-outside.jpg',
+        'assets/img/map-topfloor.jpg',
+        'assets/img/booths-list.jpg'
+      ];
+      $('#map-tabs')?.addEventListener('click', e=>{
+        const b=e.target.closest('.tab'); if(!b) return;
+        const idx=[...$('#map-tabs').children].indexOf(b);
+        $$('#map-tabs .tab').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        $('#map-image').src = fallback[idx] || fallback[0];
+      });
+    }
+
+    // Vendors
+    const vc = $('#vendor-cards');
+    if (vc && Array.isArray(D.vendors)){
+      vc.innerHTML = D.vendors.map(v=>`
+        <article class="vendor-card">
+          <div class="logo"><img src="${v.logo||'assets/img/vendor-placeholder.png'}" alt=""></div>
+          <div>
+            <h3>${v.name||''}</h3>
+            <div class="v-links">
+              ${v.instagram?`<a href="${v.instagram}" target="_blank" rel="noopener">Instagram</a>`:''}
+              ${v.url?`<a href="${v.url}" target="_blank" rel="noopener">Website</a>`:''}
+            </div>
+            <div class="desc">${v.items||''}</div>
+          </div>
+        </article>
+      `).join('');
+    }
   }
 
-  // グローバルデータ参照（既存）を露出
-  window.__DATA = window.__DATA || data;
+  /* ===== 2. 多言語（安全版） ===== */
+  function i18nInit(){
+    const D = window.__DATA || {};
+    const I = D.i18n || null;
+    const state = { lang: localStorage.getItem('lang') || 'en' };
 
-  // 初回適用
-  applyLang();
+    function t(pathArr, fb){
+      if(!I || !I[state.lang]) return fb;
+      try{ return pathArr.reduce((o,k)=>o?.[k], I[state.lang]) ?? fb; }catch{ return fb; }
+    }
 
-  // クリックで切替
-  document.addEventListener('click', (e)=>{
-    const btn = e.target.closest('.lang-switch button');
-    if(!btn) return;
-    const lang = btn.dataset.lang;
-    if(!lang || state.lang === lang) return;
-    state.lang = lang;
-    applyLang();
-  });
+    function apply(){
+      // nav & titles
+      const navMap = t(['nav'], null);
+      if (navMap){
+        const map = [['#title-program','program'],['#title-characters','characters'],['#title-history','history'],['#title-maps','maps'],['#title-vendors','vendors'],['#title-contact','contact']];
+        map.forEach(([sel,key])=>{ const el=$(sel); if(el && navMap[key]) el.textContent=navMap[key]; });
+        const order=['home','program','characters','history','maps','vendors','contact'];
+        $$('#nav-list a').forEach((a,i)=>{ const k=order[i]; if(navMap[k]) a.textContent=navMap[k]; });
+      }
+      // home
+      const head=t(['home','headline'],null), lede=t(['home','lede'],null), cta=t(['home','cta_html'],null);
+      if($('#home-headline') && head) $('#home-headline').textContent=head;
+      if($('#home-lede') && lede) $('#home-lede').textContent=lede;
+      if($('#home-cta') && cta) $('#home-cta').innerHTML=cta;
+      // buttons
+      const btns=t(['buttons'],null);
+      if(btns){
+        if($('#open-program-poster') && btns.openPoster) $('#open-program-poster').textContent=btns.openPoster;
+        if($('#download-program-poster') && btns.downloadPoster) $('#download-program-poster').textContent=btns.downloadPoster;
+      }
+      // maps
+      const ml=t(['maps'],null);
+      if(ml && $('#map-tabs')) $$('#map-tabs .tab').forEach((b,i)=>{ if(ml[i]) b.textContent=ml[i]; });
+      // bubbles
+      const bub=t(['bubbles'],null);
+      if(bub){
+        const y=$('#peek-yui .bubble p'), j=$('#peek-jasmine .bubble p');
+        if(y && bub.yui) y.textContent=bub.yui; if(j && bub.jas) j.textContent=bub.jas;
+      }
+      // program per language
+      const prog=t(['program'],null);
+      if(Array.isArray(prog) && $('#program-list')){
+        $('#program-list').innerHTML = prog.map(p=>`
+          <div class="card"><div class="time">${p.time||''}</div><div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div></div>
+        `).join('');
+      }
+      // active
+      $$('.lang-switch button').forEach(b=> b.classList.toggle('active', b.dataset.lang===state.lang));
+      localStorage.setItem('lang', state.lang);
+    }
+
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.lang-switch button'); if(!btn) return;
+      const lang = btn.dataset.lang; if(!lang) return;
+      if(lang!==localStorage.getItem('lang')){ localStorage.setItem('lang', lang); state.lang=lang; apply(); }
+    });
+
+    try{ apply(); }catch(e){ console.warn('[i18n] skipped', e); }
+  }
+
+  /* ===== 3. ひょこっとマスコット（右=Yui / 左=Jasmine） ===== */
+  function mascots(){
+    const y = $('#peek-yui'), j = $('#peek-jasmine');
+    if(!y || !j) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(el){ el.classList.add('show','float'); }
+    function hide(el){ el.classList.remove('show'); }
+
+    // 初回登場
+    setTimeout(()=>show(j), 900);
+    setTimeout(()=>show(y), 1400);
+
+    // スクロールで一旦隠し→下で再表示
+    let lastY=0;
+    addEventListener('scroll', ()=>{
+      const dy = Math.abs(scrollY-lastY);
+      if(dy>20){ hide(j); hide(y); }
+      lastY=scrollY;
+      if(scrollY>400){ show(j); show(y); }
+    }, {passive:true});
+
+    // 閉じる
+    $$('.peek .close').forEach(b=> b.addEventListener('click', e=> hide(b.closest('.peek')) ));
+
+    if(reduce){
+      y.classList.remove('float'); j.classList.remove('float');
+    }
+  }
+
+  /* ===== 4. 桜（軽量） ===== */
+  function sakura(){
+    const c = $('#petals'); if(!c) return;
+    const ctx = c.getContext('2d', {alpha:true});
+    let W=innerWidth,H=innerHeight, petals=[];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function reset(){ W=innerWidth; H=innerHeight; c.width=W; c.height=H; }
+    function spawn(){
+      const n = Math.max(8, Math.floor(W/180));
+      petals = new Array(n).fill(0).map(()=>({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        r: 3+Math.random()*2.5,
+        vx: -0.3 + Math.random()*0.6,
+        vy: 0.4 + Math.random()*0.8,
+        rot: Math.random()*Math.PI*2,
+        vr: -0.02 + Math.random()*0.04
+      }));
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of petals){
+        p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+        if(p.y>H+10) { p.y=-10; p.x=Math.random()*W; }
+        if(p.x<-10)  p.x=W+10;
+        if(p.x>W+10) p.x=-10;
+        ctx.save();
+        ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle='rgba(233,30,99,.12)'; ctx.beginPath();
+        ctx.ellipse(0,0,p.r*1.2,p.r,.4,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+      }
+      !reduce && requestAnimationFrame(step);
+    }
+    reset(); spawn(); step(); addEventListener('resize', ()=>{ reset(); spawn(); });
+  }
+
+  /* ===== 5. 画像ライトボックス ===== */
+  function lightbox(){
+    const lb = $('#lightbox'); if(!lb) return;
+    const img = $('#lightbox img'), closeBtn = $('#lightbox .close');
+    function open(src,alt){ img.src=src; img.alt=alt||''; lb.classList.add('open'); }
+    function close(){ lb.classList.remove('open'); img.src=''; }
+    window.openLightbox=open;
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
+    addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+  }
+
+  /* ===== 6. スクロール表示演出 ===== */
+  function reveal(){
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    $$('.reveal').forEach(el=> io.observe(el));
+  }
+
+  /* ===== 7. Header 小さく ===== */
+  function headerPolish(){
+    const h = $('.site-header'); if(!h) return;
+    addEventListener('scroll', ()=>{
+      h.style.boxShadow = scrollY>8 ? '0 6px 18px rgba(0,0,0,.08)' : 'none';
+      h.style.paddingTop = scrollY>8 ? '6px' : 'var(--pad-top)';
+      h.style.paddingBottom = scrollY>8 ? '6px' : '8px';
+    }, {passive:true});
+  }
+
+  /* ===== Boot ===== */
+  (async function(){
+    await loadData();
+    renderFromData();
+    i18nInit();
+    sakura();
+    mascots();
+    lightbox();
+    reveal();
+    headerPolish();
+    // 画像遅延
+    $$('img:not(#lightbox img)').forEach(i=>{ if(!i.loading) i.loading='lazy'; });
+  })();
 })();
