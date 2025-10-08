@@ -50,3 +50,29 @@
     "whatsapp_label": "+501 000-0000"
   }
 }
+"i18n": {
+  "en": {
+    "nav":   { "program":"Program", "characters":"Characters", "history":"History", "maps":"Maps", "vendors":"Vendors", "contact":"Contact" },
+    "home":  { "headline":"Celebrate Japan & Belize Together", "lede":"Food, music, anime, cosplay, and culture — everyone’s welcome!", "cta_html":"<a href=\"#vendors\">See vendors</a> · <a href=\"#map\">Maps</a>" },
+    "buttons": { "openPoster":"Open Program Poster", "downloadPoster":"Download Poster" },
+    "titles": { "characters":"Official Characters: Yui & Jasmine", "history":"Japan Day History (Images)" },
+    "maps":  ["Inside Arena","Outside Arena","Top Floor","Booths List"],
+    "bubbles": { "yui":"Hi! Check the Program →", "jas":"Welcome! Vendors →" }
+  },
+  "ja": {
+    "nav":   { "program":"プログラム", "characters":"キャラクター", "history":"ヒストリー", "maps":"マップ", "vendors":"ベンダー", "contact":"お問い合わせ" },
+    "home":  { "headline":"日本とベリーズをいっしょにお祝い🎌", "lede":"フード・音楽・アニメ・コスプレ・文化、みんな歓迎！", "cta_html":"<a href=\"#vendors\">出店一覧</a> ・ <a href=\"#map\">会場マップ</a>" },
+    "buttons": { "openPoster":"ポスターを開く", "downloadPoster":"ポスターDL" },
+    "titles": { "characters":"公式キャラ：Yui & Jasmine", "history":"ジャパンデーの歴史（画像）" },
+    "maps":  ["インサイド","アウトサイド","トップフロア","出店一覧"],
+    "bubbles": { "yui":"ユイだよ！ステージ見てね →", "jas":"ジャスミンです。ベンダーへ →" }
+  },
+  "es": {
+    "nav":   { "program":"Programa", "characters":"Personajes", "history":"Historia", "maps":"Mapas", "vendors":"Vendedores", "contact":"Contacto" },
+    "home":  { "headline":"Celebremos Japón y Belice juntos", "lede":"Comida, música, anime, cosplay y cultura — ¡todos bienvenidos!", "cta_html":"<a href=\"#vendors\">Ver vendedores</a> · <a href=\"#map\">Mapas</a>" },
+    "buttons": { "openPoster":"Abrir póster del programa", "downloadPoster":"Descargar póster" },
+    "titles": { "characters":"Personajes oficiales: Yui & Jasmine", "history":"Historia de Japan Day (imágenes)" },
+    "maps":  ["Interior","Exterior","Piso superior","Lista de stands"],
+    "bubbles": { "yui":"¡Hola! Mira el programa →", "jas":"Bienvenida, vamos a vendedores →" }
+  }
+}
