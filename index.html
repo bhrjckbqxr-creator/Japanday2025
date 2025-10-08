@@ -1,37 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Japan Day 2025 – Belize</title>
-  <link rel="preload" href="assets/data/content.json" as="fetch" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="theme-color" content="#0d0f12" />
+  <link rel="preload" href="assets/data/content.json" as="fetch" crossorigin="anonymous" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <!-- ===== Fixed Header ===== -->
+  <!-- ===== Fixed header ===== -->
   <header class="site-header">
-    <h1 class="logo"><a href="#home">Japan Day 2025</a></h1>
+    <a class="logo" href="#home">Japan Day 2025</a>
     <nav class="nav">
-      <a href="#program" data-t="nav.program">Program</a>
+      <a href="#program"   data-t="nav.program">Program</a>
       <a href="#characters" data-t="nav.characters">Characters</a>
-      <a href="#history" data-t="nav.history">History</a>
-      <a href="#maps" data-t="nav.maps">Maps</a>
-      <a href="#vendors" data-t="nav.vendors">Vendors</a>
-      <a href="#contact" data-t="nav.contact">Contact</a>
+      <a href="#history"   data-t="nav.history">History</a>
+      <a href="#maps"      data-t="nav.maps">Maps</a>
+      <a href="#vendors"   data-t="nav.vendors">Vendors</a>
+      <a href="#contact"   data-t="nav.contact">Contact</a>
     </nav>
     <div class="langs">
-      <button class="pill is-active" data-lang="ja">日本語</button>
-      <button class="pill" data-lang="en">EN</button>
+      <button class="pill" data-lang="ja">日本語</button>
+      <button class="pill is-active" data-lang="en">EN</button>
       <button class="pill" data-lang="es">ES</button>
     </div>
   </header>
   <div class="nav-spacer" aria-hidden="true"></div>
 
-  <!-- ===== HERO (Poster: always full visible) ===== -->
+  <!-- ===== HERO (Poster fully visible on mobile) ===== -->
   <section id="home" class="hero poster">
     <div class="poster-frame">
-      <!-- “contain” で必ず全体表示。左右/上下に余白が出てもOK -->
-      <img class="poster-img contain" src="assets/img/top-hero.jpg" alt="Japan Day 2025 Poster">
+      <img class="poster-img" src="assets/img/top-hero.jpg" alt="Japan Day 2025 Poster" />
     </div>
 
     <div class="hero-actions">
@@ -40,66 +40,70 @@
     </div>
 
     <div class="copy">
-      <h2 data-t="home.headline">Celebrate Japan & Belize Together</h2>
+      <h1 data-t="home.headline">Celebrate Japan & Belize Together</h1>
       <p class="lede" data-t="home.lede">Food, music, anime, cosplay, and culture — free entry for everyone.</p>
       <p class="cta" data-t-html="home.cta_html">Be a vendor or sponsor? <a href="#contact">Contact us</a>.</p>
     </div>
   </section>
 
-  <!-- ===== Sections ===== -->
+  <!-- ===== MAIN ===== -->
   <main class="container">
     <section id="program">
-      <h3 data-t="nav.program">Program</h3>
+      <h2 data-t="nav.program">Program</h2>
       <ul class="program-list js-program"></ul>
     </section>
 
     <section id="characters">
-      <h3 data-t="nav.characters">Official Characters: Yui & Jasmine</h3>
+      <h2 data-t="nav.characters">Official Characters: Yui & Jasmine</h2>
       <div class="cards">
         <figure class="card">
-          <img src="assets/img/char-yui.png" alt="Yui">
+          <img src="assets/img/char-yui.png" alt="Yui" />
           <figcaption>Yui</figcaption>
         </figure>
         <figure class="card">
-          <img src="assets/img/char-jasmine.png" alt="Jasmine">
+          <img src="assets/img/char-jasmine.png" alt="Jasmine" />
           <figcaption>Jasmine</figcaption>
         </figure>
       </div>
     </section>
 
     <section id="history">
-      <h3 data-t="nav.history">Japan Day History (Images)</h3>
-      <div class="history-grid js-history"></div>
+      <h2 data-t="nav.history">Japan Day History</h2>
+      <!-- テキスト年表（画像より優先表示） -->
+      <ol class="timeline js-history-text"></ol>
+      <!-- 参考：画像ギャラリーを残したい場合 -->
+      <div class="tl-panels js-history-img"></div>
     </section>
 
     <section id="maps">
-      <h3 data-t="nav.maps">Maps</h3>
+      <h2 data-t="nav.maps">Maps</h2>
       <div class="map-grid js-maps"></div>
     </section>
 
     <section id="vendors">
-      <h3 data-t="nav.vendors">Vendors</h3>
+      <h2 data-t="nav.vendors">Vendors</h2>
       <div class="vendors js-vendors"></div>
     </section>
 
     <section id="contact">
-      <h3 data-t="nav.contact">Contact</h3>
+      <h2 data-t="nav.contact">Contact</h2>
       <p>Email: <a href="mailto:info@japanday.bz">info@japanday.bz</a></p>
+      <p>WhatsApp: <a href="https://wa.me/5010000000" target="_blank" rel="noopener">+501 000-0000</a></p>
     </section>
   </main>
 
   <footer class="site-footer">© 2025 Japan Day Belize Committee</footer>
 
-  <!-- === Peek mascots (pop-in only images are *peek-*.png) === -->
-  <div class="peek from-right" id="peek-yui">
-    <img src="assets/img/peek-yui.png" alt="Yui (peek)">
+  <!-- ===== Peek mascots (pop-in only images: peek-*.png) ===== -->
+  <div class="peek from-right" id="peek-yui" aria-live="polite">
+    <img src="assets/img/peek-yui.png" alt="Yui (peek)" />
     <div class="bubble">
       <button class="close" aria-label="close">✕</button>
       <span class="js-bubble-yui">Hi! Check the Program →</span>
     </div>
   </div>
-  <div class="peek from-left" id="peek-jasmine">
-    <img src="assets/img/peek-jasmine.png" alt="Jasmine (peek)">
+  <div class="peek from-left" id="peek-jasmine" aria-live="polite">
+    <img src="assets/img/peek-jasmine.png" alt="Jasmine (peek)" />
     <div class="bubble">
       <button class="close" aria-label="close">✕</button>
       <span class="js-bubble-jas">Welcome! See Vendors →</span>
