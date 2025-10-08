@@ -1,144 +1,111 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Japan Day 2025 – Belize</title>
-  <meta name="description" content="Japan Day Belize 2025 — Food, music, anime, cosplay, and culture. Free for everyone." />
-  <link rel="icon" href="assets/img/favicon.png" />
-  <link rel="preload" as="image" href="assets/img/top-hero.jpg" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preload" href="assets/data/content.json" as="fetch" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-  <!-- ===== Global sakura canvas ===== -->
-  <canvas id="petals" aria-hidden="true"></canvas>
-
-  <!-- ===== Poster (full-bleed) ===== -->
-  <header class="hero poster" role="banner">
-    <img class="poster-img" src="assets/img/top-hero.jpg" alt="Japan Day 2025 Poster" />
-    <div class="poster-cta">
-      <a class="btn ghost js-open-poster" target="_blank" rel="noopener">Open Program Poster</a>
-      <a class="btn ghost js-dl-poster" download="japanday-2025-poster.jpg">Download Poster</a>
+  <!-- ===== Fixed Header ===== -->
+  <header class="site-header">
+    <h1 class="logo"><a href="#home">Japan Day 2025</a></h1>
+    <nav class="nav">
+      <a href="#program" data-t="nav.program">Program</a>
+      <a href="#characters" data-t="nav.characters">Characters</a>
+      <a href="#history" data-t="nav.history">History</a>
+      <a href="#maps" data-t="nav.maps">Maps</a>
+      <a href="#vendors" data-t="nav.vendors">Vendors</a>
+      <a href="#contact" data-t="nav.contact">Contact</a>
+    </nav>
+    <div class="langs">
+      <button class="pill is-active" data-lang="ja">日本語</button>
+      <button class="pill" data-lang="en">EN</button>
+      <button class="pill" data-lang="es">ES</button>
     </div>
   </header>
+  <div class="nav-spacer" aria-hidden="true"></div>
 
-  <!-- ===== Site header (under poster) ===== -->
-  <div class="site-header" id="siteHeader">
-    <div class="container nav-wrap">
-      <h1 class="logo">Japan Day 2025</h1>
-      <nav class="nav" aria-label="Primary">
-        <a href="#program" data-i18n="nav.program">Program</a>
-        <a href="#characters" data-i18n="nav.characters">Characters</a>
-        <a href="#history" data-i18n="nav.history">History</a>
-        <a href="#maps" data-i18n="nav.maps">Maps</a>
-        <a href="#vendors" data-i18n="nav.vendors">Vendors</a>
-        <a href="#contact" data-i18n="nav.contact">Contact</a>
-      </nav>
-      <div class="lang">
-        <button class="pill lang-btn" data-lang="ja">日本語</button>
-        <button class="pill lang-btn" data-lang="en">EN</button>
-        <button class="pill lang-btn" data-lang="es">ES</button>
-      </div>
+  <!-- ===== HERO (Poster: always full visible) ===== -->
+  <section id="home" class="hero poster">
+    <div class="poster-frame">
+      <!-- “contain” で必ず全体表示。左右/上下に余白が出てもOK -->
+      <img class="poster-img contain" src="assets/img/top-hero.jpg" alt="Japan Day 2025 Poster">
     </div>
-  </div>
 
+    <div class="hero-actions">
+      <a class="btn" href="assets/img/program-2025.jpg" target="_blank" data-t="buttons.openPoster">Open Program Poster</a>
+      <a class="btn" href="assets/img/program-2025.jpg" download data-t="buttons.downloadPoster">Download Poster</a>
+    </div>
+
+    <div class="copy">
+      <h2 data-t="home.headline">Celebrate Japan & Belize Together</h2>
+      <p class="lede" data-t="home.lede">Food, music, anime, cosplay, and culture — free entry for everyone.</p>
+      <p class="cta" data-t-html="home.cta_html">Be a vendor or sponsor? <a href="#contact">Contact us</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== Sections ===== -->
   <main class="container">
-
-    <!-- ===== Intro ===== -->
-    <section id="home" class="card">
-      <h2 class="h1" data-i18n="home.headline">Celebrate Japan & Belize Together</h2>
-      <p class="lede" data-i18n="home.lede">
-        Food, music, anime, cosplay, and culture — free entry for everyone.
-      </p>
-      <p class="cta" data-i18n-html="home.cta_html">
-        Be a vendor or sponsor? <a href="#contact">Contact us</a>.
-      </p>
+    <section id="program">
+      <h3 data-t="nav.program">Program</h3>
+      <ul class="program-list js-program"></ul>
     </section>
 
-    <!-- ===== Program ===== -->
-    <section id="program" class="card">
-      <h2 data-i18n="nav.program">Program</h2>
-      <div class="program-toolbar">
-        <a class="btn js-open-poster" target="_blank" rel="noopener" data-i18n="buttons.openPoster">Open Program Poster</a>
-        <a class="btn js-dl-poster" download="japanday-2025-poster.jpg" data-i18n="buttons.downloadPoster">Download Poster</a>
-      </div>
-      <ul id="programList" class="program-list"></ul>
-    </section>
-
-    <!-- ===== Characters (cards) ===== -->
-    <section id="characters" class="card">
-      <h2 data-i18n="nav.characters">Official Characters: Yui & Jasmine</h2>
-      <div class="grid two">
-        <figure class="char">
-          <img src="assets/img/char-yui.png" alt="Yui" />
+    <section id="characters">
+      <h3 data-t="nav.characters">Official Characters: Yui & Jasmine</h3>
+      <div class="cards">
+        <figure class="card">
+          <img src="assets/img/char-yui.png" alt="Yui">
           <figcaption>Yui</figcaption>
         </figure>
-        <figure class="char">
-          <img src="assets/img/char-jasmine.png" alt="Jasmine" />
+        <figure class="card">
+          <img src="assets/img/char-jasmine.png" alt="Jasmine">
           <figcaption>Jasmine</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- ===== History (images) ===== -->
-    <section id="history" class="card">
-      <h2 data-i18n="nav.history">Japan Day History (Images)</h2>
-      <div id="historyPanels" class="masonry"></div>
+    <section id="history">
+      <h3 data-t="nav.history">Japan Day History (Images)</h3>
+      <div class="history-grid js-history"></div>
     </section>
 
-    <!-- ===== Maps ===== -->
-    <section id="maps" class="card">
-      <h2 data-i18n="nav.maps">Maps</h2>
-      <div id="mapList" class="grid two"></div>
+    <section id="maps">
+      <h3 data-t="nav.maps">Maps</h3>
+      <div class="map-grid js-maps"></div>
     </section>
 
-    <!-- ===== Vendors ===== -->
-    <section id="vendors" class="card">
-      <h2 data-i18n="nav.vendors">Vendors</h2>
-      <p class="muted" data-i18n="vendors_hint">Tap a card to open Instagram or website.</p>
-      <div id="vendorGrid" class="grid three"></div>
+    <section id="vendors">
+      <h3 data-t="nav.vendors">Vendors</h3>
+      <div class="vendors js-vendors"></div>
     </section>
 
-    <!-- ===== Contact ===== -->
-    <section id="contact" class="card">
-      <h2 data-i18n="nav.contact">Contact</h2>
-      <ul class="contact">
-        <li>Email: <a href="mailto:info@japanday.bz">info@japanday.bz</a></li>
-        <li>WhatsApp: <a href="https://wa.me/5010000000" target="_blank" rel="noopener">+501 000 0000</a></li>
-        <li>Venue: Belize City Civic Center</li>
-      </ul>
+    <section id="contact">
+      <h3 data-t="nav.contact">Contact</h3>
+      <p>Email: <a href="mailto:info@japanday.bz">info@japanday.bz</a></p>
     </section>
-
   </main>
 
-  <footer class="site-footer">
-    <div class="container small">
-      © 2025 Japan Day Belize Committee · Built with love for culture.
-    </div>
-  </footer>
+  <footer class="site-footer">© 2025 Japan Day Belize Committee</footer>
 
-  <!-- ===== Peek mascots (pop-in only – 画像は別ファイル) ===== -->
-  <div class="peek from-right" id="peek-yui" aria-live="polite">
-    <img src="assets/img/peek-yui.png" alt="Yui (peek only)">
+  <!-- === Peek mascots (pop-in only images are *peek-*.png) === -->
+  <div class="peek from-right" id="peek-yui">
+    <img src="assets/img/peek-yui.png" alt="Yui (peek)">
     <div class="bubble">
       <button class="close" aria-label="close">✕</button>
       <span class="js-bubble-yui">Hi! Check the Program →</span>
     </div>
   </div>
-  <div class="peek from-left" id="peek-jasmine" aria-live="polite">
-    <img src="assets/img/peek-jasmine.png" alt="Jasmine (peek only)">
+  <div class="peek from-left" id="peek-jasmine">
+    <img src="assets/img/peek-jasmine.png" alt="Jasmine (peek)">
     <div class="bubble">
       <button class="close" aria-label="close">✕</button>
       <span class="js-bubble-jas">Welcome! See Vendors →</span>
     </div>
   </div>
 
-  <!-- ===== Scripts ===== -->
-  <script>
-    // 設定ファイルの場所（必要ならパスを変えてOK）
-    window.__CONTENT_JSON__ = "assets/data/content.json";
-  </script>
   <script src="assets/js/app.js" defer></script>
 </body>
 </html>
