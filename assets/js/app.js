@@ -173,35 +173,44 @@
     try{ apply(); }catch(e){ console.warn('[i18n] skipped', e); }
   }
 
-  /* ===== 3. ひょこっとマスコット（右=Yui / 左=Jasmine） ===== */
-  function mascots(){
-    const y = $('#peek-yui'), j = $('#peek-jasmine');
-    if(!y || !j) return;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ===== 3. ひょこっとマスコット（右=Yui / 左=Jasmine） ===== */
+function mascots(){
+  const y = $('#peek-yui'), j = $('#peek-jasmine');
+  if(!y || !j) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function show(el){ el.classList.add('show','float'); }
-    function hide(el){ el.classList.remove('show'); }
+  function show(el){ el.classList.add('show','float'); document.body.classList.add('has-peek'); }
+  function hide(el){ el.classList.remove('show'); }
 
-    // 初回登場
-    setTimeout(()=>show(j), 900);
-    setTimeout(()=>show(y), 1400);
+  // 初回登場（Jasmine→左、Yui→右）
+  setTimeout(()=>show(j), 900);
+  setTimeout(()=>show(y), 1400);
 
-    // スクロールで一旦隠し→下で再表示
-    let lastY=0;
-    addEventListener('scroll', ()=>{
-      const dy = Math.abs(scrollY-lastY);
-      if(dy>20){ hide(j); hide(y); }
-      lastY=scrollY;
-      if(scrollY>400){ show(j); show(y); }
-    }, {passive:true});
-
-    // 閉じる
-    $$('.peek .close').forEach(b=> b.addEventListener('click', e=> hide(b.closest('.peek')) ));
-
-    if(reduce){
-      y.classList.remove('float'); j.classList.remove('float');
+  // スクロール急移動で一旦引っ込む
+  let lastY=0, timer=null;
+  addEventListener('scroll', ()=>{
+    const dy=Math.abs(scrollY-lastY); lastY=scrollY;
+    if(dy>14){ hide(j); hide(y); clearTimeout(timer);
+      timer=setTimeout(()=>{ if(scrollY>240) { show(j); show(y); } }, 350);
     }
+  }, {passive:true});
+
+  // 画面下の“重なりやすいゾーン”では自動で隠す
+  const noPeekZones = ['#characters','#history','#vendors'].map(s=>$(s)).filter(Boolean);
+  if (noPeekZones.length && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver(entries=>{
+      const overlapping = entries.some(e=> e.isIntersecting && e.intersectionRatio>0.25);
+      if(overlapping){ hide(j); hide(y); } else { if(scrollY>240){ show(j); show(y); } }
+    }, { threshold:[0.25, 0.4] });
+    noPeekZones.forEach(sec=> io.observe(sec));
   }
+
+  // 閉じるボタン
+  $$('.peek .close').forEach(b=> b.addEventListener('click', e=> hide(b.closest('.peek')) ));
+
+  // 省エネ
+  if(reduce){ y.classList.remove('float'); j.classList.remove('float'); }
+}
 
   /* ===== 4. 桜（軽量） ===== */
   function sakura(){
