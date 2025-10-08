@@ -6,12 +6,12 @@
     "venue": "Belize City Civic Center"
   },
   "home": {
-    "headline": "Celebrate Japan & Belize Together",
-    "lede": "Food, music, anime, cosplay, and culture — free entry for everyone.",
-    "cta_html": "Be a vendor or sponsor? <a href=\"#contact\">Contact us</a>."
+    "headline": "日本とベリーズをいっしょにお祝い🎌",
+    "lede": "Food, music, anime, cosplay, culture — everyone’s welcome!",
+    "cta_html": "<a href=\"#vendors\">出店者一覧へ</a> ・ <a href=\"#map\">会場マップ</a>"
   },
   "program": [
-    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem, Ambassador remarks, Japanese lesson, Bon Dance" },
+    { "time": "10:00", "title": "Opening Ceremony", "desc": "National Anthem / Ambassador / Japanese Lesson / Bon Dance" },
     { "time": "10:30", "title": "Live Performance 1", "desc": "" },
     { "time": "11:00", "title": "Karate Demonstration", "desc": "" },
     { "time": "12:00", "title": "Live Performance 2", "desc": "" },
@@ -27,8 +27,7 @@
   ],
   "characters": [
     { "name": "Yui",      "image": "assets/img/char-yui.png",      "bio": "" },
-    { "name": "Jasmine",  "image": "assets/img/char-jasmine.png",  "bio": "" },
-    { "name": "Chibi",    "image": "assets/img/char-chibi.png",    "bio": "" }
+    { "name": "Jasmine",  "image": "assets/img/char-jasmine.png",  "bio": "" }
   ],
   "history_panels": [
     { "src": "assets/img/history-2008-2014.jpg", "alt": "History 2008-2014" },
@@ -42,13 +41,8 @@
     { "year": "2024", "src": "assets/img/hist-2024b.jpg" }
   ],
   "vendors": [
-    {
-      "name": "Sample Vendor",
-      "type": "Food",
-      "logo": "assets/img/vendor-sample.png",
-      "instagram": "https://instagram.com/yourvendor",
-      "site": ""
-    }
+    { "name": "Sakura Bites", "logo": "assets/img/vendor-sakura.png", "instagram": "https://instagram.com/sakura_bites_bz" },
+    { "name": "Otaku Corner", "logo": "assets/img/vendor-otaku.png",  "instagram": "https://instagram.com/otakucornerbz", "site": "https://example.com" }
   ],
   "contact": {
     "email": "info@japanday.bz",
