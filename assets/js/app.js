@@ -1,8 +1,8 @@
-/* Japan Day 2025 - app.js v32
+/* Japan Day 2025 - app.js v33
    - loads assets/data/content.json
    - full-screen poster + parallax
-   - floating sakura background (canvas)
-   - peek mascots (Yui & Jasmine)
+   - sakura background (canvas)
+   - peek mascots: Jasmine from LEFT, Yui from RIGHT (with float)
    - sections: Program / Characters / History / Maps / Vendors / Contact
    - image lightbox
    - Party Mode (confetti)
@@ -47,16 +47,7 @@
       &nbsp; ${data.event.time||''}<br>${data.event.venue||''}`;
   }
 
-  // ---------- POSTER + actions ----------
-  const posterEl = $('.poster-img');
-  if (posterEl) {
-    // 画像は CSS 側で top-hero.jpg を参照。存在チェックだけしておく
-    const testImg = new Image();
-    testImg.src = getComputedStyle(posterEl).backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-    testImg.onerror = ()=> console.warn('[poster] top-hero.jpg を確認してください');
-  }
-
-  // Program poster open / download
+  // ---------- POSTER actions ----------
   if (data.program_poster){
     const openBtn = $('#open-program-poster');
     const dlBtn   = $('#download-program-poster');
@@ -154,7 +145,6 @@
   if (lb){
     $('#lightbox .close').addEventListener('click',()=>lb.classList.remove('open'));
     lb.addEventListener('click',e=>{ if(e.target.id==='lightbox') lb.classList.remove('open'); });
-    // 画像クリックで拡大
     document.addEventListener('click',e=>{
       const t = e.target;
       if (t.tagName==='IMG' && t.closest('.map-images, .history-panels, .history-grid')){
@@ -206,7 +196,7 @@
       requestAnimationFrame(loop);
     })();
 
-    // Confetti reuse same canvas (draw after sakura each frame)
+    // Confetti on same canvas
     let confettiOn=false, confetti=[];
     const btn=$('#party-btn');
     function toggleConfetti(){
@@ -236,33 +226,37 @@
     })();
   }
 
-  // ---------- PEEK MASCOTS (natural) ----------
-  const yui = $('#peek-yui'), jas = $('#peek-jasmine');
+  // ---------- PEEK MASCOTS (Jasmine from LEFT, Yui from RIGHT) ----------
+  const yui = $('#peek-yui');      // 右から
+  const jas = $('#peek-jasmine');  // 左から
 
-  function showPeek(el, ms=4200){
+  function showPeek(el, side, ms=4200){
     if(!el) return;
-    el.classList.add('show');
-    const t=setTimeout(()=>el.classList.remove('show'), ms);
+    el.classList.remove('from-left','from-right'); // 先にリセット
+    el.classList.add('show', side, 'float');       // float でふわっと
+    const t=setTimeout(()=>el.classList.remove('show', side, 'float'), ms);
     const close = el.querySelector('.close');
     if(close){
-      close.onclick = (e)=>{ e.stopPropagation(); el.classList.remove('show'); clearTimeout(t); };
+      close.onclick = (e)=>{ e.stopPropagation(); el.classList.remove('show', side, 'float'); clearTimeout(t); };
     }
   }
+
   function cycle(){
-    showPeek(yui, 4200);
-    setTimeout(()=>showPeek(jas, 4200), 4800);
+    // Jasmine → 左から、Yui → 右から
+    showPeek(jas, 'from-left', 4200);
+    setTimeout(()=>showPeek(yui, 'from-right', 4200), 4800);
   }
   cycle();
   setInterval(cycle, 12000 + Math.random()*6000);
 
-  // user interaction
+  // user interaction（触ったら出る/離れたら戻る）
   ['mouseenter','touchstart'].forEach(ev=>{
-    yui && yui.addEventListener(ev, ()=> yui.classList.add('show'), {passive:true});
-    jas && jas.addEventListener(ev, ()=> jas.classList.add('show'), {passive:true});
+    yui && yui.addEventListener(ev, ()=> yui.classList.add('show','from-right','float'), {passive:true});
+    jas && jas.addEventListener(ev, ()=> jas.classList.add('show','from-left','float'), {passive:true});
   });
   ['mouseleave','touchend'].forEach(ev=>{
-    yui && yui.addEventListener(ev, ()=> yui.classList.remove('show'));
-    jas && jas.addEventListener(ev, ()=> jas.classList.remove('show'));
+    yui && yui.addEventListener(ev, ()=> yui.classList.remove('show','from-right','float'));
+    jas && jas.addEventListener(ev, ()=> jas.classList.remove('show','from-left','float'));
   });
 
 })();
