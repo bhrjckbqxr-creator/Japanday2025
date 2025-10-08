@@ -1,296 +1,134 @@
-/* Japan Day app – mobile-first / safe vM1 */
-(function(){
-  const $  = (s, r=document)=>r.querySelector(s);
-  const $$ = (s, r=document)=>[...r.querySelectorAll(s)];
+/* ===== tiny helpers ===== */
+const $  = (s, r=document)=> r.querySelector(s);
+const $$ = (s, r=document)=> Array.from(r.querySelectorAll(s));
+const state = { lang: 'en', dict: null };
 
-  /* ===== 0. JSON ロード（必須ではない/無くても落ちない） ===== */
-  async function loadData(){
-    try{
-      const res = await fetch('assets/data/content.json', {cache:'no-store'});
-      if(!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      window.__DATA = data;  // 他のIIFEからも参照可
-    }catch(e){
-      console.warn('[data] fallback (no JSON)', e);
-      window.__DATA = window.__DATA || {}; // 最低限
-    }
-  }
-
-  /* ===== 1. 画面レンダリング（データがあれば差し替え） ===== */
-  function renderFromData(){
-    const D = window.__DATA || {};
-
-    // Home
-    if (D.home){
-      if ($('#home-headline') && D.home.headline) $('#home-headline').textContent = D.home.headline;
-      if ($('#home-lede')     && D.home.lede)     $('#home-lede').textContent     = D.home.lede;
-      if ($('#home-cta')      && D.home.cta_html) $('#home-cta').innerHTML        = D.home.cta_html;
-    }
-
-    // Program list
-    const list = $('#program-list');
-    if (list && Array.isArray(D.program)){
-      list.innerHTML = D.program.map(p=>`
-        <div class="card">
-          <div class="time">${p.time||''}</div>
-          <div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div>
-        </div>
-      `).join('');
-    }
-
-    // Poster override
-    if (D.program_poster){
-      const open = $('#open-program-poster');
-      const dl   = $('#download-program-poster');
-      if (open) open.href = D.program_poster;
-      if (dl)   dl.href   = D.program_poster;
-    }
-    if (D.top_hero){
-      const hero = $('.poster-img');
-      if (hero) hero.style.backgroundImage = `url("${D.top_hero}")`;
-    }
-
-    // History
-    const hp = $('#history-panels');
-    if (hp && Array.isArray(D.history_panels)){
-      hp.innerHTML = D.history_panels.map(it=>`
-        <figure class="panel">
-          <img src="${it.src}" alt="${it.alt||''}">
-        </figure>
-      `).join('');
-      // クリックでLightbox
-      hp.addEventListener('click', e=>{
-        const img = e.target.closest('img'); if(!img) return;
-        openLightbox(img.src, img.alt||'');
-      });
-    }
-
-    // Maps
-    const tabs = $('#map-tabs'); const img = $('#map-image');
-    if (tabs && img && Array.isArray(D.maps) && D.maps.length){
-      tabs.innerHTML = D.maps.map((m,i)=>`<button class="tab ${i===0?'active':''}">${m.title||('Map '+(i+1))}</button>`).join('');
-      img.src = D.maps[0].src;
-      tabs.addEventListener('click', e=>{
-        const b = e.target.closest('.tab'); if(!b) return;
-        const idx = [...tabs.children].indexOf(b);
-        $$('.tab', tabs).forEach(x=>x.classList.remove('active'));
-        b.classList.add('active'); img.src = D.maps[idx].src;
-      });
-    }else{
-      // 既定ボタン（index.htmlのデフォルト4タブ）に画像紐付け
-      const fallback = [
-        'assets/img/map-inside.jpg',
-        'assets/img/map-outside.jpg',
-        'assets/img/map-topfloor.jpg',
-        'assets/img/booths-list.jpg'
-      ];
-      $('#map-tabs')?.addEventListener('click', e=>{
-        const b=e.target.closest('.tab'); if(!b) return;
-        const idx=[...$('#map-tabs').children].indexOf(b);
-        $$('#map-tabs .tab').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        $('#map-image').src = fallback[idx] || fallback[0];
-      });
-    }
-
-    // Vendors
-    const vc = $('#vendor-cards');
-    if (vc && Array.isArray(D.vendors)){
-      vc.innerHTML = D.vendors.map(v=>`
-        <article class="vendor-card">
-          <div class="logo"><img src="${v.logo||'assets/img/vendor-placeholder.png'}" alt=""></div>
-          <div>
-            <h3>${v.name||''}</h3>
-            <div class="v-links">
-              ${v.instagram?`<a href="${v.instagram}" target="_blank" rel="noopener">Instagram</a>`:''}
-              ${v.url?`<a href="${v.url}" target="_blank" rel="noopener">Website</a>`:''}
-            </div>
-            <div class="desc">${v.items||''}</div>
-          </div>
-        </article>
-      `).join('');
-    }
-  }
-
-  /* ===== 2. 多言語（安全版） ===== */
-  function i18nInit(){
-    const D = window.__DATA || {};
-    const I = D.i18n || null;
-    const state = { lang: localStorage.getItem('lang') || 'en' };
-
-    function t(pathArr, fb){
-      if(!I || !I[state.lang]) return fb;
-      try{ return pathArr.reduce((o,k)=>o?.[k], I[state.lang]) ?? fb; }catch{ return fb; }
-    }
-
-    function apply(){
-      // nav & titles
-      const navMap = t(['nav'], null);
-      if (navMap){
-        const map = [['#title-program','program'],['#title-characters','characters'],['#title-history','history'],['#title-maps','maps'],['#title-vendors','vendors'],['#title-contact','contact']];
-        map.forEach(([sel,key])=>{ const el=$(sel); if(el && navMap[key]) el.textContent=navMap[key]; });
-        const order=['home','program','characters','history','maps','vendors','contact'];
-        $$('#nav-list a').forEach((a,i)=>{ const k=order[i]; if(navMap[k]) a.textContent=navMap[k]; });
-      }
-      // home
-      const head=t(['home','headline'],null), lede=t(['home','lede'],null), cta=t(['home','cta_html'],null);
-      if($('#home-headline') && head) $('#home-headline').textContent=head;
-      if($('#home-lede') && lede) $('#home-lede').textContent=lede;
-      if($('#home-cta') && cta) $('#home-cta').innerHTML=cta;
-      // buttons
-      const btns=t(['buttons'],null);
-      if(btns){
-        if($('#open-program-poster') && btns.openPoster) $('#open-program-poster').textContent=btns.openPoster;
-        if($('#download-program-poster') && btns.downloadPoster) $('#download-program-poster').textContent=btns.downloadPoster;
-      }
-      // maps
-      const ml=t(['maps'],null);
-      if(ml && $('#map-tabs')) $$('#map-tabs .tab').forEach((b,i)=>{ if(ml[i]) b.textContent=ml[i]; });
-      // bubbles
-      const bub=t(['bubbles'],null);
-      if(bub){
-        const y=$('#peek-yui .bubble p'), j=$('#peek-jasmine .bubble p');
-        if(y && bub.yui) y.textContent=bub.yui; if(j && bub.jas) j.textContent=bub.jas;
-      }
-      // program per language
-      const prog=t(['program'],null);
-      if(Array.isArray(prog) && $('#program-list')){
-        $('#program-list').innerHTML = prog.map(p=>`
-          <div class="card"><div class="time">${p.time||''}</div><div><strong>${p.title||''}</strong><div class="desc">${p.desc||''}</div></div></div>
-        `).join('');
-      }
-      // active
-      $$('.lang-switch button').forEach(b=> b.classList.toggle('active', b.dataset.lang===state.lang));
-      localStorage.setItem('lang', state.lang);
-    }
-
-    document.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.lang-switch button'); if(!btn) return;
-      const lang = btn.dataset.lang; if(!lang) return;
-      if(lang!==localStorage.getItem('lang')){ localStorage.setItem('lang', lang); state.lang=lang; apply(); }
-    });
-
-    try{ apply(); }catch(e){ console.warn('[i18n] skipped', e); }
-  }
-
-/* ===== 3. ひょこっとマスコット（右=Yui / 左=Jasmine） ===== */
-function mascots(){
-  const y = $('#peek-yui'), j = $('#peek-jasmine');
-  if(!y || !j) return;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function show(el){ el.classList.add('show','float'); document.body.classList.add('has-peek'); }
-  function hide(el){ el.classList.remove('show'); }
-
-  // 初回登場（Jasmine→左、Yui→右）
-  setTimeout(()=>show(j), 900);
-  setTimeout(()=>show(y), 1400);
-
-  // スクロール急移動で一旦引っ込む
-  let lastY=0, timer=null;
-  addEventListener('scroll', ()=>{
-    const dy=Math.abs(scrollY-lastY); lastY=scrollY;
-    if(dy>14){ hide(j); hide(y); clearTimeout(timer);
-      timer=setTimeout(()=>{ if(scrollY>240) { show(j); show(y); } }, 350);
-    }
-  }, {passive:true});
-
-  // 画面下の“重なりやすいゾーン”では自動で隠す
-  const noPeekZones = ['#characters','#history','#vendors'].map(s=>$(s)).filter(Boolean);
-  if (noPeekZones.length && 'IntersectionObserver' in window){
-    const io = new IntersectionObserver(entries=>{
-      const overlapping = entries.some(e=> e.isIntersecting && e.intersectionRatio>0.25);
-      if(overlapping){ hide(j); hide(y); } else { if(scrollY>240){ show(j); show(y); } }
-    }, { threshold:[0.25, 0.4] });
-    noPeekZones.forEach(sec=> io.observe(sec));
-  }
-
-  // 閉じるボタン
-  $$('.peek .close').forEach(b=> b.addEventListener('click', e=> hide(b.closest('.peek')) ));
-
-  // 省エネ
-  if(reduce){ y.classList.remove('float'); j.classList.remove('float'); }
+async function loadDict(){
+  if(state.dict) return state.dict;
+  const res = await fetch('assets/data/content.json', {cache:'no-store'});
+  state.dict = await res.json();
+  return state.dict;
 }
 
-  /* ===== 4. 桜（軽量） ===== */
-  function sakura(){
-    const c = $('#petals'); if(!c) return;
-    const ctx = c.getContext('2d', {alpha:true});
-    let W=innerWidth,H=innerHeight, petals=[];
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function applyLang(lang){
+  state.lang = lang;
+  $$('.pill').forEach(p=> p.classList.toggle('is-active', p.dataset.lang===lang));
+  const i18n = state.dict.i18n?.[lang];
+  if(!i18n) return;
 
-    function reset(){ W=innerWidth; H=innerHeight; c.width=W; c.height=H; }
-    function spawn(){
-      const n = Math.max(8, Math.floor(W/180));
-      petals = new Array(n).fill(0).map(()=>({
-        x: Math.random()*W,
-        y: Math.random()*H,
-        r: 3+Math.random()*2.5,
-        vx: -0.3 + Math.random()*0.6,
-        vy: 0.4 + Math.random()*0.8,
-        rot: Math.random()*Math.PI*2,
-        vr: -0.02 + Math.random()*0.04
-      }));
-    }
-    function step(){
-      ctx.clearRect(0,0,W,H);
-      for(const p of petals){
-        p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
-        if(p.y>H+10) { p.y=-10; p.x=Math.random()*W; }
-        if(p.x<-10)  p.x=W+10;
-        if(p.x>W+10) p.x=-10;
-        ctx.save();
-        ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-        ctx.fillStyle='rgba(233,30,99,.12)'; ctx.beginPath();
-        ctx.ellipse(0,0,p.r*1.2,p.r,.4,0,Math.PI*2); ctx.fill();
-        ctx.restore();
-      }
-      !reduce && requestAnimationFrame(step);
-    }
-    reset(); spawn(); step(); addEventListener('resize', ()=>{ reset(); spawn(); });
+  // nav
+  Object.entries(i18n.nav||{}).forEach(([k,v])=>{
+    $$(`[data-t="nav.${k}"]`).forEach(n=> n.textContent=v);
+  });
+  // home copy
+  const H = i18n.home || {};
+  $('[data-t="home.headline"]').textContent = H.headline || '';
+  $('[data-t="home.lede"]').textContent = H.lede || '';
+  $('[data-t-html="home.cta_html"]').innerHTML = H.cta_html || '';
+
+  // buttons
+  const B = i18n.buttons || {};
+  $$('[data-t="buttons.openPoster"]').forEach(b=> b.textContent = B.openPoster || 'Open Program Poster');
+  $$('[data-t="buttons.downloadPoster"]').forEach(b=> b.textContent = B.downloadPoster || 'Download Poster');
+
+  // program list
+  const list = $('.js-program'); list.innerHTML = '';
+  const base = state.dict.program || [];
+  const localized = (i18n.program && i18n.program.length)? i18n.program : base;
+  (localized||[]).forEach(row=>{
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${row.time}</strong> — ${row.title}${row.desc?` <span class="m">${row.desc}</span>`:''}`;
+    list.appendChild(li);
+  });
+
+  // maps
+  const maps = $('.js-maps'); maps.innerHTML='';
+  (state.dict.maps||[]).forEach(m=>{
+    const fig=document.createElement('figure'); fig.className='card';
+    fig.innerHTML = `<img src="${m.src}" alt="${m.title}"><figcaption>${(i18n.maps||[])[(state.dict.maps||[]).indexOf(m)]||m.title}</figcaption>`;
+    maps.appendChild(fig);
+  });
+
+  // history
+  const hg = $('.js-history'); hg.innerHTML='';
+  (state.dict.history_panels||[]).forEach(p=>{
+    const img = document.createElement('img'); img.src=p.src; img.alt=p.alt||'';
+    hg.appendChild(img);
+  });
+
+  // vendors
+  const vwrap = $('.js-vendors'); vwrap.innerHTML='';
+  (state.dict.vendors||[]).forEach(v=>{
+    const el = document.createElement('div'); el.className='vendor';
+    el.innerHTML = `
+      <img class="logo" src="${v.logo}" alt="${v.name}">
+      <div><strong>${v.name}</strong></div>
+      <div class="meta">${v.items||''}</div>
+      <div class="links">
+        ${v.instagram?`<a target="_blank" href="${v.instagram}">Instagram</a>`:''}
+        ${v.url?` · <a target="_blank" href="${v.url}">Website</a>`:''}
+      </div>`;
+    vwrap.appendChild(el);
+  });
+
+  // mascot bubbles
+  const BUB = i18n.bubbles || {};
+  $('.js-bubble-yui').textContent = BUB.yui || 'Hi! Check the Program →';
+  $('.js-bubble-jas').textContent = BUB.jas || BUB.jasmine || 'Welcome! See Vendors →';
+}
+
+function initLangSwitch(){
+  $$('.pill').forEach(p=> p.addEventListener('click', async ()=>{
+    await loadDict(); applyLang(p.dataset.lang);
+    history.replaceState(null,'',location.pathname+`?lang=${p.dataset.lang}`);
+  }));
+  // default from query or browser
+  const url = new URL(location.href);
+  const q = url.searchParams.get('lang');
+  const prefer = q || (navigator.language||'en').slice(0,2);
+  state.lang = ['ja','en','es'].includes(prefer)? prefer : 'en';
+}
+
+function initHeroFit(){
+  // 何もしない：CSSが object-fit: contain で常に全体表示
+  // 画像の全体が見えるように、ヘッダー高さを考慮してスクロールマージンを確保
+  document.querySelectorAll('section').forEach(s=>{
+    s.style.scrollMarginTop = '76px';
+  });
+}
+
+function initPeek(){
+  const y = $('#peek-yui'), j = $('#peek-jasmine');
+  if(!y||!j) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(){ y.classList.add('show'); j.classList.add('show'); }
+  function hide(){ y.classList.remove('show'); j.classList.remove('show'); }
+
+  // 少しスクロールしたら出す
+  let timer=null, last=window.scrollY;
+  function onScroll(){
+    clearTimeout(timer);
+    timer=setTimeout(()=>{
+      const sc = window.scrollY;
+      if(sc>140) show(); else hide();
+      last=sc;
+    }, 60);
   }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('load', onScroll);
 
-  /* ===== 5. 画像ライトボックス ===== */
-  function lightbox(){
-    const lb = $('#lightbox'); if(!lb) return;
-    const img = $('#lightbox img'), closeBtn = $('#lightbox .close');
-    function open(src,alt){ img.src=src; img.alt=alt||''; lb.classList.add('open'); }
-    function close(){ lb.classList.remove('open'); img.src=''; }
-    window.openLightbox=open;
-    closeBtn.addEventListener('click', close);
-    lb.addEventListener('click', e=>{ if(e.target===lb) close(); });
-    addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
-  }
+  // 閉じる
+  $$('.peek .close').forEach(b=> b.addEventListener('click', ()=> b.closest('.peek').classList.remove('show') ));
 
-  /* ===== 6. スクロール表示演出 ===== */
-  function reveal(){
-    const io = new IntersectionObserver(es=>{
-      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold:.12});
-    $$('.reveal').forEach(el=> io.observe(el));
-  }
+  if(reduce){ y.style.transition='none'; j.style.transition='none'; }
+}
 
-  /* ===== 7. Header 小さく ===== */
-  function headerPolish(){
-    const h = $('.site-header'); if(!h) return;
-    addEventListener('scroll', ()=>{
-      h.style.boxShadow = scrollY>8 ? '0 6px 18px rgba(0,0,0,.08)' : 'none';
-      h.style.paddingTop = scrollY>8 ? '6px' : 'var(--pad-top)';
-      h.style.paddingBottom = scrollY>8 ? '6px' : '8px';
-    }, {passive:true});
-  }
-
-  /* ===== Boot ===== */
-  (async function(){
-    await loadData();
-    renderFromData();
-    i18nInit();
-    sakura();
-    mascots();
-    lightbox();
-    reveal();
-    headerPolish();
-    // 画像遅延
-    $$('img:not(#lightbox img)').forEach(i=>{ if(!i.loading) i.loading='lazy'; });
-  })();
-})();
+async function boot(){
+  initLangSwitch();
+  await loadDict();
+  applyLang(state.lang);
+  initHeroFit();
+  initPeek();
+}
+document.addEventListener('DOMContentLoaded', boot);
